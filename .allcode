@@ -1,0 +1,116 @@
+{
+  "_info": "For information about this file, see: https://github.com/DrSiemer/CodeMerger/",
+  "project_name": "portfolio",
+  "project_color": "#43b1c0",
+  "project_font_color": "light",
+  "active_profile": "Default",
+  "profiles": {
+    "Default": {
+      "selected_files": [
+        {
+          "path": "work/Begrijpendbias.html",
+          "mtime": 1773859432.0872107,
+          "hash": "07cff6bc37a9534e50283ecd0300ac0ef9137ddd",
+          "tokens": 1559,
+          "lines": 94
+        },
+        {
+          "path": "work/Boodunnit.html",
+          "mtime": 1773859431.8914678,
+          "hash": "1b4672e027d023de32020089c77f30e99c8e787b",
+          "tokens": 1191,
+          "lines": 85
+        },
+        {
+          "path": "work/Burgercrush.html",
+          "mtime": 1773859431.8542821,
+          "hash": "ecd3b158cb9874ce76f344c994f248343bc63621",
+          "tokens": 1029,
+          "lines": 80
+        },
+        {
+          "path": "work/gamification.html",
+          "mtime": 1773859431.670186,
+          "hash": "8cad5710621cf596a780b8eb6b4e0f00fbf69339",
+          "tokens": 1495,
+          "lines": 102
+        },
+        {
+          "path": "work/InABox.html",
+          "mtime": 1773859431.6248195,
+          "hash": "263a29885c600da4944f97e693d47bfe6ed30bca",
+          "tokens": 1345,
+          "lines": 95
+        },
+        {
+          "path": "work/Recommender.html",
+          "mtime": 1773859431.3410034,
+          "hash": "da00c4895bca7398a93bb48bdf419314c147790a",
+          "tokens": 1385,
+          "lines": 95
+        },
+        {
+          "path": "work/vrgame.html",
+          "mtime": 1773859431.4074657,
+          "hash": "0b29630f48dd3fa65c8f78bbd94bf9a96e70b8d1",
+          "tokens": 1302,
+          "lines": 95
+        },
+        {
+          "path": "index.html",
+          "mtime": 1773860199.0942614,
+          "hash": "185547b9b31e1d68ca1a5103c2f822416604c135",
+          "tokens": 90,
+          "lines": 12
+        },
+        {
+          "path": "script.js",
+          "mtime": 1773859416.4868753,
+          "hash": "f1b4858fe44d36ac0214db17bfc127d88cf9c01f",
+          "tokens": 1631,
+          "lines": 271
+        },
+        {
+          "path": "style.css",
+          "mtime": 1773860553.3951912,
+          "hash": "3714580e1f5f00af61fb5f95e87092d303817781",
+          "tokens": 6967,
+          "lines": 1338
+        }
+      ],
+      "total_tokens": 0,
+      "intro_text": "This is my personal portfolio website",
+      "outro_text": "DO:\n- always return full code, unless a change is VERY small (a single line or a short connected segment)\n- make sure empty lines are actually empty: avoid generating lines of spaces or tabs\nalways place closing triple backticks (```) on their own, new line\n\nDo NOT:\n- remove my original comments\n- return diff files\n- use numbered steps (e.g., \"1.\") in comments\n- use <summary> tags\n- end comments with dots (unless you are using multiple sentences)\n- call something \"final\" or \"definitive\"; it usually isn't\n- use double newlines between code\n- add comments if the code itself makes it pretty clear what it does\n\nUse the following format if you want to add temporary notification comments: `// [KEYWORD] Comment` (e.g., `[FIX] Now using correct value`, `[MODIFIED] Improved algorithm`). These comments are transient and exist only to show the user what you've changed. If you find them in code you are reviewing, remove these comments as the user will have already seen them.",
+      "expanded_dirs": [
+        "temp"
+      ],
+      "unknown_files": []
+    }
+  },
+  "known_files": [
+    "go.bat",
+    "index.html",
+    "package.json",
+    "script.js",
+    "src/App.vue",
+    "src/assets/lang/en.json",
+    "src/assets/lang/nl.json",
+    "src/composables/useLang.js",
+    "src/main.js",
+    "src/router.js",
+    "src/style.css",
+    "src/views/Home.vue",
+    "src/views/Project.vue",
+    "src/views/Test.vue",
+    "style.css",
+    "temp/spotifycode.html",
+    "vite.config.js",
+    "work/Begrijpendbias.html",
+    "work/Boodunnit.html",
+    "work/Burgercrush.html",
+    "work/InABox.html",
+    "work/Recommender.html",
+    "work/gamification.html",
+    "work/vrgame.html"
+  ]
+}

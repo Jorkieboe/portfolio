@@ -1,0 +1,1338 @@
+@font-face {
+    font-family: Cooper;
+    src: url(fonts/Cooper.ttf);
+}
+
+body {
+    /* max-width: 1920px;
+    width: 100%; */
+    margin: auto;
+    margin-top: 0;
+
+}
+
+.page {}
+
+p {
+    font-family: Arial, Helvetica, sans-serif;
+    font-size: 16px;
+}
+
+a {
+    color: inherit;
+    text-decoration: none;
+}
+
+.content {
+    max-width: 1920px;
+    width: 100%;
+    margin: auto;
+    display: flex;
+    flex-direction: column;
+    overflow: hidden;
+}
+
+.header {
+    position: fixed;
+    background-color: #2BA69C;
+    width: 100vw;
+    z-index: 10;
+}
+
+.headerContent {
+    display: flex;
+    max-width: 1920px;
+    width: 100%;
+    height: 50px;
+
+    justify-content: flex-end;
+    align-items: center;
+    font-family: Cooper;
+    color: #fff;
+    margin: auto;
+}
+
+ul {
+    display: flex;
+    list-style-type: none;
+}
+
+li {
+    margin-right: 50px;
+    font-weight: bold;
+}
+
+.langSel {
+    margin: 2vw;
+    border-radius: 20px;
+    padding: 5px;
+    border-color: #000;
+    border-width: 0px;
+}
+
+#title {
+    /* align-self: flex-start; */
+    margin-right: auto;
+    padding-left: 2vw;
+}
+
+#title:hover {
+    color: #F2A227
+}
+
+.text {
+    font-family: Arial;
+}
+
+.page {
+    display: flex;
+    flex-direction: column;
+}
+
+.home {
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    align-items: center;
+    background-color: #2BA69C;
+    width: 100%;
+    height: 90vh;
+}
+
+.homeImage {
+    max-width: 500px;
+    width: 95%;
+    height: auto;
+    /* animation-name: floating;
+    animation-duration: 10s;
+    animation-iteration-count: infinite;
+    animation-timing-function: linear; */
+
+}
+
+/* @keyframes floating{
+    0% {transform: translate(0vw) }
+    25% {transform: translate(0.5vw, -0.5vw)}
+    50% {transform: translate(1vw, -1.2vw)}
+    75% {transform: translate(0.5vw, -0.7vw)}
+    100% {transform: translate(0vw)}
+} */
+
+
+.homeText {
+    max-width: 700px;
+    width: 100%;
+    height: auto;
+    color: white;
+    font-size: 40px;
+    text-align: center;
+
+}
+
+.projectlist {
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    /* background-color: yellow; */
+    flex-wrap: nowrap;
+
+    max-width: 1920px;
+    width: 100%;
+    /* overflow: hidden; */
+    pointer-events: none;
+}
+
+.projectWrapper {
+    display: flex;
+    height: 30vw;
+    width: 100%;
+    max-width: 60vw;
+    margin-left: -8.2vw;
+    transform: translateY(-100px);
+    pointer-events: all;
+    transition: all 0.75s;
+    opacity: 0;
+    cursor: pointer;
+}
+
+.projectWrapper.pj6 {
+    transition-delay: 0.25s;
+}
+
+.projectWrapper.pj5 {
+    transition-delay: 0.5s;
+}
+
+.projectWrapper.pj4 {
+    transition-delay: 0.75s;
+}
+
+.projectWrapper.pj3 {
+    transition-delay: 1s;
+}
+
+.projectWrapper.pj2 {
+    transition-delay: 1.25s;
+}
+
+.projectWrapper.pj1 {
+    transition-delay: 1.5s;
+    transform: translateY(0);
+}
+
+
+.project {
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    /* height: 30vw;
+    width: 100%; */
+
+    padding-left: -8.2vw;
+    flex-grow: 1;
+    pointer-events: none;
+    overflow: hidden;
+}
+
+.projectWrapper.animate {
+    transform: translateY(0px);
+    opacity: 1;
+}
+
+.projectImage {
+    height: 30vw;
+    width: 100%;
+    min-width: 10vw;
+    max-width: 35vw;
+    clip-path: polygon(25% 0%, 100% 0%, 75% 100%, 0% 100%);
+    -webkit-transition: all 1s;
+    transition: all 1s;
+    pointer-events: auto;
+}
+
+#notActive {
+    pointer-events: none;
+}
+
+.projectPanel {
+    width: 0px;
+    transition: all 1s;
+    padding: 0px;
+    /* margin-left: -6vw; */
+    display: block;
+    opacity: 0;
+    left: 30vw;
+    /* clip-path: polygon(0% 0%, 100% 0%, 75% 100%, 0% 100%); */
+
+}
+
+#activePanel {
+    padding-top: 25px;
+    padding-left: 5px;
+    margin-right: 35px;
+    width: 30vw;
+    display: block;
+    transition: 1s;
+    left: 0;
+    opacity: 1;
+}
+
+.panelTextDiv {
+    width: 25vw;
+    overflow: hidden;
+}
+
+/* .panelText{p2
+    
+} */
+
+.p1 {
+    background-image: url("images/begrijpendbiased.jpg");
+    background-position: center;
+    background-size: auto 30vw;
+    z-index: 1;
+}
+
+.p2 {
+    background-image: url("images/gamification/challenge\ screen.jpg");
+    background-position: center;
+    background-size: auto 30vw;
+    z-index: 2;
+}
+
+.p3 {
+    background-image: url("images/recommender/FR_mock_recommendation.jpg");
+    background-position: center;
+    background-size: auto 30vw;
+    z-index: 3;
+}
+
+.p4 {
+    background-image: url("images/BurgerCrush/crushBanner.jpg");
+    background-position: center;
+    background-size: auto 30vw;
+    z-index: 4;
+}
+
+.p5 {
+    background-image: url("images/SOTA/npcs.jpg");
+    background-position: center;
+    background-size: auto 30vw;
+    z-index: 5;
+}
+
+.p6 {
+    background-image: url("images/Inabox/playercharacter.jpg");
+    background-position: center;
+    background-size: auto 30vw;
+    z-index: 6;
+}
+
+
+/* .project:hover .projectImage{
+    clip-path: polygon(0% 0%, 100% 0%, 75% 100%, 0% 100%);
+} */
+
+#projectImageActive {
+    clip-path: polygon(0% 0%, 100% 0%, 75% 100%, 0% 100%);
+    /* margin-left: -50px;  */
+    min-width: 20vw;
+    transition: all 1s;
+}
+
+
+/* .project:hover .projectImage{
+     animation: projecthover 0.5s forwards;
+   margin-left: -50px; 
+   min-width: 20vw;
+} */
+
+/* .project:hover{
+    flex-grow: 5;
+} */
+
+
+.project:hover .panelText {
+    /* animation: projecthover 0.5s forwards; */
+    display: block;
+
+}
+
+
+/* @keyframes projecthover {
+    from {clip-path: polygon(25% 0%, 100% 0%, 75% 100%, 0% 100%);}
+    to { clip-path: polygon(0% 0%, 100% 0%, 75% 100%, 0% 100%);}
+  } */
+
+#projectDescription {
+    max-width: 35vw;
+    width: 80%;
+    overflow: hidden;
+    font-size: 1.2vw;
+}
+
+.projectDescription {
+    max-width: 700px;
+    display: flex;
+    align-items: center;
+}
+
+.about {
+    margin: auto;
+    margin-top: 50px;
+    margin-bottom: 50px;
+    max-width: 1920px;
+    width: 100%;
+    transform: translateX(-100px);
+    transition: 0.75s;
+    opacity: 0;
+}
+
+.about.animate {
+    transform: translateX(0px);
+    opacity: 1;
+}
+
+.aboutMeContent {
+    display: flex;
+    align-items: center;
+    justify-content: space-around;
+}
+
+.profilePicture {
+    max-width: 400px;
+    width: 90%
+}
+
+.meText {
+    max-width: 600px;
+    width: 50%;
+    font-size: 1.2vw
+}
+
+.footer {
+    width: 100%;
+    background-color: #F2A227;
+    display: flex;
+    justify-content: center;
+    padding-top: 50px;
+    padding-bottom: 50px;
+    flex-wrap: wrap;
+    /* border: 1px solid var(--character-color-light); */
+
+    padding: 10px 0;
+    filter: drop-shadow(0 0 0.2rem #3D3D3D);
+}
+
+.link {
+    width: 50px;
+    height: auto;
+    padding: 5px;
+    align-self: flex-start;
+    cursor: pointer;
+}
+
+.contact:hover {
+    color: #2BA69C
+}
+
+
+h3 {
+    font-family: 'cooper';
+    font-size: 1.5vw;
+}
+
+h4 {
+    font-family: 'Arial';
+    font-size: 1.2vw;
+}
+
+.sectionTitle {
+    font-family: 'cooper';
+    margin-left: 30px
+}
+
+.projectIntro {
+    display: flex;
+    justify-content: space-between;
+    max-width: 1920px;
+    width: 90%;
+    margin: auto;
+    margin-top: 100px;
+}
+
+.arrow {
+    display: none;
+
+}
+
+#clickable {
+    cursor: pointer;
+}
+
+#clickable:hover {
+    color: rgb(242, 162, 39);
+}
+
+
+#projectType {
+    font-family: Cooper;
+    font-size: 1vw;
+    margin-bottom: 0px;
+}
+
+.projectName {
+    font-family: Cooper;
+    font-size: 5vw;
+    max-width: 800px;
+    width: 100%;
+    margin-top: 0;
+}
+
+#titleGamification {
+    max-width: 800px;
+    font-size: 2.5vw;
+}
+
+
+#projectDescriptionPage {
+    max-width: 800px;
+    width: 95%;
+    font-size: 18px;
+    text-align: justify;
+}
+
+.projectOverview {
+    max-width: 1920px;
+    width: 100vw;
+    display: flex;
+    height: 800px;
+    margin: auto;
+}
+
+@keyframes example {
+    0% {
+        margin-left: 100px;
+        opacity: 1;
+    }
+
+    100% {
+        margin-left: 0px;
+        opacity: 0;
+    }
+}
+
+.bigImage {
+    max-width: 1200px;
+    width: 100vw;
+    height: 800px;
+    background-image: url('images/mobilescreens.jpg');
+    background-position: center;
+    background-size: auto 800px;
+    background-repeat: no-repeat;
+    transform: translateX(-100px);
+    opacity: 0;
+    transition: 0.5s;
+    overflow: hidden;
+}
+
+.bigImage.animate {
+    transform: translateX(0);
+    opacity: 1;
+}
+
+
+
+.subTitle {
+    font-family: Cooper;
+}
+
+.projectInfoSection {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 95%;
+    margin: auto;
+    margin-top: 50px;
+}
+
+#projectDevelopment {
+    margin-bottom: 50px;
+}
+
+.smallImageSection {
+    display: flex;
+    flex-direction: column;
+}
+
+.smallImage1 {
+    max-width: 720px;
+    width: 100vw;
+    height: 400px;
+    background-image: url('images/sfeer.jpg');
+    background-position: center;
+    background-size: auto 420px;
+    background-repeat: no-repeat;
+    transform: translateX(100px);
+    opacity: 0;
+    transition: 0.5s;
+    transition-delay: 0.1s;
+    overflow: hidden;
+
+}
+
+.smallImage1.animate {
+    transform: translateX(0);
+    opacity: 1;
+
+}
+
+#bb_small {
+    background-size: auto 600px;
+}
+
+.smallImage2 {
+    max-width: 720px;
+    width: 100vw;
+    height: 400px;
+    background-image: url('images/uitlegschermronde1.jpg');
+    background-position: center;
+    background-size: auto 420px;
+    background-repeat: no-repeat;
+    transform: translateY(100px);
+    opacity: 0;
+    transition: 0.5s;
+    transition-delay: 0.2s;
+    overflow: hidden;
+}
+
+.smallImage2.animate {
+    transform: translateY(0);
+    opacity: 1;
+
+}
+
+#bd_bigImage {
+    background-image: url('images/Boodunnit/street.jpg');
+}
+
+#bd_smallIm1 {
+    background-image: url('images/Boodunnit/cementary2.jpg');
+}
+
+#bd_smallIm2 {
+    background-image: url('images/Boodunnit/boodunnit.jpg');
+}
+
+#vr_bigImage {
+    background-image: url('images/SOTA/beach.jpg');
+}
+
+#vr_smallIm1 {
+    background-image: url('images/SOTA/npcdialog.jpg');
+}
+
+#vr_smallIm2 {
+    background-image: url('images/SOTA/goal.jpg');
+}
+
+#gf_bigImage {
+    background-image: url('images/gamification/challenge\ screen.jpg');
+}
+
+#gf_bigImage2 {
+    background-image: url('images/gamification/prototypeScreen.jpg');
+}
+
+
+#ib_bigImage {
+    background-image: url('images/Inabox/beginnerWorld.jpg');
+}
+
+#ib_smallIm1 {
+    background-image: url('images/Inabox/playercharacter.jpg');
+    background-size: auto 500px;
+}
+
+#ib_smallIm2 {
+    background-image: url('images/Inabox/spaceWorld.jpg');
+}
+
+#bc_bigImage {
+    background-image: url('images/BurgerCrush/crushBanner.jpg');
+    max-width: 3000px;
+    width: 100vw;
+    height: auto;
+    background-size: auto;
+}
+
+#bc_opdracht {
+    background-image: url('images/BurgerCrush/early\ version.jpg');
+}
+
+#bc_Development {
+    background-image: url('images/BurgerCrush/development.jpg');
+    -webkit-transform: scaleX(-1) translateX(-200px);
+    transform: scaleX(-1) translateX(-200px);
+}
+
+#rf_bigImage {
+    background-image: url('images/recommender/FR_mock_recommendation.jpg');
+    max-width: 3000px;
+    width: 100vw;
+    height: auto;
+    background-size: auto;
+}
+
+
+
+.subSectionImage.middle.animate#bc_Development {
+    -webkit-transform: scaleX(-1) translateX(-0px);
+    transform: scaleX(-1) translateX(-0px);
+}
+
+.subSectionImage {
+    width: 500px;
+    height: 300px;
+    background-image: url('images/begrijpendbiased.jpg');
+    background-position: center;
+    background-size: auto 250px;
+    background-repeat: no-repeat;
+    transform: translateX(200px);
+    transition: all 0.5s;
+    transition-delay: 0.2s;
+    overflow: hidden;
+}
+
+/* .subSectionImage.middle {
+    transform: ScaleX(-1);
+} */
+
+
+.subSectionImage.animate {
+    transform: translateX(0px);
+}
+
+.subSectionImage.middle {
+    transform: translateX(-200px);
+}
+
+.subSectionImage.middle.animate {
+    transform: translateX(0px);
+}
+
+.topMask {
+    width: 500px;
+    height: 300px;
+    -webkit-mask-image: url(images/svg/rect.png);
+    mask-image: url(images/svg/rect.png);
+    -webkit-mask-size: cover;
+    mask-size: cover;
+}
+
+#middlemask {
+    -webkit-transform: scaleX(-1);
+    transform: scaleX(-1);
+}
+
+
+#bb_problem {
+    background-image: url('images/begrijpendbiased/gedragVeran.jpg');
+    background-size: auto 100%;
+
+}
+
+#bb_concept {
+    background-image: url('images/begrijpendbiased/IMG_2487.jpg');
+    background-size: auto 300px;
+    /* -webkit-transform: scaleX(-1), translateX(-100px);
+    transform: scaleX(-1) , translateX(-100px); */
+    -webkit-transform: scaleX(-1) translateX(-200px);
+    transform: scaleX(-1) translateX(-200px);
+}
+
+.subSectionImage.middle.animate#bb_concept {
+    -webkit-transform: scaleX(-1)translateX(-0px);
+    transform: scaleX(-1)translateX(-0px);
+}
+
+#bb_dev {
+    background-image: url('images/begrijpendbiased/screens.jpg');
+    background-size: auto 300px;
+}
+
+#bd_game {
+    background-image: url('images/Boodunnit/Boonkle.jpg');
+    background-size: auto 300px;
+}
+
+
+#bd_boonkle {
+    background-image: url('images/Boodunnit/AmsterdamXToscane.jpg');
+    background-size: auto 300px;
+    -webkit-transform: scaleX(-1) translateX(-200px);
+    transform: scaleX(-1) translateX(-200px);
+}
+
+.subSectionImage.middle.animate#bd_boonkle {
+    -webkit-transform: scaleX(-1) translateX(-0px);
+    transform: scaleX(-1) translateX(-0px);
+}
+
+#bd_modeling {
+    background-image: url('images/Boodunnit/blenderplayground.jpg');
+    background-size: auto 300px;
+}
+
+
+#vr_probleem {
+    background-image: url('images/SOTA/beach.jpg');
+    background-size: auto 300px;
+}
+
+#vr_concept {
+    background-image: url('images/SOTA/npcs.jpg');
+    background-size: auto 300px;
+    -webkit-transform: scaleX(-1) translateX(-200px);
+    transform: scaleX(-1) translateX(-200px);
+}
+
+.subSectionImage.middle.animate#vr_concept {
+    -webkit-transform: scaleX(-1) translateX(-0px);
+    transform: scaleX(-1) translateX(-0px);
+}
+
+#vr_development {
+    background-image: url('images/SOTA/dialog.jpg');
+    background-size: auto 300px;
+}
+
+#gf_probleem {
+    background-image: url('images/gamification/research.jpg');
+    background-size: auto 300px;
+}
+
+#gf_concept {
+    background-image: url('images/gamification/interfacesketches.jpg');
+    background-size: auto 300px;
+    -webkit-transform: scaleX(-1) translateX(-200px);
+    transform: scaleX(-1) translateX(-200px);
+}
+
+#rf_concept {
+    background-image: url('images/recommender/output2.jpg');
+    background-size: auto 300px;
+}
+
+#rf_data {
+    background-image: url('images/recommender/output.jpg');
+    background-size: auto 300px;
+    -webkit-transform: scaleX(-1) translateX(-200px);
+    transform: scaleX(-1) translateX(opx);
+}
+
+#rf_development {
+    background-image: url('images/recommender/FR_cosine.jpg');
+    background-size: auto 300px;
+}
+
+.subSectionImage.middle.animate#gf_concept {
+    -webkit-transform: scaleX(-1) translateX(-0px);
+    transform: scaleX(-1) translateX(-0px);
+}
+
+.subSectionImage.middle.animate#rf_data {
+    -webkit-transform: scaleX(-1) translateX(-0px);
+    transform: scaleX(-1) translateX(-0px);
+}
+
+#gf_development {
+    background-image: url('images/gamification/algoWorking.jpg');
+    background-size: auto 300px;
+}
+
+#ib_game {
+    background-image: url('images/Inabox/conceptartRot.jpg');
+    background-size: auto 300px;
+}
+
+#ib_art {
+    background-image: url('images/Inabox/boxroom.jpg');
+    background-size: auto 300px;
+    -webkit-transform: scaleX(-1) translateX(-200px);
+    transform: scaleX(-1) translateX(-200px);
+}
+
+.subSectionImage.middle.animate#ib_art {
+    -webkit-transform: scaleX(-1) translateX(-0px);
+    transform: scaleX(-1) translateX(-0px);
+}
+
+
+#ib_development {
+    background-image: url('images/Inabox/enemy.jpg');
+    background-size: auto 300px;
+}
+
+.sectionInfo {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    margin-left: 50px;
+    margin-right: 50px;
+    transform: translateX(200px);
+    opacity: 0;
+    transition: 0.5s;
+    transition-delay: 0.25s;
+}
+
+#middleSection {
+    transform: translateX(-200px);
+}
+
+#middleSection.sectionInfo.animate {
+    opacity: 1;
+    transform: translateX(0)
+}
+
+.sectionInfo.animate {
+    opacity: 1;
+    transform: translateX(0)
+}
+
+
+.sectionInfo.animate {
+    opacity: 1;
+    transform: translateX(0)
+}
+
+.subSectionText {
+    max-width: 600px;
+    width: 100%
+}
+
+.footerText {
+    font-family: Cooper;
+    text-align: center;
+    color: #fff;
+    margin-bottom: 0px;
+    max-width: 90%;
+
+}
+
+@media (max-width: 1000px) and (min-width: 765px) {
+    .homeText {
+        font-size: 25px;
+        width: 60%;
+    }
+
+    .homeImage {
+        max-width: 400px;
+    }
+
+    #projectType {
+        font-size: 2vw;
+    }
+
+    #projectDescriptionPage {
+        max-width: 600px
+    }
+}
+
+
+/* mobile */
+@media (max-width: 765px) {
+    .projectlist {
+        flex-direction: column;
+        flex-wrap: wrap;
+        cursor: pointer;
+    }
+
+    .projectWrapper {
+        max-width: 100vw;
+        height: 300px;
+        width: 100vw;
+        margin-left: 0px;
+        cursor: pointer;
+    }
+
+    .projectImage {
+        height: 300px;
+        width: 100vw;
+        max-width: 100vw;
+        clip-path: polygon(0% 0%, 100% 0%, 100% 100%, 0% 100%);
+        position: relative;
+        cursor: pointer;
+    }
+
+    .p1 {
+        background-size: auto 80vw;
+    }
+
+    .p2 {
+        background-size: auto 80vw;
+    }
+
+    .p3 {
+        background-size: auto 80vw;
+    }
+
+    .p4 {
+        background-size: auto 80vw;
+    }
+
+    .p5 {
+        background-size: auto 80vw;
+    }
+
+    .p6 {
+        background-size: auto 80vw;
+    }
+
+    .projectWrapper.pj6 {
+        transition-delay: 0.25s;
+        z-index: 1;
+    }
+
+    .projectWrapper.pj5 {
+        transition-delay: 0.25s;
+        z-index: 2;
+    }
+
+    .projectWrapper.pj4 {
+        transition-delay: 0.25s;
+        z-index: 3;
+    }
+
+    .projectWrapper.pj3 {
+        transition-delay: 0.25s;
+        z-index: 4;
+    }
+
+    .projectWrapper.pj2 {
+        transition-delay: 0.25s;
+        z-index: 5;
+    }
+
+    .projectWrapper.pj1 {
+        transition-delay: 0.25s;
+        z-index: 6;
+    }
+
+    h3 {
+        font-size: 22px;
+    }
+
+    h4 {
+        font-size: 16px;
+    }
+
+
+    #projectDescription {
+        font-size: 9px;
+    }
+
+    .aboutMeContent {
+        flex-wrap: wrap;
+    }
+
+    .meText {
+        max-width: 500px;
+        width: 80%;
+        font-size: 14px;
+        margin-top: 30px
+    }
+
+    .headerContent {
+        flex-wrap: wrap;
+        justify-content: center;
+        height: auto;
+        max-width: 700px;
+        width: 95vw;
+        margin: 0 auto;
+    }
+
+    .langSel {
+        position: absolute;
+        right: 5px;
+        top: 5px;
+    }
+
+    #title {
+        margin-right: 0;
+        text-align: center;
+        flex-grow: 1;
+        padding-left: 0px;
+    }
+
+    .projectIntro {
+        flex-direction: column;
+        margin-bottom: 40px;
+    }
+
+    .projectName {
+        font-size: max(12vw, 10px);
+    }
+
+    #titleGamification {
+        font-size: max(8vw, 10px);
+    }
+
+    #projectType {
+        font-size: max(4vw, 4px);
+    }
+
+    .projectDescription {
+        font-size: max(12vw, 10px);
+        width: 100%;
+        margin: auto;
+    }
+
+    .projectOverview {
+        flex-wrap: wrap;
+    }
+
+    .bigImage {
+        height: 300px;
+        background-size: auto 300px;
+        z-index: 0;
+        transform: translateX(0), translateY(-100px);
+    }
+
+    .smallImage1 {
+        height: 300px;
+        background-size: auto 300px;
+        transform: translateX(-1), translateY(-100px);
+        z-index: -1
+    }
+
+    .smallImage2 {
+        height: 300px;
+        background-size: auto 300px;
+        transform: translateY(-100px);
+        z-index: -2
+    }
+
+    .smallImage1.animate {
+        transform: translateX(0), translateY(0);
+    }
+
+    .smallImage2.animate {
+        transform: translateX(0), translateY(0);
+    }
+
+    .nav-buttons {
+        display: none;
+        cursor: pointer;
+    }
+
+    .projectInfoSection {
+        flex-wrap: wrap;
+        width: 100%;
+        margin-top: 20px
+    }
+
+    .projectInfoSection.middle {
+        flex-direction: column-reverse;
+        flex-wrap: nowrap;
+    }
+
+    .sectionInfo {
+        margin-left: 25px;
+        margin-right: 25px;
+        /* width: 100% */
+    }
+
+    .subSectionImage {
+        height: 300px;
+        background-size: auto 300px;
+        overflow: hidden;
+    }
+
+    .projectOverview {
+        height: auto;
+    }
+
+    .projectOverview.bc {
+        height: 300px;
+    }
+
+
+    .project {
+        /* flex-direction: column; */
+        /* flex-wrap: wrap; */
+        overflow: hidden;
+    }
+
+    #projectImageActive {
+        width: 20vw
+    }
+
+
+    #activePanel {
+        padding: 0;
+        padding-left: 15px;
+        width: 70vw;
+        height: 300px;
+    }
+
+    #projectDescription {
+        max-width: 75vw;
+        width: 75vw;
+        font-size: 14px;
+    }
+
+    .panelTextDiv {
+        width: 75vw;
+    }
+
+    .panelText {
+        display: block;
+        margin-bottom: 2px;
+    }
+
+    .arrow {
+        display: block;
+        /* background-color: yellow; */
+        background-image: url('images/Icons/ArrowPointer.png');
+        background-size: 50px, 50px;
+        background-repeat: no-repeat;
+        /* background-position: center; */
+        width: 50px;
+        height: 50px;
+        position: absolute;
+        z-index: 2;
+        right: 0;
+        bottom: 125px;
+        pointer-events: all;
+    }
+
+    .arrow.active {
+        -webkit-transform: scaleX(-1);
+        transform: scaleX(-1);
+    }
+
+    #middlemask {
+        -webkit-transform: scaleX(1);
+        transform: scaleX(1);
+    }
+
+
+    .home {
+        flex-direction: column;
+    }
+
+    .homeImage {
+        width: 80%;
+        margin-top: 50px;
+        margin-bottom: 75px;
+
+    }
+
+    .homeText {
+        font-size: 20px;
+        width: 80%
+    }
+
+    #bc_bigImage {
+        max-width: 100vw;
+        width: 100vw;
+        background-size: 100vw auto;
+    }
+
+    #rf_bigImage {
+        max-width: 100vw;
+        width: 100vw;
+        background-size: 100vw auto;
+        height: 60vw;
+    }
+
+    #gf_concept {
+        -webkit-transform: scaleX(1);
+        transform: scaleX(1);
+    }
+
+    #bd_boonkle {
+        -webkit-transform: scaleX(1);
+        transform: scaleX(1);
+    }
+
+    #bc_Development {
+        -webkit-transform: scaleX(1);
+        transform: scaleX(1);
+
+    }
+
+    #vr_concept {
+        -webkit-transform: scaleX(1);
+        transform: scaleX(1);
+    }
+
+    #bb_concept {
+        -webkit-transform: scaleX(1);
+        transform: scaleX(1);
+    }
+
+    #rf_data {
+        -webkit-transform: scaleX(1);
+        transform: scaleX(1);
+    }
+
+    .subSectionImage.middle.animate#bb_concept {
+        -webkit-transform: scaleX(1) translateX(-0px);
+        transform: scaleX(1) translateX(-0px);
+    }
+
+    .subSectionImage.middle.animate#bd_boonkle {
+        -webkit-transform: scaleX(1) translateX(-0px);
+        transform: scaleX(1) translateX(-0px);
+    }
+
+    .subSectionImage.middle.animate#vr_concept {
+        -webkit-transform: scaleX(1) translateX(-0px);
+        transform: scaleX(1) translateX(-0px);
+    }
+
+    .subSectionImage.middle.animate#gf_concept {
+        -webkit-transform: scaleX(1) translateX(-0px);
+        transform: scaleX(1) translateX(-0px);
+    }
+
+    .subSectionImage.middle.animate#ib_art {
+        -webkit-transform: scaleX(1) translateX(-0px);
+        transform: scaleX(1) translateX(-0px);
+    }
+
+    .subSectionImage.middle.animate#bc_Development {
+        -webkit-transform: scaleX(1) translateX(-0px);
+        transform: scaleX(1) translateX(-0px);
+    }
+
+    .subSectionImage.middle.animate#rf_data {
+        -webkit-transform: scaleX(1) translateX(-0px);
+        transform: scaleX(1) translateX(-0px);
+    }
+
+
+}
+
+/* HD */
+@media (min-width: 1500px) {
+    h3 {
+        font-size: 25px;
+    }
+
+    h4 {
+        font-size: 18px;
+    }
+
+    #projectDescription {
+        font-size: 15px;
+    }
+
+    .meText {
+        font-size: 15px;
+    }
+}
+
+/* ultrawide */
+@media (min-width: 1920px) {
+
+
+
+
+    .projectImage {
+        height: 25vw;
+
+        background-size: auto 25vw;
+    }
+
+    .p4 {
+        background-size: auto 28vw;
+    }
+}
+
+@media (min-width: 765px) and (max-width: 1200px) {
+    .bigImage {
+        max-width: none;
+        width: 40vw;
+    }
+
+    .smallImage1 {
+        max-width: none;
+        width: 60vw;
+    }
+
+    .smallImage2 {
+        max-width: none;
+        width: 60vw;
+    }
+
+    #titleGamification {
+        font-size: 4vw;
+    }
+
+    #projectType {
+        font-size: 2vw;
+    }
+}
