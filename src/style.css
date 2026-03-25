@@ -3,10 +3,17 @@
     src: url(/fonts/Cooper.ttf);
 }
 
+:root {
+    font-size: clamp(1rem, calc(0.5rem + 0.625vw), 1.5rem);
+}
+
+
+
 body {
     margin: auto;
     margin-top: 0;
     background-color: black;
+
 }
 
 p {
@@ -20,7 +27,7 @@ a {
 }
 
 .content {
-    max-width: 1920px;
+    max-width: 160rem;
     width: 100%;
     margin: auto;
     display: flex;
@@ -38,7 +45,7 @@ a {
 
 .headerContent {
     display: flex;
-    max-width: 1920px;
+    max-width: 160rem;
     width: 100%;
     height: 50px;
     justify-content: flex-end;
@@ -124,32 +131,6 @@ li {
     align-items: center;
 }
 
-.about {
-    margin: auto;
-    margin-top: 50px;
-    margin-bottom: 50px;
-    max-width: 1920px;
-    width: 100%;
-    transform: translateX(-100px);
-    transition: 0.75s;
-    opacity: 0;
-}
-
-.about.animate {
-    transform: translateX(0px);
-    opacity: 1;
-}
-
-.aboutMeContent {
-    display: flex;
-    align-items: center;
-    justify-content: space-around;
-}
-
-.profilePicture {
-    max-width: 400px;
-    width: 90%
-}
 
 .meText {
     max-width: 600px;
@@ -181,17 +162,17 @@ li {
 
 h3 {
     font-family: 'cooper';
-    font-size: 1.5vw;
+    font-size: 1.5rem;
 }
 
 h4 {
     font-family: 'Arial';
-    font-size: 1.2vw;
+    font-size: 1.25rem;
 }
 
 .sectionTitle {
     font-family: 'cooper';
-    margin-left: 30px;
+    margin-left: px;
 }
 
 .projectIntro {
@@ -746,12 +727,7 @@ h4 {
         flex-wrap: wrap;
     }
 
-    .meText {
-        max-width: 500px;
-        width: 80%;
-        font-size: 14px;
-        margin-top: 30px
-    }
+
 
     .headerContent {
         flex-wrap: wrap;
@@ -874,12 +850,6 @@ h4 {
         width: 20vw
     }
 
-    #activePanel {
-        padding: 0;
-        padding-left: 15px;
-        width: 70vw;
-        height: 300px;
-    }
 
     #projectDescription {
         max-width: 75vw;
@@ -887,14 +857,8 @@ h4 {
         font-size: 14px;
     }
 
-    .panelTextDiv {
-        width: 75vw;
-    }
 
-    .panelText {
-        display: block;
-        margin-bottom: 2px;
-    }
+
 
     .arrow {
         display: block;
@@ -1015,7 +979,7 @@ h4 {
 }
 
 /* HD */
-@media (min-width: 1500px) {
+/* @media (min-width: 1500px) {
     h3 {
         font-size: 25px;
     }
@@ -1031,10 +995,10 @@ h4 {
     .meText {
         font-size: 15px;
     }
-}
+} */
 
 /* ultrawide */
-@media (min-width: 1920px) {
+/* @media (min-width: 1920px) {
     .projectImage {
         height: 25vw;
         background-size: auto 25vw;
@@ -1043,9 +1007,9 @@ h4 {
     .p4 {
         background-size: auto 28vw;
     }
-}
+} */
 
-@media (min-width: 765px) and (max-width: 1200px) {
+/* @media (min-width: 765px) and (max-width: 1200px) {
     .bigImage {
         max-width: none;
         width: 40vw;
@@ -1068,4 +1032,4 @@ h4 {
     #projectType {
         font-size: 2vw;
     }
-}
+} */

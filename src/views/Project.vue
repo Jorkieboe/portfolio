@@ -1,10 +1,18 @@
 <script setup>
-import { computed } from 'vue'
+import { computed, onMounted, inject, ref } from 'vue'
 import { useRoute } from 'vue-router'
 import { useLang } from '../composables/useLang'
 
 const route = useRoute()
 const { t } = useLang()
+
+const store = inject('store')
+
+const localContentRef = ref()
+
+onMounted(()=>{
+  store.content = localContentRef
+})
 
 const projectId = computed(() => route.params.id)
 const projectData = computed(() => t.value[projectId.value])
@@ -74,7 +82,7 @@ const configMap = {
 const cfg = computed(() => configMap[projectId.value] || configMap.begrijpendBiased)
 </script>
 <template>
-  <div class="content" v-if="projectData">
+  <div class="content" ref="localContentRef" v-if="projectData">
       <div class="projectIntro">
           <div class="projectTitle">
               <h4 id="projectType">{{ projectData.projectType }}</h4>

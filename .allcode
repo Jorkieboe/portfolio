@@ -9,80 +9,187 @@
       "selected_files": [
         {
           "path": "work/Begrijpendbias.html",
-          "mtime": 1773859432.0872107,
+          "mtime": 1774251772.023571,
           "hash": "07cff6bc37a9534e50283ecd0300ac0ef9137ddd",
           "tokens": 1559,
           "lines": 94
         },
         {
           "path": "work/Boodunnit.html",
-          "mtime": 1773859431.8914678,
+          "mtime": 1774251772.023571,
           "hash": "1b4672e027d023de32020089c77f30e99c8e787b",
           "tokens": 1191,
           "lines": 85
         },
         {
           "path": "work/Burgercrush.html",
-          "mtime": 1773859431.8542821,
+          "mtime": 1774251772.023571,
           "hash": "ecd3b158cb9874ce76f344c994f248343bc63621",
           "tokens": 1029,
           "lines": 80
         },
         {
           "path": "work/gamification.html",
-          "mtime": 1773859431.670186,
+          "mtime": 1774251772.0245707,
           "hash": "8cad5710621cf596a780b8eb6b4e0f00fbf69339",
           "tokens": 1495,
           "lines": 102
         },
         {
           "path": "work/InABox.html",
-          "mtime": 1773859431.6248195,
+          "mtime": 1774251772.0245707,
           "hash": "263a29885c600da4944f97e693d47bfe6ed30bca",
           "tokens": 1345,
           "lines": 95
         },
         {
           "path": "work/Recommender.html",
-          "mtime": 1773859431.3410034,
+          "mtime": 1774251772.0245707,
           "hash": "da00c4895bca7398a93bb48bdf419314c147790a",
           "tokens": 1385,
           "lines": 95
         },
         {
           "path": "work/vrgame.html",
-          "mtime": 1773859431.4074657,
+          "mtime": 1774251772.0245707,
           "hash": "0b29630f48dd3fa65c8f78bbd94bf9a96e70b8d1",
           "tokens": 1302,
           "lines": 95
         },
         {
           "path": "index.html",
-          "mtime": 1773860199.0942614,
+          "mtime": 1774251772.0185692,
           "hash": "185547b9b31e1d68ca1a5103c2f822416604c135",
           "tokens": 90,
           "lines": 12
         },
         {
           "path": "script.js",
-          "mtime": 1773859416.4868753,
+          "mtime": 1774251772.0195699,
           "hash": "f1b4858fe44d36ac0214db17bfc127d88cf9c01f",
           "tokens": 1631,
           "lines": 271
         },
         {
           "path": "style.css",
-          "mtime": 1773860553.3951912,
+          "mtime": 1774251772.02257,
           "hash": "3714580e1f5f00af61fb5f95e87092d303817781",
           "tokens": 6967,
           "lines": 1338
+        },
+        {
+          "path": "src/assets/lang/en.json",
+          "mtime": 1774251772.02057,
+          "hash": "06e98830007d11ba9c658a77c89b08779d0e3074",
+          "tokens": 2787,
+          "lines": 123
+        },
+        {
+          "path": "src/assets/lang/nl.json",
+          "mtime": 1774251772.02057,
+          "hash": "f33d996e53d3f10f68b56291824a578c8d9a3761",
+          "tokens": 3775,
+          "lines": 127
+        },
+        {
+          "path": "src/components/Canvas.vue",
+          "mtime": 1774261131.3471766,
+          "hash": "1cf67e051bff3fc16f68cc43462f4debc8053af5",
+          "tokens": 2734,
+          "lines": 284
+        },
+        {
+          "path": "src/composables/useLang.js",
+          "mtime": 1774251772.02057,
+          "hash": "d017d6bcaec9b7294dd037b2f9f1034c92529036",
+          "tokens": 125,
+          "lines": 19
+        },
+        {
+          "path": "src/store/store.js",
+          "mtime": 1774261167.7975125,
+          "hash": "8a207e97d1f26a25694819dee98c685e9c7fd61a",
+          "tokens": 96,
+          "lines": 15
+        },
+        {
+          "path": "src/views/Home.vue",
+          "mtime": 1774251772.02257,
+          "hash": "befdb192ba3f259ae6381e0ce74ee926d71dd70b",
+          "tokens": 905,
+          "lines": 113
+        },
+        {
+          "path": "src/views/Project.vue",
+          "mtime": 1774251772.02257,
+          "hash": "33e6f9691d4f93fe99ab47813a1424ece315f5ee",
+          "tokens": 1248,
+          "lines": 130
+        },
+        {
+          "path": "src/views/Test.vue",
+          "mtime": 1774261381.949355,
+          "hash": "5670364079577a1141019f2033b39294abd0b056",
+          "tokens": 2057,
+          "lines": 376
+        },
+        {
+          "path": "src/App.vue",
+          "mtime": 1774261378.3652563,
+          "hash": "6d8934187ce8312f8eb297cf5feca448ebe7b438",
+          "tokens": 572,
+          "lines": 62
+        },
+        {
+          "path": "src/main.js",
+          "mtime": 1774260752.6087227,
+          "hash": "e3c1f295a6c2443574db60cc4399d641424c736f",
+          "tokens": 447,
+          "lines": 63
+        },
+        {
+          "path": "src/router.js",
+          "mtime": 1774251772.0215704,
+          "hash": "b967895897f3a17c477b82a707f253981e38b3b6",
+          "tokens": 114,
+          "lines": 18
+        },
+        {
+          "path": "src/style.css",
+          "mtime": 1774251772.0215704,
+          "hash": "a6f18eaf5b54bf474b3fa0861ccf23390b746ae6",
+          "tokens": 5576,
+          "lines": 1071
+        },
+        {
+          "path": "go.bat",
+          "mtime": 1774251771.880605,
+          "hash": "aadc8f77ab11b9334226b1710c3257dc9c765653",
+          "tokens": 128,
+          "lines": 18
+        },
+        {
+          "path": "package.json",
+          "mtime": 1774259617.9718769,
+          "hash": "ec6b3ae6faf65e016187cc97532a13d9eb768d7a",
+          "tokens": 170,
+          "lines": 22
+        },
+        {
+          "path": "vite.config.js",
+          "mtime": 1774251772.023571,
+          "hash": "78ea177b79c86065884df657ce25dc291d4aa04a",
+          "tokens": 33,
+          "lines": 6
         }
       ],
-      "total_tokens": 0,
+      "total_tokens": 38761,
       "intro_text": "This is my personal portfolio website",
       "outro_text": "DO:\n- always return full code, unless a change is VERY small (a single line or a short connected segment)\n- make sure empty lines are actually empty: avoid generating lines of spaces or tabs\nalways place closing triple backticks (```) on their own, new line\n\nDo NOT:\n- remove my original comments\n- return diff files\n- use numbered steps (e.g., \"1.\") in comments\n- use <summary> tags\n- end comments with dots (unless you are using multiple sentences)\n- call something \"final\" or \"definitive\"; it usually isn't\n- use double newlines between code\n- add comments if the code itself makes it pretty clear what it does\n\nUse the following format if you want to add temporary notification comments: `// [KEYWORD] Comment` (e.g., `[FIX] Now using correct value`, `[MODIFIED] Improved algorithm`). These comments are transient and exist only to show the user what you've changed. If you find them in code you are reviewing, remove these comments as the user will have already seen them.",
       "expanded_dirs": [
-        "temp"
+        "src",
+        "src/components",
+        "src/store"
       ],
       "unknown_files": []
     }
@@ -95,15 +202,16 @@
     "src/App.vue",
     "src/assets/lang/en.json",
     "src/assets/lang/nl.json",
+    "src/components/Canvas.vue",
     "src/composables/useLang.js",
     "src/main.js",
     "src/router.js",
+    "src/store/store.js",
     "src/style.css",
     "src/views/Home.vue",
     "src/views/Project.vue",
     "src/views/Test.vue",
     "style.css",
-    "temp/spotifycode.html",
     "vite.config.js",
     "work/Begrijpendbias.html",
     "work/Boodunnit.html",

@@ -1,13 +1,70 @@
 <script setup>
+import { provide, watch, reactive, onMounted } from 'vue';
 import { useLang } from './composables/useLang'
 const { currentLang, setLang } = useLang()
+import { useMainStore } from './store/store'
+import Canvas from './components/canvas.vue';
+import { useSpring, useMotionProperties } from '@vueuse/motion';
+import gsap from 'gsap';
+
+
+const store = useMainStore()
+
+provide('store', store)
+
+const vh = window.innerHeight
+const initialHeaderPx = vh - (vh * store.headerSize)
+
+
+
+// const { motionProperties } = useMotionProperties(motionprop, {
+//   y: 0,
+// })
+
+
+
 
 const scrollTo = (id) => {
   const el = document.getElementById(id)
   if (el) el.scrollIntoView({ behavior: 'smooth' })
 }
+
+const onBeforeLeave = () => {
+  const vh = window.innerHeight
+  const headerPx = vh * store.headerSize
+  
+  // Give control to the spring
+  store.isTransitioning = true
+}
+
+const onLeave = (el, done) => {
+  store.isTransitioning = true
+   gsap.to(store, {
+    transitionClipOverride: 0,
+    duration: 0.4,
+    onComplete: ()=>{
+      store.isTransitioning = false
+      done()
+    }
+  })
+}
+
+const onEnter = (el, done) => {
+  store.isTransitioning = true
+  gsap.to(store, {
+    transitionClipOverride: initialHeaderPx,
+    delay: 0.5,
+    duration: 0.4,
+    onComplete: ()=>{
+      store.isTransitioning = false
+      done()
+    }
+  })
+}
+
 </script>
 <template>
+   <div ref="motionprop" style="display: none;"></div>
   <!-- <div class="header">
       <div class="headerContent">
           <router-link id='title' to="/"><h2>Jorrik Dillisse</h2></router-link>
@@ -30,8 +87,20 @@ const scrollTo = (id) => {
       </div>
   </div> -->
 
+  <Canvas></Canvas>
+
   <div class="page content-wrapper">
-     <router-view />
+     <router-view v-slot="{ Component }">
+      <transition 
+        mode="out-in" 
+        :css="false"
+        @before-leave="onBeforeLeave"
+        @leave="onLeave"
+        @enter="onEnter"
+      >
+        <component :is="Component" :key="$route.path" />
+      </transition>
+    </router-view>
   </div>
 
   <div class="footer" id="footer">
@@ -45,6 +114,10 @@ const scrollTo = (id) => {
 </template>
 
 <style>
+
+h3, h4, p{
+  margin: 0;
+}
 .content-wrapper {
    min-height: 100vh;
    display: flex;

@@ -1,9 +1,12 @@
 import { createApp } from 'vue'
 import App from './App.vue'
 import router from './router'
+import { createPinia } from 'pinia'
+import { MotionPlugin } from '@vueuse/motion'
 import './style.css'
 
 const app = createApp(App)
+const pinia = createPinia()
 
 const observer = new IntersectionObserver(entries => {
   entries.forEach(entry => {
@@ -56,5 +59,7 @@ app.directive('animate', {
   }
 })
 
+app.use(pinia)
+app.use(MotionPlugin)
 app.use(router)
 app.mount('#app')

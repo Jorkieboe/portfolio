@@ -1,8 +1,11 @@
 <script setup>
-import { onMounted, ref, onBeforeUnmount, computed, watch } from 'vue'
-import * as THREE from 'three/webgpu'
-import { Fn, uv, float, uniform, texture, smoothstep, vec2, vec3, vec4, mix, time, mx_noise_float, If } from 'three/tsl'
+import { ref, computed, inject, onMounted } from 'vue'
+import Canvas from '../components/canvas.vue'
 import { useLang } from '../composables/useLang'
+import { gsap } from "gsap";
+import { ScrollTrigger } from "gsap/ScrollTrigger";
+
+
 
 const { t } = useLang()
 
@@ -16,32 +19,7 @@ const projectIds =[
   'inABox'
 ]
 
-const colors =  [
-  {
-    "top": {x:1, y:0.2, z:0.2},
-    "bottom": {x: 0.3, y: 0.8, z: 0.2},
-  },
-  {
-    "top":  {x:0.2,  y: 0.6,z:0.7},
-    "bottom":  {x:0.5, y:  0.2, z:0.3},
-  },
-  {
-    "top":  {x:0.2,  y: 0.5, z:0.5},
-    "bottom":  {x:0.1, y:  0.9, z:0.6},
-  },
-  {
-    "top":  {x:0.9, y:  1, z:0.1},
-    "bottom":  {x:0.3, y:  0.8, z:0.2},
-  },
-  {
-    "top": {x:0.4,  y: 0.7, z:0.8},
-    "bottom": {x:0.1,  y: 0.1, z:0.3},
-  },
-  {
-    "top": {x:0.4,  y: 0.4, z:1.0},
-    "bottom": {x:0.7, y: 0.4, z:0.1},
-  }
-]
+const store = inject('store')
 
 const projects = computed(() => {
   return projectIds.map((id, index) => {
@@ -56,238 +34,63 @@ const toggleMobile = (index) => {
   activeProject.value = activeProject.value === index ? null : index
 }
 
-const canvasContainer = ref(null)
+const localContentRef = ref(null)
+let ctx;
 
-let renderer, scene, camera, animationId, mesh
-
-const headerSize = ref(0.08) // 8% of screen
-const minHeaderPx = 64 // Ensure it never gets smaller than this on mobile
-
-const stableHeight = ref(0) // Our stable reference
-const dynamicZoneHeight = ref(0)
-let lastWidth = 0
-
-const contentRef = ref(null)
-
-
-// Uniforms
-const uMaskScale = uniform(1) 
-const uPlaneAspect = uniform(1)  // Actual screen aspect
-const uTextureAspect = uniform(1) // Aspect of your SVG
-const uMaskStrength = uniform(0)
-const uMoveProgress = uniform(0) // 0 = Center, 1 = Top-Right Header
-const uColourTop = uniform(new THREE.Color(colors[0].top.x, colors[0].top.y, colors[0].top.z))
-const uColourBottom = uniform(new THREE.Color(colors[0].bottom.x, colors[0].bottom.y, colors[0].bottom.z))
-const targetTop = new THREE.Color(colors[0].top.x, colors[0].top.y, colors[0].top.z)
-const targetBottom = new THREE.Color(colors[0].bottom.x, colors[0].bottom.y, colors[0].bottom.z)
-
-const uMaskHeight = uniform(headerSize.value)
-
-let scrollProgress = 0
-let smoothedProgress = 0
-const lerpFactor = 0.12 // Slightly higher for more responsive smoothness
-
-const projectActive = ref(null)
-
-watch(projectActive, (newActive) => {
-  if (newActive !== null) {
-    const nextCol = colors[newActive]
-    targetTop.setRGB(nextCol.top.x, nextCol.top.y, nextCol.top.z)
-    targetBottom.setRGB(nextCol.bottom.x, nextCol.bottom.y, nextCol.bottom.z)
-  } else {
-    // Optional: Reset to default color when not hovering any project
-    targetTop.setRGB(colors[0].top.x, colors[0].top.y, colors[0].top.z)
-    targetBottom.setRGB(colors[0].bottom.x, colors[0].bottom.y, colors[0].bottom.z)
-  }
-})
-
-const handleScroll = () => {
-    // Use the stable height to calculate the track. 
-    // Now, even if the URL bar appears, this number stays constant.
-    const zoomTrackHeight = stableHeight.value * 2 
-    const currentScroll = window.scrollY
-    scrollProgress = Math.min(currentScroll / zoomTrackHeight, 1.0)
-}
-
-const handleResize = () => {
-    if (!canvasContainer.value) return
+onMounted(() => {
+  store.setContentRef(localContentRef)
+  gsap.registerPlugin(ScrollTrigger);
+  
+  ctx = gsap.context(() => {
     
-    const w = window.innerWidth
-    const h = window.innerHeight
-
-    // ONLY update our reference if the width changed (rotation) 
-    // or if the height change is huge (more than 150px, likely not just a URL bar)
-    if (w !== lastWidth || Math.abs(h - stableHeight.value) > 150) {
-        stableHeight.value = h
-        lastWidth = w
-        
-        // Update Three.js renderer
-        const constrainedWidth = Math.min(w, 1920)
-        renderer.setSize(w, h)
-        uPlaneAspect.value = constrainedWidth / h
-    }
-}
-
-onMounted(async () => {
-
-    stableHeight.value = window.innerHeight
-    lastWidth = window.innerWidth
-    dynamicZoneHeight.value = window.innerHeight
-
-    window.addEventListener('scroll', handleScroll, { passive: true })
-    window.addEventListener('resize', handleResize)
-
-    scene = new THREE.Scene()
-    camera = new THREE.OrthographicCamera(-1, 1, 1, -1, 0, 1)
-
-    renderer = new THREE.WebGPURenderer({ antialias: true })
-    renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2))
-    renderer.setSize(window.innerWidth, window.innerHeight)
-    canvasContainer.value.appendChild(renderer.domElement)
-
-    const textureLoader = new THREE.TextureLoader()
-    const maskTexture = await textureLoader.loadAsync('/images/Jorrik.svg')
-    
-    const img = maskTexture.image
-    uTextureAspect.value = img.width / img.height
-    uPlaneAspect.value = Math.min(window.innerWidth, 1920) / window.innerHeight
-
-    const main = Fn(() => {
-      const coords = uv()
-
-      // --- 1. UV COORDINATE CALCULATION ---
-      const ratio = uPlaneAspect.div(uTextureAspect)
-      const containUV = vec2(0, 0).toVar()
-      If(ratio.greaterThan(1.0), () => {
-          containUV.assign(vec2(coords.x.sub(0.5).mul(ratio).add(0.5), coords.y))
-      }).Else(() => {
-          containUV.assign(vec2(coords.x, coords.y.sub(0.5).div(ratio).add(0.5)))
-      })
-      const centeredUV = containUV.sub(0.5).div(uMaskScale).add(0.5)
-
-      const padding = float(0.015) 
-      const targetWidth = uMaskHeight.mul(uTextureAspect).div(uPlaneAspect)
-      const targetOriginX = padding
-      const targetOriginY = float(1.0).sub(uMaskHeight).add(padding.div(2))
-      const cornerUV = coords.sub(vec2(targetOriginX, targetOriginY)).div(vec2(targetWidth, uMaskHeight))
-
-      // Mix between the two UV states
-      const currentUV = mix(centeredUV, cornerUV, uMoveProgress)
-
-      // --- 2. MASK LOGIC ---
-      // Check if current UV is inside the 0.0-1.0 texture bounds
-      const isInsideMask = currentUV.x.greaterThan(0).and(currentUV.x.lessThan(1))
-                          .and(currentUV.y.greaterThan(0)).and(currentUV.y.lessThan(1))
-                          .select(1.0, 0.0)
-
-      const rawMaskValue = texture(maskTexture, currentUV).r
-
-      // NORMAL STATE: Logo is visible, background is empty
-      const normalMask = rawMaskValue.mul(isInsideMask)
-
-      // INVERTED STATE: Logo is a hole, background is solid
-      // Math: 1.0 (Full screen) minus the logo shape
-      const invertedMask = float(1.0).sub(rawMaskValue.mul(isInsideMask))
-
-      const transition = smoothstep(float(0.95), float(0.98), uMoveProgress);
-
-      // Transition between normal mask and inverted "hole" mask
-      const maskAlpha = mix(normalMask, invertedMask, transition)
-
-      // --- 3. FINAL COMPOSITION ---
-      // Apply uMaskStrength (the initial fade-in of the effect)
-      const finalAlpha = mix(float(1.0), maskAlpha, uMaskStrength)
-      
-      // Noise Background
-      const nBig = mx_noise_float(vec2(coords.x.mul(0.5), time.mul(0.5)))
-      const nSmall = mx_noise_float(vec2(coords.x.mul(4.0), time.mul(2.0)))
-      const center = mix(float(0.0), float(1.0), nBig.mul(0.6).add(nSmall.mul(0.4)).mul(0.5).add(0.5))
-
-
-      const offsetTransition = smoothstep(float(0.5), float(1.0), uMoveProgress);
-
-      const offset = uMoveProgress.mul(0.5);
-
-      const noiseMask = smoothstep(
-        center.add(offset).sub(0.1),
-        center.add(offset).add(0.1),
-        coords.y
-      )
-      const noiseResult = mix(vec4(uColourTop,1.0), vec4(uColourBottom, 1.0), noiseMask)
-
-      return noiseResult.mul(finalAlpha)
-  })
-
-    const material = new THREE.NodeMaterial()
-    material.fragmentNode = main()
-    material.transparent = true
-
-    mesh = new THREE.Mesh(new THREE.PlaneGeometry(2, 2), material)
-    scene.add(mesh)
-
-    const animate = () => {
-      animationId = requestAnimationFrame(animate)
-      smoothedProgress += (scrollProgress - smoothedProgress) * lerpFactor
-
-      let zoomPhase = Math.min(smoothedProgress / 0.6, 1.0)
-      zoomPhase = 1 - Math.pow(1 - zoomPhase, 3) 
-
-      let movePhase = Math.max(0, (smoothedProgress - 0.6) / 0.4)
-      movePhase = movePhase * movePhase * (3.0 - 2.0 * movePhase)
-
-      uMaskScale.value = 100.0 + (1.0 - 100.0) * zoomPhase
-      uMoveProgress.value = movePhase
-      uMaskStrength.value = Math.min(smoothedProgress * 10.0, 1.0)
-
-      uColourTop.value.lerp(targetTop, 0.05)
-      uColourBottom.value.lerp(targetBottom, 0.05)
-
-       if (canvasContainer.value) {
-          const vh = stableHeight.value
-          const targetHeaderH = vh * headerSize.value
-          
-          // 1. EXACT DOM TRACKING: Get the real position of the content wrapper
-          const contentTop = contentRef.value.getBoundingClientRect().top
-          
-          // 2. CLIP CALCULATION (Instant, no smoothing to flawlessly match the DOM)
-          let rawClip = vh - contentTop 
-          let maxClip = vh - targetHeaderH // Stop shrinking when it reaches the header size
-          let clipAmount = Math.max(0, Math.min(rawClip, maxClip))
-
-          // Apply clip instantly so it looks completely attached to the scrolling content
-          const clipString = `inset(0px 0px ${clipAmount}px 0px)`
-          canvasContainer.value.style.webkitClipPath = clipString
-          canvasContainer.value.style.clipPath = clipString
-          canvasContainer.value.style.transform = 'translateZ(0)'
-          
-          dynamicZoneHeight.value = vh - clipAmount
+    // 1. YOUR EXISTING PROJECTS TIMELINE
+    const tl = gsap.timeline({
+      scrollTrigger: {
+        trigger: "#projects",
+        start: "top 15%",  
+        end: "+=1550vh",   
+        pin: true,    
+        pinSpacing: true,    
+        scrub: 1,  
       }
+    });
 
- 
+    tl.from(".projectWrapper", {
+      y: 50,      
+      opacity: 0,
+      stagger: 0.2,   
+      ease: "power2.out",
+      duration: 1    
+    });
 
-      renderer.render(scene, camera)
-  }
+    tl.to({}, { duration: 0.5 });
 
-    await renderer.init()
-    animate()
-})
+    const disp = document.querySelector("feDisplacementMap");
+  const offset = document.querySelector("feOffset");
 
-onBeforeUnmount(() => {
-    window.removeEventListener('scroll', handleScroll)
-    window.removeEventListener('resize', handleResize)
-    cancelAnimationFrame(animationId)
-    renderer.dispose()
-})
+    const tlAbout = gsap.timeline({
+      scrollTrigger: {
+        trigger: "#about",
+        start: "top top",
+        end: "+=2000", 
+        scrub: 1,  
+        pin: true, 
+        pinSpacing: true,      
+      }
+    });
 
+
+
+  }, localContentRef.value);
+});
 
 </script>
 
 <template>
-  <div class="canvas-fixed-container" ref="canvasContainer"  :style="{ height: stableHeight + 'px' }" ></div>
+ <div class="test-page-wrapper">
 
-   <div class="zoom-scroll-track" :style="{ height: ('100%' * headerSize) + 'px' }"></div>
-    <div class="content" ref="contentRef">
-        <!-- <div class="zone" :style="{ height: dynamicZoneHeight + 'px' }"></div> -->
+   <div class="zoom-scroll-track" :style="{ height: ('100%' * store.headerSize) + 'px' }"></div>
+    <div class="content" ref="localContentRef">
         <div class="projects" id="projects">
             <h3 class="sectionTitle">Work</h3>
             <div class="projectlist">
@@ -295,53 +98,71 @@ onBeforeUnmount(() => {
                   v-for="(project, index) in projects"
                   :key="project.id"
                   class="projectWrapper"
-                  :class="['pj' + (index + 1), { active: activeProject === index, inactive: activeProject !== null && activeProject !== index }]"
-                  v-animate="'oneway'"
-                  @mouseenter="()=>{projectActive = index}"
-                  @mouseleave="()=>{projectActive = null}"
+                  :class="[
+                    'pj' + (index + 1), 
+                    { active: store.projectActive === index }
+                  ]"
+            
+                  @mouseenter="()=>{store.projectActive = index}"
+                  @mouseleave="()=>{store.projectActive = null}"
                 >
-                    <div class="project" :class="{'active': projectActive == index}">
+                    <div class="project" :class="{'reversed': index > 2}">
                         <div class="projectImage" :class="'p' + (index + 1)" @click="$router.push('/work/' + project.id)">
                             <div class="arrow" :class="{ active: activeProject === index }" @click.stop="toggleMobile(index)"></div>
                         </div>
                         <div class="projectPanel">
                             <div class="panelTextDiv">
-                                <h3 class="panelText" id="projectTitle">{{ project.content.projectTitle }}</h3>
-                                <h4 class="panelText" id="projectType">{{ project.content.projectType }}</h4>
-                                <p class="panelText" id="projectDescription">{{ project.content.projectText }}</p>
+                              <div class="left-guard"></div>
+                              <div class="right-guard"></div>
+
+                              <h3 class="panelText title" >{{ project.content.projectTitle }}</h3>
+                              <h4 class="panelText type">{{ project.content.projectType }}</h4>
+                              <p class="panelText description">{{ project.content.projectText }}</p>
                             </div>
                         </div>
                     </div>
                 </div>
             </div>
         </div>
-        <div class="about" id="about" v-animate="'oneway'">
-            <h3 class="sectionTitle">About me</h3>
+        <div class="about" id="about">
+          <svg width="0" height="0">
+            <filter id="distort">
+              
+              <feTurbulence 
+                type="turbulence"
+                baseFrequency="0.01 0.25"
+                numOctaves="2"
+                result="noise"
+              />
+
+              <feOffset in="noise" dy="0" result="move" />
+
+              <feDisplacementMap
+                in="SourceGraphic"
+                in2="move"
+                scale="0"
+                xChannelSelector="R"
+                yChannelSelector="G"
+              />
+
+            </filter>
+          </svg>
+          <img class="profilePicture" src="/images/Jorrik.jpg">
+            <!-- <h3 class="sectionTitle">About me</h3>
             <div class="aboutMeContent">
-                <img class="profilePicture" src="/images/Jorrik.jpg">
+                
                 <p class="meText" v-html="t.homePage.aboutmeText"></p>
-            </div>
+            </div> -->
         </div>
     </div>
-
+</div>
 </template>
 
 <style scoped lang="scss">
-.canvas-fixed-container {
-  position: fixed;
-  top: 0;
-  left: 0;
-  width: 100%;
-  height: 100vh;
-  z-index: 100; 
-  pointer-events: none; 
-  background-color: black;
-  will-change: clip-path, -webkit-clip-path;
-  filter: drop-shadow(0 0 0.75rem crimson);
-}
+
 
 .zoom-scroll-track {
-  height: 200vh;  
+  height: 250vh;  
 }
 
 .content {
@@ -359,103 +180,116 @@ onBeforeUnmount(() => {
 
 .zone {
   width: 100%;
-  /* Height is now handled by :style binding */
-  background-color: transparent; /* Changed to transparent so background shows through */
+  background-color: transparent;
   pointer-events: none;
 }
 
+.pin-scacer{
+  pointer-events: none;
+  
+}
+
 .projects{
+  padding-top: 25px;
+  padding-bottom: 25px;
+  max-width: 100rem;
+  width: 100%;
+  overflow: hidden;
+  margin: 0 auto;
+
+  // height: 125vh;
+  
+
   .projectlist {
     display: flex;
     flex-direction: row;
     justify-content: center;
+    align-items: center;
     flex-wrap: nowrap;
-    max-width: 1920px;
-    width: 100%;
+    word-wrap: max-content;
+    
     pointer-events: none;
-  
     overflow: hidden;
 
     .projectWrapper {
       display: flex;
-      height: 30vw;
-      width: 100%;
-      max-width: 60vw;
-      margin-left: -8.2vw;
-      transform: translateY(-200px);
+      flex-shrink: 0;
+      // width: 25rem;
+      height: fit-content;
+      margin-left: -5rem; 
       pointer-events: all;
-      transition: all 0.75s;
-      opacity: 0;
+      transition: width 0.75s;
+      opacity: 1;
       cursor: pointer;
 
-      &.pj6 {
-        transition-delay: 0.25s;
+       &:first-child {
+        margin-left: 0;
       }
 
-      &.pj5 {
-        transition-delay: 0.5s;
-      }
+       &.active{
+          // width: 45rem;
+          margin-left: 0;
+          z-index: 10;
+          flex-grow: 0;
+          .project{
+            .projectImage {
+              clip-path: polygon(0% 0%, 100% 0%, 85% 100%, 0% 100%);
+              min-width: 18rem; 
+              transition: all 1s;
+            }
 
-      &.pj4 {
-        transition-delay: 0.75s;
-      }
+            .projectPanel{
+              padding-top: 25px;
+              padding-left: 5px;
+              margin-left: -4rem;
+              width: 20rem; 
+              display: block;
+              transition: 1s;
+              left: 0;
+              opacity: 1;
+            
+            }
 
-      &.pj3 {
-        transition-delay: 1s;
-      }
+            &.reversed{
+              .projectImage{
+                clip-path: polygon(15% 0%, 100% 0%, 100% 100%, 0% 100%);
+              }
 
-      &.pj2 {
-        transition-delay: 1.25s;
-      }
+              .projectPanel{
+                // margin-left: 0;
+                margin-right: -4rem;
+              }
+            }
+          }
+          
 
-      &.pj1 {
-        transition-delay: 1.5s;
-        transform: translateY(0);
-      }
-
-      &.animate {
-      transform: translateY(0px);
-      opacity: 1;
-      }
+        }
 
       .project {
         display: flex;
         flex-direction: row;
         justify-content: center;
-        padding-left: -8.2vw;
-        flex-grow: 1;
+        width: fit-content;
+        padding-left: -10rem;
+        // flex-grow: 1;
         pointer-events: none;
         overflow: hidden;
 
-        &.active{
-          .projectImage {
-            clip-path: polygon(0% 0%, 100% 0%, 75% 100%, 0% 100%);
-              min-width: 20vw;
-              transition: all 1s;
-          }
-
-          .projectPanel{
-            padding-top: 25px;
-            padding-left: 5px;
-            margin-right: 35px;
-            width: 30vw;
-            display: block;
-            transition: 1s;
-            left: 0;
-            opacity: 1;
-          }
-
+        &.reversed{
+          flex-direction: row-reverse;
         }
 
+       
+
         .projectImage {
-          height: 30vw;
-          width: 100%;
-          min-width: 10vw;
-          max-width: 35vw;
-          clip-path: polygon(25% 0%, 100% 0%, 75% 100%, 0% 100%);
+          width: 20rem;
+          aspect-ratio: 3/4;
+          clip-path: polygon(15% 0%, 100% 0%, 85% 100%, 0% 100%);
           -webkit-transition: all 1s;
           transition: all 1s;
           pointer-events: auto;
+           background-size: cover; 
+            background-position: center;
         }
 
         #notActive {
@@ -463,19 +297,54 @@ onBeforeUnmount(() => {
         }
 
         .projectPanel {
-            width: 0px;
-            transition: all 1s;
-            padding: 0px;
-            display: block;
+            width: 0;
             opacity: 0;
-            left: 30vw;
+            overflow: hidden;
+            transition: all 0.6s ease-in-out;
+            // transform: translateX(-3rem);
         }
 
-        
-
         .panelTextDiv {
-            width: 25vw;
-            overflow: hidden;
+            width: 20rem; 
+            position: relative;
+            // overflow: hidden;
+            // clip-path: polygon(15% 0%, 100% 0%, 85% 100%, 0% 100%);
+            min-height: 200px; 
+            height: 100%;
+
+            .left-guard {
+              width: 5rem;
+              height: 100%;
+              float: left;
+              shape-outside: polygon(80% 0%, 100% 0%, 40% 100%, 0% 100%);
+         
+            }
+
+            .right-guard {
+              width: 5rem;
+              height: 100%;
+              float: right;
+              /* We define the shape of the 'empty space' on the right */
+              shape-outside: polygon(40% 0%, 100% 0%, 80% 100%, 0% 100%);
+            }
+
+            .panelText{
+              margin-bottom: .5rem;
+              word-wrap: break-word;
+              &.title{
+                font-size: 1.5rem;
+                
+              }
+
+              &.type{
+                 font-size: 1.2rem;
+              }
+
+              &.description{
+                 font-size: 0.8rem;
+
+              }
+            }
         }
       }
     }
@@ -483,11 +352,40 @@ onBeforeUnmount(() => {
 
 }
 
+.about {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin: auto;
+    margin-top: 50px;
+    margin-bottom: 50px;
+    max-width: 100rem;
+    width: 100%;
+    height: 100vh;
+    margin: 0 auto;
 
+    .profilePicture {
+      max-width: 30rem;
+      width: 90%;
+      object-fit: contain;
+      height: fit-content;
+      margin: 0 auto;
+      filter: url(#distort);
+    }
 
+    .aboutMeContent {
+    display: flex;
+    align-items: center;
+    justify-content: space-around;
+ 
+    width: 100%;
 
-
-
+    .meText {
+        width: 100%;
+        font-size: 1rem;
+      }
+    }
+}
 
 
 
