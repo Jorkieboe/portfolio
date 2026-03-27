@@ -1,5 +1,5 @@
 <script setup>
-import { ref, computed, inject, onMounted } from 'vue'
+import { ref, computed, inject, onMounted, onUnmounted } from 'vue'
 import Canvas from '../components/canvas.vue'
 import { useLang } from '../composables/useLang'
 import { gsap } from "gsap";
@@ -31,94 +31,135 @@ const activeProject = ref(null)
 const isMobile = ref(typeof navigator !== 'undefined' && /Android|webOS|iPhone|iPad|iPod|BlackBerry|Windows Phone/i.test(navigator.userAgent))
 
 const toggleMobile = (index) => {
-  activeProject.value = activeProject.value === index ? null : index
+  store.activeProject = store.activeProject === index ? null : index
 }
 
 const localContentRef = ref(null)
-let ctx;
+let mm;
 
 onMounted(() => {
   store.setContentRef(localContentRef)
-  gsap.registerPlugin(ScrollTrigger);
-  gsap.registerPlugin(SplitText);
+  gsap.registerPlugin(ScrollTrigger, SplitText);
+  mm = gsap.matchMedia(localContentRef.value);
 
-  ctx = gsap.context(() => {
+  mm.add({
+    isDesktop: "(min-width: 766px)",
+    isMobile: "(max-width: 765px)"
+  }, (context) => {
     
-    const tl = gsap.timeline({
+    let { isDesktop, isMobile } = context.conditions;
+
+    if (isDesktop) {
+      const tl = gsap.timeline({
+        scrollTrigger: {
+          trigger: "#projects",
+          start: "top 15%",  
+          end: "+=1000vh",   
+          pin: true,    
+          pinSpacing: true,    
+          scrub: 1,  
+        }
+      });
+
+      tl.from(".projectWrapper", {
+        y: 50, 
+        opacity: 0,
+        stagger: 0.2,   
+        ease: "power2.out",
+        duration: 1    
+      }).to({}, { duration: 0.5 });
+    } 
+
+    if (isMobile) {
+      const wrappers = gsap.utils.toArray(".projectWrapper");
+      wrappers.forEach((wrapper) => {
+        gsap.from(wrapper, {
+          scrollTrigger: {
+            trigger: wrapper,
+            start: "top 85%", 
+            toggleActions: "play none none reverse",
+            markers: true,
+          },
+          y: 50,
+          opacity: 0,
+          duration: 0.8,
+          ease: "power2.out"
+        });
+      });
+    }
+
+    const tlAbout = gsap.timeline({
       scrollTrigger: {
-        trigger: "#projects",
-        start: "top 15%",  
-        end: "+=1000vh",   
-        pin: true,    
-        pinSpacing: true,    
-        scrub: 1,  
+        trigger: ".aboutMeContent", 
+        start: isDesktop ? "5% 25%" : "5% 80%",
+        end: isDesktop ? "72.5% 50%" : "30% 60%", 
+        scrub: 1,
+        pin: isDesktop ? ".profilePicture" : false, 
+        pinSpacing: false,  
+     
       }
     });
 
-    tl.from(".projectWrapper", {
-      y: 50,      
-      opacity: 0,
-      stagger: 0.2,   
-      ease: "power2.out",
-      duration: 1    
-    })
+    if (isDesktop) {
+      tlAbout.to(".profilePicture", {
+        yPercent: -25, opacity: 1, duration: 0.5, ease: "power2.out"
+      })
+      .to({}, { duration: 0.5 })
+      .to(".profilePicture", {
+        x: -150, rotateY: '30deg', skewX: '-25deg', duration: 0.5, ease: "power1.inOut"
+      })
+      .to(".profilePicture", {
+        x: -250, rotateY: '60deg', skewX: '-50deg', scale: 0.8, duration: 0.5
+      })
+      .to(".profilePicture", {
+        x: -300, skewX: '0deg', rotateY: '0deg', scale: 0.7, duration: 0.5
+      });
+      tlAbout.to({}, { duration: 4 }); 
+    } else {
+      tlAbout.from(".profilePicture", {
+        rotateZ: '30deg',
+        xPercent: 50,
+        opacity: 1,
+        scale: 1,
+        duration: 0.5,
+        ease: "power1.inOut"
+      });
+    }
 
-    tl.to({}, { duration: 0.5 });
 
-    const tlAbout = gsap.timeline({
-          scrollTrigger: {
-            trigger: ".aboutMeContent", 
-            start: "5% 25%",
-            end: "72.5% 50%", 
-            scrub: 1,
-            pin: ".profilePicture", 
-            pinSpacing: false,  
-            markers: true 
-    
-          }
-        });
+        const textElements = gsap.utils.toArray(".meText");
 
-        tlAbout.to(".profilePicture", {
-          yPercent: -25,
-          opacity: 1,
-          duration: 0.5,
-          ease: "power2.out"
-        })
-        .to({}, { duration: 0.5 })
-        .to(".profilePicture", {
-          x: -150, rotateY: '30deg', skewX: '-25deg', duration: 0.5, ease: "power1.inOut"
-        })
-        .to(".profilePicture", {
-          x: -250, rotateY: '60deg', skewX: '-50deg', scale: 0.8, duration: 0.5
-        })
-        .to(".profilePicture", {
-          x: -300, skewX: '0deg', rotateY: '0deg', scale: 0.7, duration: 0.5
-        });
+        textElements.forEach((el) => {
+          const split = new SplitText(el, { type: "words" });
 
-        tlAbout.to({}, { duration: 4 }); 
-     
-          const textElements = gsap.utils.toArray(".meText");
-
-          textElements.forEach((el) => {
-            const split = new SplitText(el, { type: "words" });
-
-            gsap.from(split.words, {
-              scrollTrigger: {
-                trigger: el,    
-                start: "10% 90%",  
-                end: "top 50%",    
-                scrub: 0.5,       
-              },
-              scale: 0.9,
-              x: -10,
-              y: 10,
-              autoAlpha: 0,
-              stagger: { amount: 1.5 },
-              duration: 0.5,
-            });
+          gsap.from(split.words, {
+            scrollTrigger: {
+              trigger: el,    
+              start: isDesktop ? "50% 90%" : "30% 90%",  
+              end: isDesktop ? "top 50%" : "center 75%",    
+              scrub: 0.5,
+                  
+            },
+            scale: 0.9,
+            x: -10,
+            y: 10,
+            autoAlpha: 0,
+            stagger: { amount: isDesktop ? 1.5 : 0.8 }, 
+            duration: 0.5,
           });
+        }); 
+   
+ 
 
-      }, localContentRef.value);
+
+  }); 
+});
+
+
+onUnmounted(() => {
+  if (mm) {
+    mm.revert(); 
+  }
 });
 
 </script>
@@ -137,7 +178,7 @@ onMounted(() => {
                   class="projectWrapper"
                   :class="[
                     'pj' + (index + 1), 
-                    { active: store.projectActive === index }
+                    { active: store.projectActive === index || activeProject === index }
                   ]"
             
                   @mouseenter="()=>{store.projectActive = index}"
@@ -250,7 +291,7 @@ onMounted(() => {
           flex-grow: 0;
           .project{
             .projectImage {
-              clip-path: polygon(0% 0%, 100% 0%, 85% 100%, 0% 100%);
+              
               min-width: 18rem; 
               transition: all 1s;
             }
@@ -264,6 +305,10 @@ onMounted(() => {
               transition: 1s;
               left: 0;
               opacity: 1;
+
+              .panelTextDiv {
+                opacity: 1;
+              }
             
             }
 
@@ -323,6 +368,9 @@ onMounted(() => {
             position: relative;
             min-height: 200px; 
             height: 100%;
+            opacity: 0;
+            transition: opacity 0.5s;
+            transition-delay: 0.5s;
 
             .left-guard {
               width: 5rem;
@@ -366,7 +414,7 @@ onMounted(() => {
 .about {
     display: flex;
     position: relative;
-   flex-direction: column;
+    flex-direction: column;
     justify-content: center;
     align-items: flex-start;
     margin: auto;
@@ -392,6 +440,7 @@ onMounted(() => {
         flex-direction: column;
         align-items: center;
         justify-content: center;
+        margin: 2rem 0;
 
         .profilePicture {
           max-width: 50vh;
@@ -483,7 +532,6 @@ onMounted(() => {
 }
 
 @media (max-width: 765px) {
-
   .projects{
     .projectlist {
         flex-direction: column;
@@ -496,68 +544,149 @@ onMounted(() => {
         width: 100vw;
         margin-left: 0px;
         cursor: pointer;
-        
-    
-
-        .project {
-
-          &.active{
+        &.active{
+          .project{
             .projectImage {
-              width: 20vw;
+              width: 30vw;
+              min-width: unset;
             }
 
             .projectPanel{
               padding: 0;
-              padding-left: 15px;
+              padding-left: 1rem;
+              padding-right: 1rem;
               width: 70vw;
               height: 300px;
+              box-sizing: border-box;
+              margin-top: 0.5rem;
 
               .panelTextDiv {
-                  width: 75vw;
+                  width: 100%;
               }
+            }
+
+            &.reversed{
+              .projectImage {
+                clip-path: polygon(0% 0%, 100% 0%, 75% 100%, 0% 100%);
+              }
+              .projectPanel{
+                margin-right: 0;
+              }
+            }
           }
+        }
+ 
+      .project {
+        justify-content: space-between;
+        width: 100%;
+        .panelTextDiv {
+
+          .left-guard{
+            display: none;
           }
-
-          .projectImage {
-              height: 300px;
-              width: 100vw;
-              max-width: 100vw;
-              clip-path: polygon(0% 0%, 100% 0%, 100% 100%, 0% 100%);
-              position: relative;
-              cursor: pointer;
-
-              &.p1 {
-                background-size: auto 80vw;
-              }
-
-              &.p2 {
-                background-size: auto 80vw;
-              }
-
-              &.p3 {
-                background-size: auto 80vw;
-              }
-
-              &.p4 {
-                  background-size: auto 80vw;
-              }
-
-              &.p5 {
-                background-size: auto 80vw;
-              }
-
-              &.p6 {
-                background-size: auto 80vw;
-              }
+          .right-guard{
+            display: none;
           }
+          width: 100%; 
+        }
 
-        
+        &.reversed{
+          flex-direction: row;
 
-        
+          .projectImage{
+            clip-path: polygon(0% 0%, 100% 0%, 100% 100%, 0% 100%);
+          }
+        }
+
+        .projectImage {
+            height: 300px;
+            width: 100vw;
+            max-width: 100vw;
+            clip-path: polygon(0% 0%, 100% 0%, 100% 100%, 0% 100%);
+            position: relative;
+            cursor: pointer;
+
+            &.p1 {
+              background-size: auto 80vw;
+            }
+
+            &.p2 {
+              background-size: auto 80vw;
+            }
+
+            &.p3 {
+              background-size: auto 80vw;
+            }
+
+            &.p4 {
+                background-size: auto 80vw;
+            }
+
+            &.p5 {
+              background-size: auto 80vw;
+            }
+
+            &.p6 {
+              background-size: auto 80vw;
+            }
+          }
         }
       }
     }
     
+  }
+
+  .about {
+
+    
+
+    .aboutMeContent {
+      width: 100%;
+      height: fit-content;
+
+      .pic-wrapper{
+        width: 100%;
+        height: fit-content;
+        display: flex;
+        padding: 1rem 0;
+
+
+        .profilePicture {
+          max-width: 50vh;
+          width: 100%;
+          object-fit: contain;
+          height: fit-content;
+    
+          filter: url(#distort);
+        }
+      }
+
+      .text-section{
+        width: 90%;
+        height: fit-content;
+        position: relative;
+        display: flex;
+        flex-direction: column;
+        padding: 0;
+        .dummy {
+           display: none;
+         }
+
+        .meTextwrapper{
+            display: flex;
+            flex-direction: column;
+            width: 100%;
+          .meText {
+            font-size: 1.5rem;
+            max-width: 30rem;
+            width: 100%;
+            // width: 50%;
+            margin-bottom: 2.5rem;
+      
+          }
+        } 
+      }
+    }     
   }
   
 

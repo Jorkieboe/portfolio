@@ -10,7 +10,7 @@
             "projectTitle": "Jongeren motiveren om te sporten met gepersonaliseerde gamification",
             "projectType": "Gamification",
             "projectText": "In mijn afstuurdeerproject word uitgezocht hoe gamification persoonlijk gemaakt kan worden om studenten meer te laten sporten.  Met behulp van machine learning algoritmes leert een applicaties wat een persoon het beste motiveert."
-        }, 
+        },
         {
             "projectTitle": "Burger Crush",
             "projectType": "Stageopdracht",
@@ -32,10 +32,10 @@
             "projectText":  "In a box is een work in progress puzzle-platform game waar je speelt in een kartonnen doos die draaibaar is. Hierdoor verandert de zwaartekracht en moet je vanuit meerdere dimensies deze puzzels benaderen."
         }],
         "aboutmeText": [
-                        "Ik ben Jorrik Dillisse en heb mijn bachelor in Communicatie & Multimedia Design en master in Data-driven Design. Ik ben vanaf jongs af aan al geïnteresseerd in technologie. Ik vind het leuk om met mijn creativiteit verschillende technologieën te onderzoeken en nieuwe ideeën voor digitale producten te ontwerpen en ontwikkelen. Hierdoor wil ik het leven leuker, makkelijker en/of leerzamer maken.", 
+                        "Ik ben Jorrik Dillisse en heb mijn bachelor in Communicatie & Multimedia Design en master in Data-driven Design. Ik ben vanaf jongs af aan al geïnteresseerd in technologie. Ik vind het leuk om met mijn creativiteit verschillende technologieën te onderzoeken en nieuwe ideeën voor digitale producten te ontwerpen en ontwikkelen. Hierdoor wil ik het leven leuker, makkelijker en/of leerzamer maken.",
                         "Ik zie mijzelf als een multidisciplinaire developer en designer met ervaring in web development, game design, data science, UX design en kennis in de laatste ontwikkeling rond AI en machine learning."
                     ]
-        
+
     },
     "begrijpendBiased":{
         "projectTitle": "Begrijpend Biased",
@@ -43,13 +43,16 @@
         "introText": "Begrijpend biased is een serious game die leerlingen van de middelbare school in de Nederlandse les kritisch naar nieuws op social media laat kijken. Leerlingen stellen nieuwsberichten samen en beoordelen die van anderen op bepaalde biases in het bericht. Hiermee leren jongeren te herkennen hoe zulke nieuwsberichten gestuurd worden richting een bepaalde mening.",
         "content": [{
             "title":"Probleem",
-            "text": "Steeds meer jongeren lezen nieuws via social media in plaats van via de traditionele platformen zoals de krant of het journaal. Het probleem van nieuws op social media platforms zoals Instagram is dat ze erg kort zijn en inspelen op emoties. Ook de selectie van informatie creëert een frame waardoor het bericht in een bepaalde daglicht wordt gezet. Hierdoor kan makkelijk de confirmation bias ontstaan. Dat betekent dat mensen sneller informatie aannemen als dat hun mening bevestigt. Daarnaast sluiten ze zich van andere informatie juist af. In combinatie het algoritmes kom je hierdoor in de bubbel terecht."
+            "text": "Steeds meer jongeren lezen nieuws via social media in plaats van via de traditionele platformen zoals de krant of het journaal. Het probleem van nieuws op social media platforms zoals Instagram is dat ze erg kort zijn en inspelen op emoties. Ook de selectie van informatie creëert een frame waardoor het bericht in een bepaalde daglicht wordt gezet. Hierdoor kan makkelijk de confirmation bias ontstaan. Dat betekent dat mensen sneller informatie aannemen als dat hun mening bevestigt. Daarnaast sluiten ze zich van andere informatie juist af. In combinatie het algoritmes kom je hierdoor in de bubbel terecht.",
+            "image": "/images/begrijpendbiased/gedragVeran.jpg"
         },{
             "title":"Concept",
-            "text": "Begrijpend biased is een serious game die leerlingen van de middelbare school in de Nederlandse les kritisch naar nieuws op social media laat kijken. Leerlingen spelen tegen in elkaar in groepjes van 4. Hierin mag iedereen zelf een nieuwsbericht samenstellen, bestaand uit een afbeelding, headline en tekst, op basis van een stelling. Hieruit moeten de leerlingen de afbeelding, headline en tekst kiezen die het beste bij toegewezen stelling. Nadat iedereen een bericht heeft gemaakt, gaan de andere leerlingen het bericht beoordelen. Hierbij kiezen ze een stelling die bij het bericht past. Het spel bestaat uit meerdere rondes waarbij de docent tussendoor leesstrategieën uitlegt om de berichten nog beter te begrijpen. Deze aanpak zorgt ervoor dat de leerlingen kritisch gaan kijken naar berichten vanuit zowel de selectie van de schrijver als de lezer van dergelijke berichten."
+            "text": "Begrijpend biased is een serious game die leerlingen van de middelbare school in de Nederlandse les kritisch naar nieuws op social media laat kijken. Leerlingen spelen tegen in elkaar in groepjes van 4. Hierin mag iedereen zelf een nieuwsbericht samenstellen, bestaand uit een afbeelding, headline en tekst, op basis van een stelling. Hieruit moeten de leerlingen de afbeelding, headline en tekst kiezen die het beste bij toegewezen stelling. Nadat iedereen een bericht heeft gemaakt, gaan de andere leerlingen het bericht beoordelen. Hierbij kiezen ze een stelling die bij het bericht past. Het spel bestaat uit meerdere rondes waarbij de docent tussendoor leesstrategieën uitlegt om de berichten nog beter te begrijpen. Deze aanpak zorgt ervoor dat de leerlingen kritisch gaan kijken naar berichten vanuit zowel de selectie van de schrijver als de lezer van dergelijke berichten.",
+            "image": "/images/begrijpendbiased/IMG_2487.jpg"
         },{
             "title":"Development",
-            "text": "De applicatie is gemaakt met de javascript library: Phaser met websockets voor de multiplayer functionaliteit. Websocket is een algemene server maar in een klas zitten meerdere groepjes die allemaal tegelijk moeten spelen zonder dat de spellen door elkaar raken. Daardoor wordt er gewerkt met game codes. Deze codes zorgen ervoor dat alle samengestelde berichten bij de juiste mensen aankomt binnen je groepje. Daarnaast is daarboven nog een algemene lobby voor de hele klas. De docent kan alles spellen tegelijkertijd laten verlopen en uitleg geven."
+            "text": "De applicatie is gemaakt met de javascript library: Phaser met websockets voor de multiplayer functionaliteit. Websocket is een algemene server maar in een klas zitten meerdere groepjes die allemaal tegelijk moeten spelen zonder dat de spellen door elkaar raken. Daardoor wordt er gewerkt met game codes. Deze codes zorgen ervoor dat alle samengestelde berichten bij de juiste mensen aankomt binnen je groepje. Daarnaast is daarboven nog een algemene lobby voor de hele klas. De docent kan alles spellen tegelijkertijd laten verlopen en uitleg geven.",
+            "image": "/images/begrijpendbiased/screens.jpg"
         }]
     },
     "gamification":{
@@ -58,13 +61,16 @@
         "introText": "In mijn afstuurdeerproject word uitgezocht hoe gamification persoonlijk gemaakt kan worden om studenten meer te laten sporten.  Met behulp van machine learning algoritmes leert een applicaties wat een persoon het beste motiveert.",
         "content": [{
             "title":"Probleem",
-            "text": "Gamification is een veel gebruikte techniek om mensen meer te laten sporten. Verschillende game elementen helpen om meer motivatie te creëren. Het probleem van deze apps is dat ze maar één manier gebruiken om iedereen te motiveren. Meerdere onderzoekers zoeken naar een manier om gamification meer te personaliseren."
+            "text": "Gamification is een veel gebruikte techniek om mensen meer te laten sporten. Verschillende game elementen helpen om meer motivatie te creëren. Het probleem van deze apps is dat ze maar één manier gebruiken om iedereen te motiveren. Meerdere onderzoekers zoeken naar een manier om gamification meer te personaliseren.",
+            "image": "/images/gamification/research.jpg"
         },{
             "title": "Concept",
-            "text": "Deze applicatie is een sport app die dagelijks gepersonaliseerde challenges voorstelt om te gaan rennen. De applicatie gebruikt reinforcement learning om de interesses van de gebruiker te herkennen. Alle challenges zijn gemaakt voor één specifiek spelertype. Bijvoorbeeld een challenge dat gaat over het verbreken van persoonlijke records hoort bij het spelertype ‘achiever’. Dus, wanneer de gebruiker een challenges kiest dat gaat over eigen records verbreken, leert het systeem dat speler mogelijk een achiever is. Het system kan vervolgens meer achiever challenges aanbevelen."
+            "text": "Deze applicatie is een sport app die dagelijks gepersonaliseerde challenges voorstelt om te gaan rennen. De applicatie gebruikt reinforcement learning om de interesses van de gebruiker te herkennen. Alle challenges zijn gemaakt voor één specifiek spelertype. Bijvoorbeeld een challenge dat gaat over het verbreken van persoonlijke records hoort bij het spelertype ‘achiever’. Dus, wanneer de gebruiker een challenges kiest dat gaat over eigen records verbreken, leert het systeem dat speler mogelijk een achiever is. Het system kan vervolgens meer achiever challenges aanbevelen.",
+            "image": "/images/gamification/interfacesketches.jpg"
         },{
             "title": "Development",
-            "thirdText": "Het development proces bestond uit drie onderdelen: Creëren van de challenges, recommendation system maken met reinforcement learning algorithm en het ontwerpen van de gebruikers interface. <br> De challenges zijn gemaakt door het scrapen van 2500 challenges van strava. Deze challenges zijn weer gegroepeerd om tot nieuwe challenges te komen voor elke individuele speler type.<br> het recommendation system is gemaakt met het Thompson sampling reinforcement learning algoritme. Deze is getest in een simulatie samen met twee andere reinforcement learning algoritme. Hierdoor selecteerde de computer steeds een challenges op basis van wat een gebruiker met bepaalde voorkeuren zou kiezen. <br> Het gebruikers interface is gemaakt in figma. De applicatie moest simpliciteit uitstralen. Het doel van de applicatie is om te rennen en dus snel te bedienen onderweg. Dit is meerdere keren getest onder de doelgroep en bleek ook erg simpel en duidelijk te zijn."
+            "text": "Het development proces bestond uit drie onderdelen: Creëren van de challenges, recommendation system maken met reinforcement learning algorithm en het ontwerpen van de gebruikers interface. <br> De challenges zijn gemaakt door het scrapen van 2500 challenges van strava. Deze challenges zijn weer gegroepeerd om tot nieuwe challenges te komen voor elke individuele speler type.<br> het recommendation system is gemaakt met het Thompson sampling reinforcement learning algoritme. Deze is getest in een simulatie samen met twee andere reinforcement learning algoritme. Hierdoor selecteerde de computer steeds een challenges op basis van wat een gebruiker met bepaalde voorkeuren zou kiezen. <br> Het gebruikers interface is gemaakt in figma. De applicatie moest simpliciteit uitstralen. Het doel van de applicatie is om te rennen en dus snel te bedienen onderweg. Dit is meerdere keren getest onder de doelgroep en bleek ook erg simpel en duidelijk te zijn.",
+            "image": "/images/gamification/algoWorking.jpg"
         }]
     },
     "festivalRecommender":{
@@ -73,13 +79,16 @@
         "introText": "Festival recommender beveelt jouw aan naar welke muziek festivals je moet gaan op basis van je geluisterde muziek op Spotify. Dit systeem gebruik machine learning om jouw favoriete muziek te vergelijken met de artiesten op festivals.",
         "content": [{
             "title": "Concept",
-            "text": "Het hele jaar door zijn heel veel festivals door Nederland, maar naar welke moet je gaan. Op deze festivals kunnen bekenden artiesten spelen, maar ook minder bekende die je mogelijk wel heel leuk vind. Het is natuurlijk een hoop werk om alle artiesten die op het festival optreden te beluisteren. Hiervoor heb ik een recommender system gemaakt die festivals aanbeveelt op basis van je meest beluisterde muziek."
+            "text": "Het hele jaar door zijn heel veel festivals door Nederland, maar naar welke moet je gaan. Op deze festivals kunnen bekenden artiesten spelen, maar ook minder bekende die je mogelijk wel heel leuk vind. Het is natuurlijk een hoop werk om alle artiesten die op het festival optreden te beluisteren. Hiervoor heb ik een recommender system gemaakt die festivals aanbeveelt op basis van je meest beluisterde muziek.",
+            "image": "/images/recommender/output2.jpg"
         },{
             "title": "Data verzamelen",
-            "text": "De recommender system moet data over de muziek van de artiesten vergelijken met jouw meest beluisterde muziek. Hiervoor heb ik de Spotify API gebruikt om data over muziek te verzamelen. De Spotify API geeft je toegang tot metadata over tracks zoals danceability, valence en tempo. Deze waarde ga ik vergelijken met elkaar. Uiteindelijk kan ik alle verzamelde data gebruiken om een profiel te maken van jouw muziek en elk individueel festival."
+            "text": "De recommender system moet data over de muziek van de artiesten vergelijken met jouw meest beluisterde muziek. Hiervoor heb ik de Spotify API gebruikt om data over muziek te verzamelen. De Spotify API geeft je toegang tot metadata over tracks zoals danceability, valence en tempo. Deze waarde ga ik vergelijken met elkaar. Uiteindelijk kan ik alle verzamelde data gebruiken om een profiel te maken van jouw muziek en elk individueel festival.",
+            "image": "/images/recommender/output.jpg"
         },{
             "title": "Development",
-            "text": "Uiteindelijk wordt jouw muziekprofiel vergeleken met elk festival via de cosine similarity. Hieruit komt een getal tussen de nul en één. Hoe hoger dit getal is, hoe meer gelijk het festival is aan jouw muzieksmaak. Na mijn studie ben ik dit recommender system gaan verwerken in een react.js app. Deze applicatie gebruikt pyscript om direct in de browser python code te runnen. Daarnaast is het recommender system verder ontwikkeld door de muziek te clusteren zodat een gevarieerde muziek smaak niet gegeneraliseerd wordt."
+            "text": "Uiteindelijk wordt jouw muziekprofiel vergeleken met elk festival via de cosine similarity. Hieruit komt een getal tussen de nul en één. Hoe hoger dit getal is, hoe meer gelijk het festival is aan jouw muzieksmaak. Na mijn studie ben ik dit recommender system gaan verwerken in een react.js app. Deze applicatie gebruikt pyscript om direct in de browser python code te runnen. Daarnaast is het recommender system verder ontwikkeld door de muziek te clusteren zodat een gevarieerde muziek smaak niet gegeneraliseerd wordt.",
+            "image": "/images/recommender/FR_cosine.jpg"
         }]
     },
     "burgerCrush":{
@@ -88,13 +97,12 @@
         "introText": "Burger crush is een 3-match game gemaakt voor in de McDonalds app.",
         "content": [{
             "title": "Opdracht",
-            "text": "In opdracht van LiveWall Group heb ik de basis voor een 3-match game zoals Candy Crush gecreëerd voor McDonalds, genaamd Burger Crush. LiveWall maakt verschillende games voor McDonalds die ze in hun apps kunnen zetten waardoor spelers kortingbonnen kunnen verdienen om uit te geven in hun restaurants."
+            "text": "In opdracht van LiveWall Group heb ik de basis voor een 3-match game zoals Candy Crush gecreëerd voor McDonalds, genaamd Burger Crush. LiveWall maakt verschillende games voor McDonalds die ze in hun apps kunnen zetten waardoor spelers kortingbonnen kunnen verdienen om uit te geven in hun restaurants.",
+            "image": "/images/BurgerCrush/early version.jpg"
         },{
             "title": "Development",
-            "text": "Deze game was gemaakt met Phaser 3, een JavaScript library. De eerste fase bestond uit het opzetten van de basis code om drie items op een rij te detecteren. Daarna werd het uitgebreid naar het creëren van speciale items zoals dat vier op een rij een item creëert waarbij de hele rij verdwijnt. Als laatste werd door het design team een ontwerp aangeleverd in de stijl van McDonalds. Deze was geïmplementeerd met wat animaties tussen de schermen door."
-        },{
-            "title": "",
-            "text": ""
+            "text": "Deze game was gemaakt met Phaser 3, een JavaScript library. De eerste fase bestond uit het opzetten van de basis code om drie items op een rij te detecteren. Daarna werd het uitgebreid naar het creëren van speciale items zoals dat vier op een rij een item creëert waarbij de hele rij verdwijnt. Als laatste werd door het design team een ontwerp aangeleverd in de stijl van McDonalds. Deze was geïmplementeerd met wat animaties tussen de schermen door.",
+            "image": "/images/BurgerCrush/development.jpg"
         }]
     },
     "vrGame":{
@@ -102,14 +110,17 @@
         "projectType": "Serious game",
         "introText": "Verdrinking is nog steeds een grote doodsoorzaak voor jonge mannen. In dit project word er met behulp van Virtual Reality een kleine ervaring gemaakt die jonge mannen de gevaren laat zien van water door overschatting en groepsdruk.",
         "content": [{
-            "firstTitle": "Probleem",
-            "firstText": "Verdrinken is nog een steeds een grote doodsoorzaak voor jonge mensen. Opvallend komen er naast jonge kinderen ook veel jonge mannen om door verdrinken. Dit ontstaat door groepsdruk rond deze leeftijd. Jonge mannen moeten aantonen dat ze niet bang zijn en sterk zijn. Zij komen door die bewijsdrang makkelijk in gevaarlijke situaties."
+            "title": "Probleem",
+            "text": "Verdrinken is nog een steeds een grote doodsoorzaak voor jonge mensen. Opvallend komen er naast jonge kinderen ook veel jonge mannen om door verdrinken. Dit ontstaat door groepsdruk rond deze leeftijd. Jonge mannen moeten aantonen dat ze niet bang zijn en sterk zijn. Zij komen door die bewijsdrang makkelijk in gevaarlijke situaties.",
+            "image": "/images/SOTA/beach.jpg"
         },{
-            "secondTitle": "Concept",
-            "secondText": "In een VR experience worden jonge mannen uitgedaagd om naar een rots ver in de zee te zwemmen. Hierdoor worden ze door aantal non player characters via een dialoog overgehaald om toch te zwemmen terwijl het duidelijk best ver is. Als de gebruiker besluit om de uitdaging aan te gaan, komt hij er achter dat het best ver is en verdrinkt."
+            "title": "Concept",
+            "text": "In een VR experience worden jonge mannen uitgedaagd om naar een rots ver in de zee te zwemmen. Hierdoor worden ze door aantal non player characters via een dialoog overgehaald om toch te zwemmen terwijl het duidelijk best ver is. Als de gebruiker besluit om de uitdaging aan te gaan, komt hij er achter dat het best ver is en verdrinkt.",
+            "image": "/images/SOTA/npcs.jpg"
         },{
-            "thirdTitle": "Development",
-            "thirdText": "De VR experience is gemaakt in de Unreal Engine. Dit project was onderdeel van een master opdracht en had ik daardoor maar 3 weken om dit naast andere projecten in elkaar te zetten. Ik begon met het bouwen van het strand en heb een dialoog systeem opgezet. Via verschillende gebruiker testen zijn verschillende dialogen getest en zijn de environment clues, zoals geluiden, die aangeven dat je vermoeid raakt verbeterd. "
+            "title": "Development",
+            "text": "De VR experience is gemaakt in de Unreal Engine. Dit project was onderdeel van een master opdracht en had ik daardoor maar 3 weken om dit naast andere projecten in elkaar te zetten. Ik begon met het bouwen van het strand en heb een dialoog systeem opgezet. Via verschillende gebruiker testen zijn verschillende dialogen getest en zijn de environment clues, zoals geluiden, die aangeven dat je vermoeid raakt verbeterd. ",
+            "image": "/images/SOTA/dialog.jpg"
         }]
     },
     "inABox":{
@@ -118,13 +129,16 @@
         "introText": "In a Box is een work in progress puzzle-platform game waar je speelt in een kartonnen doos die draaibaar is. Hierdoor verandert de zwaartekracht en moet je vanuit meerdere dimensies deze puzzels benaderen.",
         "content": [{
             "title": "Game",
-            "text": "In a Box is een work in progress puzzle-platform game ontwikkeld door mijzelf. Je speelt als een knuffel egel van het zoontje van een schoenmaker. De schoenmaker heeft een mysterieuze achterkamer, waar andere knuffels verdwijnen. Op een dag besluit de egel de kamer te betreden. Daarbinnen komt hij vast te zitten in een wereld bestaand uit kartonnen dozen. Deze dozen kan je draaien waardoor zwaartekracht verandert. Jouw doel is om deze wereld te ontdekken en alle vermiste knuffels te bevrijden."
+            "text": "In a Box is een work in progress puzzle-platform game ontwikkeld door mijzelf. Je speelt als een knuffel egel van het zoontje van een schoenmaker. De schoenmaker heeft een mysterieuze achterkamer, waar andere knuffels verdwijnen. Op een dag besluit de egel de kamer te betreden. Daarbinnen komt hij vast te zitten in een wereld bestaand uit kartonnen dozen. Deze dozen kan je draaien waardoor zwaartekracht verandert. Jouw doel is om deze wereld te ontdekken en alle vermiste knuffels te bevrijden.",
+            "image": "/images/Inabox/conceptartRot.jpg"
         },{
             "title": "Art Style",
-            "text": "De game speelt zich af in de achterkamer van de schoenmaker op een bureau waar hij speeldozen maakt voor zijn zoontje. Daardoor hebben de dozen een knutsel achtige look, met papier achtige texturen. In deze donkere kamer schijnt een licht op de doos wat een soort toneel licht voorstelt. Hierdoor ligt de focus op de doos waar ook de game zich afspeelt."
+            "text": "De game speelt zich af in de achterkamer van de schoenmaker op een bureau waar hij speeldozen maakt voor zijn zoontje. Daardoor hebben de dozen een knutsel achtige look, met papier achtige texturen. In deze donkere kamer schijnt een licht op de doos wat een soort toneel licht voorstelt. Hierdoor ligt de focus op de doos waar ook de game zich afspeelt.",
+            "image": "/images/Inabox/boxroom.jpg"
         },{
-            "thirdTitle": "Development",
-            "thirdText": "Deze game is gemaakt in Unreal Engine 5 met visual programming met blueprints. De uitdaging van de game was dat UE5 geen andere richting van zwaartekracht ondersteunt. Dit was deels op te lossen door een plugin uit de Unreal marketplace, maar bepaalde game mechanics als movement, pathfinding moesten alsnog aangepast worden om de andere richting te ondersteunen."
+            "title": "Development",
+            "text": "Deze game is gemaakt in Unreal Engine 5 with visual programming met blueprints. De uitdaging van de game was dat UE5 geen andere richting van zwaartekracht ondersteunt. Dit was deels op te lossen door een plugin uit de Unreal marketplace, maar bepaalde game mechanics als movement, pathfinding moesten alsnog aangepast worden om de andere richting te ondersteunen.",
+            "image": "/images/Inabox/enemy.jpg"
         }]
     }
 }

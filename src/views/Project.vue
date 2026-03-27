@@ -2,6 +2,9 @@
 import { computed, onMounted, inject, ref } from 'vue'
 import { useRoute } from 'vue-router'
 import { useLang } from '../composables/useLang'
+import { gsap } from "gsap";
+import { ScrollTrigger } from "gsap/ScrollTrigger";
+import { SplitText } from 'gsap/SplitText';
 
 const route = useRoute()
 const { t } = useLang()
@@ -10,15 +13,50 @@ const store = inject('store')
 
 const localContentRef = ref()
 
-onMounted(()=>{
-  store.content = localContentRef
+let mm;
+
+onMounted(() => {
+    store.content = localContentRef
+    gsap.registerPlugin(ScrollTrigger, SplitText);
+    mm = gsap.matchMedia(localContentRef.value);
+
+    mm.add({
+        isDesktop: "(min-width: 766px)",
+        isMobile: "(max-width: 765px)"
+    }, (context) => {
+
+        const tl = gsap.timeline({
+            scrollTrigger: {
+                trigger: ".projectOverview",
+                start: "top 15%",
+                end: "+=800",
+                pin: true,
+                pinSpacing: true,
+                scrub: 1,
+                markers: false
+            }
+        });
+
+        tl.from(".bigImage", {
+            scale: 0.8,
+            opacity: 0,
+            duration: 0.5,
+            ease: "power2.out"
+        })
+
+        tl.from([".smallImage1", ".smallImage2"], {
+            scale: 0,
+            opacity: 0,
+            stagger: 0.2,
+            duration: 0.8,
+            ease: "back.out(1.7)"
+        }, "-=0.5");
+
+    })
 })
 
 const projectId = computed(() => route.params.id)
 const projectData = computed(() => t.value[projectId.value])
-
-const getTitle = (obj) => obj?.title || obj?.firstTitle || obj?.secondTitle || obj?.thirdTitle || ''
-const getText = (obj) => obj?.text || obj?.firstText || obj?.secondText || obj?.thirdText || ''
 
 const configMap = {
   begrijpendBiased: {
@@ -26,54 +64,36 @@ const configMap = {
     hasSmall: true,
     imgBig: 'bb_bigImage',
     imgSmall1: 'bb_small',
-    imgSmall2: 'bb_small2',
-    imgSec1: 'bb_problem',
-    imgSec2: 'bb_concept',
-    imgSec3: 'bb_dev'
+    imgSmall2: 'bb_small2'
   },
   gamification: {
     prefix: 'gf',
     hasSmall: false,
-    imgBig: 'gf_bigImage',
-    imgSec1: 'gf_probleem',
-    imgSec2: 'gf_concept',
-    imgSec3: 'gf_development'
+    imgBig: 'gf_bigImage'
   },
   festivalRecommender: {
     prefix: 'rf',
     hasSmall: false,
-    imgBig: 'rf_bigImage',
-    imgSec1: 'rf_concept',
-    imgSec2: 'rf_data',
-    imgSec3: 'rf_development'
+    imgBig: 'rf_bigImage'
   },
   burgerCrush: {
     prefix: 'bc',
     hasSmall: false,
-    imgBig: 'bc_bigImage',
-    imgSec1: 'bc_opdracht',
-    imgSec2: 'bc_Development',
-    imgSec3: ''
+    imgBig: 'bc_bigImage'
   },
   vrGame: {
     prefix: 'vr',
     hasSmall: true,
     imgBig: 'vr_bigImage',
     imgSmall1: 'vr_smallIm1',
-    imgSmall2: 'vr_smallIm2',
-    imgSec1: 'vr_probleem',
-    imgSec2: 'vr_concept',
-    imgSec3: 'vr_development'
+    imgSmall2: 'vr_smallIm2'
   },
   inABox: {
     prefix: 'ib',
     hasSmall: true,
     imgBig: 'ib_bigImage',
     imgSmall1: 'ib_smallIm1',
-    imgSmall2: 'ib_smallIm2',
-    imgSec1: 'ib_game',
-    imgSec2: 'ib_art',
-    imgSec3: 'ib_development'
+    imgSmall2: 'ib_smallIm2'
   }
 }
 
@@ -87,7 +107,7 @@ const cfg = computed(() => configMap[projectId.value] || configMap.begrijpendBia
               <h2 class="projectName">{{ projectData.projectTitle }}</h2>
           </div>
           <div class="projectDescription">
-              <p class='text' id="projectDescriptionPage">{{ projectData.introText }}</p>
+              <p class='text'>{{ projectData.introText }}</p>
           </div>
       </div>
 
@@ -97,39 +117,149 @@ const cfg = computed(() => configMap[projectId.value] || configMap.begrijpendBia
           <div class="bigImage" id="gf_bigImage2" v-if="projectId === 'gamification'" v-animate="'oneway'"></div>
 
           <div class="smallImageSection" v-if="cfg.hasSmall">
-              <div class="smallImage1" :id="cfg.imgSmall1" v-animate="'oneway'"></div>
-              <div class="smallImage2" :id="cfg.imgSmall2" v-animate="'oneway'"></div>
+              <div class="smallImage1" :id="cfg.imgSmall1"></div>
+              <div class="smallImage2" :id="cfg.imgSmall2"></div>
           </div>
       </div>
 
-      <div class="projectInfoSection" id="projectProblem" v-if="projectData.content[0]" v-animate>
+      <div v-for="(content, index) in projectData.content" :key="index" class="projectInfoSection" :class="{ 'middle': index % 2 !== 0 }">
           <div class="sectionInfo">
-              <h2 class="subTitle">{{ getTitle(projectData.content[0]) }}</h2>
-              <p class="text subSectionText" v-html="getText(projectData.content[0])"></p>
+              <h2 class="subTitle">{{ content.title }}</h2>
+              <p class="text subSectionText" v-html="content.text"></p>
           </div>
-          <div class="topMask">
-              <div class="subSectionImage" :id="cfg.imgSec1" v-animate></div>
-          </div>
-      </div>
 
-      <div class="projectInfoSection middle" id="projectConcept" v-if="projectData.content[1]" v-animate>
-          <div class="topMask" id="middlemask">
-              <div class="subSectionImage middle" :id="cfg.imgSec2" v-animate></div>
-          </div>
-          <div class="sectionInfo" id="middleSection" v-animate>
-              <h2 class="subTitle">{{ getTitle(projectData.content[1]) }}</h2>
-              <p class="text subSectionText" v-html="getText(projectData.content[1])"></p>
-          </div>
-      </div>
-
-      <div class="projectInfoSection" id="projectDevelopment" v-if="projectData.content[2]" v-animate>
-          <div class="sectionInfo">
-              <h2 class="subTitle">{{ getTitle(projectData.content[2]) }}</h2>
-              <p class="text subSectionText" v-html="getText(projectData.content[2])"></p>
-          </div>
-          <div class="topMask">
-              <div class="subSectionImage" :id="cfg.imgSec3" v-animate></div>
+          <div class="subSectionImage">
+              <img :src="content.image" :alt="content.title" class="subSectionImg">
           </div>
       </div>
   </div>
 </template>
+<style lang="scss" scoped>
+    .projectIntro {
+        display: flex;
+        justify-content: space-between;
+        max-width: 1920px;
+        width: 90%;
+        margin: auto;
+        margin-top: 100px;
+
+        #projectType {
+            font-family: Cooper;
+            font-size: 2rem;
+            margin-bottom: 0px;
+        }
+        .projectName {
+            font-family: Cooper;
+            font-size: 5rem;
+            max-width: 800px;
+            width: 100%;
+            margin-top: 0;
+        }
+        .projectDescription {
+            max-width: 700px;
+            display: flex;
+            align-items: center;
+            p{
+                font-size: 1.2rem;
+            }
+        }
+    }
+
+    .projectOverview {
+        max-width: 1920px;
+        width: 100vw;
+        display: flex;
+        height: 800px;
+        margin: auto;
+
+        .bigImage {
+            max-width: 1200px;
+            width: 100vw;
+            height: 800px;
+            background-image: url('/images/mobilescreens.jpg');
+            background-position: center;
+            background-size: auto 800px;
+            background-repeat: no-repeat;
+            overflow: hidden;
+        }
+
+        .smallImageSection {
+            display: flex;
+            flex-direction: column;
+
+           .smallImage1 {
+                max-width: 720px;
+                width: 100vw;
+                height: 400px;
+                background-image: url('/images/sfeer.jpg');
+                background-position: center;
+                background-size: auto 420px;
+                background-repeat: no-repeat;
+                overflow: hidden;
+            }
+
+            .smallImage2 {
+                max-width: 720px;
+                width: 100vw;
+                height: 400px;
+                background-image: url('/images/uitlegschermronde1.jpg');
+                background-position: center;
+                background-size: auto 420px;
+                background-repeat: no-repeat;
+                overflow: hidden;
+            }
+        }
+    }
+
+    .projectInfoSection {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        max-width: 40rem;
+        width: 90%;
+        margin-top: 20px;
+
+        .sectionInfo {
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            margin-left: 50px;
+            margin-right: 50px;
+
+            p, h2{
+                  color: black;
+            }
+        }
+
+        .subSectionImage {
+            width: 500px;
+            height: 300px;
+            object-fit: contain;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+
+            .subSectionImg {
+                height: 100%;
+                width: auto;
+                object-fit: contain;
+            }
+        }
+    }
+
+    .projectInfoSection.middle {
+        flex-direction: row-reverse;
+        .subSectionImage {
+
+        }
+    }
+
+    @media (max-width: 765px) {
+        .projectInfoSection {
+            flex-wrap: wrap;
+            &.middle {
+                flex-direction: column-reverse;
+            }
+        }
+    }
+</style>

@@ -9,132 +9,125 @@
       "selected_files": [
         {
           "path": "index.html",
-          "mtime": 1774251772.0185692,
+          "mtime": 1774600893.7583694,
           "hash": "185547b9b31e1d68ca1a5103c2f822416604c135",
           "tokens": 90,
           "lines": 12
         },
         {
           "path": "script.js",
-          "mtime": 1774251772.0195699,
+          "mtime": 1774600893.761003,
           "hash": "f1b4858fe44d36ac0214db17bfc127d88cf9c01f",
           "tokens": 1631,
           "lines": 271
         },
         {
-          "path": "style.css",
-          "mtime": 1774251772.02257,
-          "hash": "3714580e1f5f00af61fb5f95e87092d303817781",
-          "tokens": 6967,
-          "lines": 1338
-        },
-        {
           "path": "src/assets/lang/en.json",
-          "mtime": 1774251772.02057,
-          "hash": "06e98830007d11ba9c658a77c89b08779d0e3074",
-          "tokens": 2787,
-          "lines": 123
+          "mtime": 1774600899.7533088,
+          "hash": "0d65e4e2e7dd4c5876f82753b9e29c6fe2dbcd81",
+          "tokens": 2789,
+          "lines": 126
         },
         {
           "path": "src/assets/lang/nl.json",
-          "mtime": 1774251772.02057,
-          "hash": "f33d996e53d3f10f68b56291824a578c8d9a3761",
-          "tokens": 3775,
+          "mtime": 1774627314.481299,
+          "hash": "eb274b5f631012459e1c134b1e5e189c60e70ec0",
+          "tokens": 3755,
           "lines": 127
         },
         {
           "path": "src/components/Canvas.vue",
-          "mtime": 1774453696.2558534,
-          "hash": "fc24ae33ca07e179898318e558e834edaeb15ab2",
-          "tokens": 2843,
-          "lines": 298
+          "mtime": 1774600899.755574,
+          "hash": "635c26cf8cab1ac2f5eef77845cb8da3f9d3714d",
+          "tokens": 2576,
+          "lines": 277
         },
         {
           "path": "src/composables/useLang.js",
-          "mtime": 1774251772.02057,
+          "mtime": 1774600893.764864,
           "hash": "d017d6bcaec9b7294dd037b2f9f1034c92529036",
           "tokens": 125,
           "lines": 19
         },
         {
           "path": "src/store/store.js",
-          "mtime": 1774262301.58838,
+          "mtime": 1774600899.757579,
           "hash": "f6c0a80500ae3341a65c41f24585b568750aba48",
           "tokens": 111,
           "lines": 17
         },
         {
           "path": "src/views/Home.vue",
-          "mtime": 1774251772.02257,
-          "hash": "befdb192ba3f259ae6381e0ce74ee926d71dd70b",
-          "tokens": 905,
-          "lines": 113
+          "mtime": 1774600899.7585747,
+          "hash": "08298a5f85c2803ac1af101d524dcd5028f3568c",
+          "tokens": 882,
+          "lines": 112
         },
         {
           "path": "src/views/Project.vue",
-          "mtime": 1774299393.3351777,
-          "hash": "1328da4d6c155fb32f8dc9b5addfa803200222b8",
-          "tokens": 1287,
-          "lines": 138
+          "mtime": 1774627613.599886,
+          "hash": "765216bbef0b18aa7a6743e94c647df41e8d0a88",
+          "tokens": 1779,
+          "lines": 264
         },
         {
           "path": "src/views/Test.vue",
-          "mtime": 1774453613.1633332,
-          "hash": "553bd7b0424fc3409ccb386eaa6692d195a184c8",
-          "tokens": 2956,
-          "lines": 533
+          "mtime": 1774608694.281433,
+          "hash": "20535cfc4b5eb5b491ba681ebd8d884ad0e40224",
+          "tokens": 3954,
+          "lines": 695
         },
         {
           "path": "src/App.vue",
-          "mtime": 1774443627.013596,
-          "hash": "c9c24a89db7d818ad03e2a09c204fe54af5b08a7",
-          "tokens": 927,
-          "lines": 126
+          "mtime": 1774600899.7517343,
+          "hash": "1f6804b561faf0db90007a66daa93f3ea6c0062e",
+          "tokens": 894,
+          "lines": 115
         },
         {
           "path": "src/main.js",
-          "mtime": 1774262163.7743838,
+          "mtime": 1774600899.756574,
           "hash": "f38aa31d3642b0b8450e7c6f743055d17acd5587",
           "tokens": 465,
           "lines": 65
         },
         {
           "path": "src/router.js",
-          "mtime": 1774251772.0215704,
+          "mtime": 1774600893.7663329,
           "hash": "b967895897f3a17c477b82a707f253981e38b3b6",
           "tokens": 114,
           "lines": 18
         },
         {
           "path": "src/style.css",
-          "mtime": 1774452501.312734,
-          "hash": "347825c299234a2444cbd6bb4cce54aa6aca70a4",
-          "tokens": 5383,
-          "lines": 1035
+          "mtime": 1774627629.1595728,
+          "hash": "124c3af40efed2857c08c7d684a10f6b5adb6489",
+          "tokens": 4427,
+          "lines": 866
         },
         {
           "path": "go.bat",
-          "mtime": 1774251771.880605,
+          "mtime": 1774600893.5423257,
           "hash": "aadc8f77ab11b9334226b1710c3257dc9c765653",
           "tokens": 128,
           "lines": 18
         },
         {
           "path": "package.json",
-          "mtime": 1774291272.8562114,
+          "mtime": 1774600899.7504213,
           "hash": "6a458de5839317ea0924e4cf3055978443e1ba0c",
           "tokens": 196,
           "lines": 24
         },
         {
           "path": "vite.config.js",
-          "mtime": 1774251772.023571,
+          "mtime": 1774600893.7714334,
           "hash": "78ea177b79c86065884df657ce25dc291d4aa04a",
           "tokens": 33,
           "lines": 6
         }
       ],
-      "total_tokens": 30723,
+      "total_tokens": 0,
       "intro_text": "This is my personal portfolio website",
       "outro_text": "DO:\n- always return full code, unless a change is VERY small (a single line or a short connected segment)\n- make sure empty lines are actually empty: avoid generating lines of spaces or tabs\nalways place closing triple backticks (```) on their own, new line\n\nDo NOT:\n- remove my original comments\n- return diff files\n- use numbered steps (e.g., \"1.\") in comments\n- use <summary> tags\n- end comments with dots (unless you are using multiple sentences)\n- call something \"final\" or \"definitive\"; it usually isn't\n- use double newlines between code\n- add comments if the code itself makes it pretty clear what it does\n\nUse the following format if you want to add temporary notification comments: `// [KEYWORD] Comment` (e.g., `[FIX] Now using correct value`, `[MODIFIED] Improved algorithm`). These comments are transient and exist only to show the user what you've changed. If you find them in code you are reviewing, remove these comments as the user will have already seen them.",
       "expanded_dirs": [
@@ -162,7 +155,6 @@
     "src/views/Home.vue",
     "src/views/Project.vue",
     "src/views/Test.vue",
-    "style.css",
     "vite.config.js"
   ]
 }

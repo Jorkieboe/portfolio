@@ -9,8 +9,8 @@
         {
             "projectTitle": "Motivate students to sport with personalized gamification.",
             "projectType": "Gamification",
-            "projectText": "My graduation project investigates how gamification can be personalized to get students to exercise more. This application will learn how to motivate a specific student using machine learning algorithms."        
-        }, 
+            "projectText": "My graduation project investigates how gamification can be personalized to get students to exercise more. This application will learn how to motivate a specific student using machine learning algorithms."
+        },
         {
             "projectTitle": "Festival recommender",
             "projectType": "Machine learning",
@@ -32,7 +32,7 @@
             "projectText":  "In a Box is a work-in-progress puzzle-platform game where you play in a box that can rotate. Resulting in a change of gravity, so you must approach the puzzle from multiple dimensions."
         }],
         "aboutmeText": [
-            "My name is Jorrik Dillisse, and I have a bachelor's degree in Communication & multimedia design and a master's degree in Data-driven Design. I have been interested in technology from an early age. I enjoy using my creativity to research the possibilities of new technologies and create new ideas to design and develop. To make life more fun, easier, and more educational.", 
+            "My name is Jorrik Dillisse, and I have a bachelor's degree in Communication & multimedia design and a master's degree in Data-driven Design. I have been interested in technology from an early age. I enjoy using my creativity to research the possibilities of new technologies and create new ideas to design and develop. To make life more fun, easier, and more educational.",
             "I am a multidisciplinary developer and designer with experience in web development, game design, data science, UX design, and knowledge of the latest developments in AI and machine learning."
         ]
     },
@@ -42,14 +42,17 @@
         "introText": "Begrijpend biased is a serious games that lets high school students look critically at news on social media in Dutch lessons. Students compile news reports and asses those of others for certain biases in the message. That will teach young people to recognize how such news reports are biased toward a particular opinion.",
         "content": [{
             "title":"Problem",
-            "text": "Young people are more likely to read their news on social media instead of traditional newspapers or TV outlets. The problem with news on social media platforms like Instagram is the tendency to be short and respond to emotions. Furthermore, the selection of the information creates a frame that puts a message in a certain light. It creates an easy opportunity for confirmation bias to kick in. That is a type of bias in which people are more likely to absorb information that confirms their opinion and block other information that contradicts their opinion. In combination with the algorithm, this puts you in a bubble."
+            "text": "Young people are more likely to read their news on social media instead of traditional newspapers or TV outlets. The problem with news on social media platforms like Instagram is the tendency to be short and respond to emotions. Furthermore, the selection of the information creates a frame that puts a message in a certain light. It creates an easy opportunity for confirmation bias to kick in. That is a type of bias in which people are more likely to absorb information that confirms their opinion and block other information that contradicts their opinion. In combination with the algorithm, this puts you in a bubble.",
+            "image": "/images/begrijpendbiased/gedragVeran.jpg"
         },{
             "title":"Concept",
-            "text": "Begrijpend bias is a serious game that lets high school students look critically at news reports on social media. Students play against each other in groups of four. Every student must compile a news report consisting of an image, headline, and text according to a statement. After that, the student must assess the report of the other players and pick the correct statement. The game consists of multiple rounds in which the teacher explains reading strategies in between to understand the biases even better. This approach will force students to be critical of news reports and read them from the writers' and readers' perspectives."
+            "text": "Begrijpend bias is a serious game that lets high school students look critically at news reports on social media. Students play against each other in groups of four. Every student must compile a news report consisting of an image, headline, and text according to a statement. After that, the student must assess the report of the other players and pick the correct statement. The game consists of multiple rounds in which the teacher explains reading strategies in between to understand the biases even better. This approach will force students to be critical of news reports and read them from the writers' and readers' perspectives.",
+            "image": "/images/begrijpendbiased/IMG_2487.jpg"
         },{
             "title":"Development",
-            "text": "The application uses the javascript library: Phaser 3 with websockets for the multiplayer functionality. Websockets is a general server, but that could be a problem in classrooms where the groups will play simultaneously. Therefore, we used game codes to separate the different groups. The codes will help to send the compiled reports to the players within a group. Above that is a general lobby for the whole class. So the teacher can control the course of the game and teach the reading strategies."
-        }] 
+            "text": "The application uses the javascript library: Phaser 3 with websockets for the multiplayer functionality. Websockets is a general server, but that could be a problem in classrooms where the groups will play simultaneously. Therefore, we used game codes to separate the different groups. The codes will help to send the compiled reports to the players within a group. Above that is a general lobby for the whole class. So the teacher can control the course of the game and teach the reading strategies.",
+            "image": "/images/begrijpendbiased/screens.jpg"
+        }]
     },
     "gamification":{
         "projectTitle": "Motivate students to sport with personalized gamification.",
@@ -57,13 +60,16 @@
         "introText": "My graduation project investigates how gamification can be personalized to get students to exercise more. This application will learn how to motivate a specific student using machine learning algorithms. ",
         "content": [{
             "title":"Problem",
-            "text": "Gamification is an often-used method to get people more active. Several game element helps to create motivation. The problem with these apps is that they only use one way to motivate everyone. Multiple researchers argue for new methods to personalize gamification."
+            "text": "Gamification is an often-used method to get people more active. Several game element helps to create motivation. The problem with these apps is that they only use one way to motivate everyone. Multiple researchers argue for new methods to personalize gamification.",
+            "image": "/images/gamification/research.jpg"
         },{
             "title":"Concept",
-            "text": "Deze applicatie is een sport app die dagelijks gepersonaliseerde challenges voorstelt om te gaan rennen. De applicatie gebruikt reinforcement learning om de interesses van de gebruiker te herkennen. Alle challenges zijn gemaakt voor één specifiek spelertype. Bijvoorbeeld een challenge dat gaat over het verbreken van persoonlijke records hoort bij het spelertype ‘achiever’. Dus, wanneer de gebruiker een challenges kiest dat gaat over eigen records verbreken, leert het systeem dat speler mogelijk een achiever is. Het system kan vervolgens meer achiever challenges aanbevelen."
+            "text": "Deze applicatie is een sport app die dagelijks gepersonaliseerde challenges voorstelt om te gaan rennen. De applicatie gebruikt reinforcement learning om de interesses van de gebruiker te herkennen. Alle challenges zijn gemaakt voor één specifiek spelertype. Bijvoorbeeld een challenge dat gaat over het verbreken van persoonlijke records hoort bij het spelertype ‘achiever’. Dus, wanneer de gebruiker een challenges kiest dat gaat over eigen records verbreken, leert het systeem dat speler mogelijk een achiever is. Het system kan vervolgens meer achiever challenges aanbevelen.",
+            "image": "/images/gamification/interfacesketches.jpg"
         },{
             "title":"Development",
-            "text": "The development process consists of three steps: Creating challenges, creating a recommendation system with a reinforcement learning algorithm, and designing a user interface. <br> Firstly, the challenges were created by scraping 2500 challenges from Strava. I clustered all the challenges to create new ones for each specific playertype. <br> Secondly, the recommendation system uses the Thompson sampling reinforcement learning algorithm. Combined with the other two algorithms, these were tested in a simulation. In the simulation, the computer selected challenges based on certain users' preferences. <br> Lastly, the user interface was created in Figma. The goal of this application was to get people running and thus fast to use. That has been tested several times among the target audience and turned out to be very simple and clear."
+            "text": "The development process consists of three steps: Creating challenges, creating a recommendation system with a reinforcement learning algorithm, and designing a user interface. <br> Firstly, the challenges were created by scraping 2500 challenges from Strava. I clustered all the challenges to create new ones for each specific playertype. <br> Secondly, the recommendation system uses the Thompson sampling reinforcement learning algorithm. Combined with the other two algorithms, these were tested in a simulation. In the simulation, the computer selected challenges based on certain users' preferences. <br> Lastly, the user interface was created in Figma. The goal of this application was to get people running and thus fast to use. That has been tested several times among the target audience and turned out to be very simple and clear.",
+            "image": "/images/gamification/algoWorking.jpg"
         }]
     },
     "festivalRecommender":{
@@ -72,13 +78,16 @@
         "introText": "Festival recommender suggests which music festivals you should go to based on the music you listen to on Spotify. This system uses machine learning to compare your favorite music with the performing artists at festivals. ",
         "content": [{
             "title": "Concept",
-            "text": "There are many festivals throughout the year in the Netherlands, but which one should you go to? You will hear many known artists at those festivals, but you also might like lesser-known artists. However, it is a lot of work to listen to all artists performing at certain festivals. Therefore. I created a recommender system that suggests festivals based on your most listened-to tracks."
+            "text": "There are many festivals throughout the year in the Netherlands, but which one should you go to? You will hear many known artists at those festivals, but you also might like lesser-known artists. However, it is a lot of work to listen to all artists performing at certain festivals. Therefore. I created a recommender system that suggests festivals based on your most listened-to tracks.",
+            "image": "/images/recommender/output2.jpg"
         },{
             "title": "Data collection",
-            "text": "This recommender system will compare data about all the artists with your most listened-to tracks. So, I used the Spotify API to collect data about music. The Spotify API gives you access to metadata about tracks, such as danceability, valence, and tempo. I will compare these datapoints with each other. Finally, I can use the data to create a profile for your music and every festival."
+            "text": "This recommender system will compare data about all the artists with your most listened-to tracks. So, I used the Spotify API to collect data about music. The Spotify API gives you access to metadata about tracks, such as danceability, valence, and tempo. I will compare these datapoints with each other. Finally, I can use the data to create a profile for your music and every festival.",
+            "image": "/images/recommender/output.jpg"
         },{
             "title": "Development",
-            "text": "The last step is to compare your music with every festival using the cosine similarity. That will give a number between zero and one. The higher the number, the more similar the festival in comparison to your music taste. After the master's, I started implementing the recommendation model into a react.js app. The application uses Pyscript to run Python code directly in the browser. Furthermore, improving the model by clustering music to prevent generalization of music taste."
+            "text": "The last step is to compare your music with every festival using the cosine similarity. That will give a number between zero and one. The higher the number, the more similar the festival in comparison to your music taste. After the master's, I started implementing the recommendation model into a react.js app. The application uses Pyscript to run Python code directly in the browser. Furthermore, improving the model by clustering music to prevent generalization of music taste.",
+            "image": "/images/recommender/FR_cosine.jpg"
         }]
     },
     "burgerCrush":{
@@ -87,10 +96,12 @@
         "introText": "Burger crush is a 3-match game for the McDonalds app.",
         "content": [{
             "title":"Assignment",
-            "text": "During my internship at LiveWall Group, I created a base of a 3-match game like Candy Crush, called Burger Crush. Live Wall creates different games for McDonalds to implement in their apps to create more engagement for the brand. People play the game and collect coupons to use in their restaurants."
+            "text": "During my internship at LiveWall Group, I created a base of a 3-match game like Candy Crush, called Burger Crush. Live Wall creates different games for McDonalds to implement in their apps to create more engagement for the brand. People play the game and collect coupons to use in their restaurants.",
+            "image": "/images/BurgerCrush/early version.jpg"
         },{
             "title":"Development",
-            "text": "The game was created with Phaser 3, a JavaScript library. I created the base code in the first development phase to detect three items in a row. Subsequently, I Expanded this detection to create special items, such as four in a row that remove an entire row. Lastly, the design team handed a design to transform the application into the McDonalds style. That was implemented with extra animations between scenes."
+            "text": "The game was created with Phaser 3, a JavaScript library. I created the base code in the first development phase to detect three items in a row. Subsequently, I Expanded this detection to create special items, such as four in a row that remove an entire row. Lastly, the design team handed a design to transform the application into the McDonalds style. That was implemented with extra animations between scenes.",
+            "image": "/images/BurgerCrush/development.jpg"
         }]
     },
     "vrGame":{
@@ -99,13 +110,16 @@
         "introText": "Drowning is still a major cause of death among young men. This project uses virtual reality to create a small experience that lets men face the dangers of water through overestimation and peer pressure.",
         "content": [{
             "title": "Problem",
-            "text": "Verdrinken is nog een steeds een grote doodsoorzaak voor jonge mensen. Opvallend komen er naast jonge kinderen ook veel jonge mannen om door verdrinken. Dit ontstaat door groepsdruk rond deze leeftijd. Jonge mannen moeten aantonen dat ze niet bang zijn en sterk zijn. Zij komen door die bewijsdrang makkelijk in gevaarlijke situaties."
+            "text": "Verdrinken is nog een steeds een grote doodsoorzaak voor jonge mensen. Opvallend komen er naast jonge kinderen ook veel jonge mannen om door verdrinken. Dit ontstaat door groepsdruk rond deze leeftijd. Jonge mannen moeten aantonen dat ze niet bang zijn en sterk zijn. Zij komen door die bewijsdrang makkelijk in gevaarlijke situaties.",
+            "image": "/images/SOTA/beach.jpg"
         },{
             "title": "Concept",
-            "text": "In the VR experience, young men are challenged to swim to a rock far in the sea. A couple of non-player characters challenge them via a dialog. They want to convince you to accept the challenges while that rock is clearly far away. Finally, if the user decides to take up the challenge, they will discover it is quite far and eventually drown."
+            "text": "In the VR experience, young men are challenged to swim to a rock far in the sea. A couple of non-player characters challenge them via a dialog. They want to convince you to accept the challenges while that rock is clearly far away. Finally, if the user decides to take up the challenge, they will discover it is quite far and eventually drown.",
+            "image": "/images/SOTA/npcs.jpg"
         },{
             "title": "Development",
-            "text": "The VR experience is created in the Unreal Engine. This project was part of my master's, so I had to create it within three weeks in combination with other projects. I started by building the beach and the logic for the dialog. And I used different user tests to evaluate and improve the dialogs and environmental clues, such as sounds that indicate fatigue."
+            "text": "The VR experience is created in the Unreal Engine. This project was part of my master's, so I had to create it within three weeks in combination with other projects. I started by building the beach and the logic for the dialog. And I used different user tests to evaluate and improve the dialogs and environmental clues, such as sounds that indicate fatigue.",
+            "image": "/images/SOTA/dialog.jpg"
         }]
     },
     "inABox":{
@@ -114,13 +128,16 @@
         "introText": "In a Box is a work-in-progress puzzle-platform game where you play in a box that can rotate. Resulting in a change of gravity, so you must approach the puzzle from multiple dimensions.",
         "content": [{
             "title": "Game",
-            "text": "In a box is a work-in-progress puzzle-platform game I created. You play as a stuffed animal hedgehog, which belongs to the cobbler's son. He has a mysterious backroom where other cuddly toys disappear. One day, the hedgehog decides to enter that room and ends up stuck in a world of cardboard boxes. These boxes can rotate, which affects gravity. Your goal is to discover this world and free all stuffed animals."
+            "text": "In a box is a work-in-progress puzzle-platform game I created. You play as a stuffed animal hedgehog, which belongs to the cobbler's son. He has a mysterious backroom where other cuddly toys disappear. One day, the hedgehog decides to enter that room and ends up stuck in a world of cardboard boxes. These boxes can rotate, which affects gravity. Your goal is to discover this world and free all stuffed animals.",
+            "image": "/images/Inabox/conceptartRot.jpg"
         },{
             "title": "Art Style",
-            "text": "The game takes place in the cobbler’s back room on a desk where he creates boxes for his son. Therefore, the boxes have a crafted look with paper textures. In this dark room, a light shines onto the box that represents a stage light. That moves the focus to the box where the game plays out."
+            "text": "The game takes place in the cobbler’s back room on a desk where he creates boxes for his son. Therefore, the boxes have a crafted look with paper textures. In this dark room, a light shines onto the box that represents a stage light. That moves the focus to the box where the game plays out.",
+            "image": "/images/Inabox/boxroom.jpg"
         },{
             "title": "Development",
-            "text": "The game was created in the Unreal Engine 5 with visual blueprint scripting. The challenge of this game was that UE5 doesn’t support other directions of gravity. That was partly fixable by using a plugin from the Unreal marketplace. However, I needed to remake some built-in features to support multiple gravity directions, like movement or pathfinding."
+            "text": "The game was created in the Unreal Engine 5 with visual blueprint scripting. The challenge of this game was that UE5 doesn’t support other directions of gravity. That was partly fixable by using a plugin from the Unreal marketplace. However, I needed to remake some built-in features to support multiple gravity directions, like movement or pathfinding.",
+            "image": "/images/Inabox/enemy.jpg"
         }]
     }
 }
