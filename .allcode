@@ -8,55 +8,6 @@
     "Default": {
       "selected_files": [
         {
-          "path": "work/Begrijpendbias.html",
-          "mtime": 1774251772.023571,
-          "hash": "07cff6bc37a9534e50283ecd0300ac0ef9137ddd",
-          "tokens": 1559,
-          "lines": 94
-        },
-        {
-          "path": "work/Boodunnit.html",
-          "mtime": 1774251772.023571,
-          "hash": "1b4672e027d023de32020089c77f30e99c8e787b",
-          "tokens": 1191,
-          "lines": 85
-        },
-        {
-          "path": "work/Burgercrush.html",
-          "mtime": 1774251772.023571,
-          "hash": "ecd3b158cb9874ce76f344c994f248343bc63621",
-          "tokens": 1029,
-          "lines": 80
-        },
-        {
-          "path": "work/gamification.html",
-          "mtime": 1774251772.0245707,
-          "hash": "8cad5710621cf596a780b8eb6b4e0f00fbf69339",
-          "tokens": 1495,
-          "lines": 102
-        },
-        {
-          "path": "work/InABox.html",
-          "mtime": 1774251772.0245707,
-          "hash": "263a29885c600da4944f97e693d47bfe6ed30bca",
-          "tokens": 1345,
-          "lines": 95
-        },
-        {
-          "path": "work/Recommender.html",
-          "mtime": 1774251772.0245707,
-          "hash": "da00c4895bca7398a93bb48bdf419314c147790a",
-          "tokens": 1385,
-          "lines": 95
-        },
-        {
-          "path": "work/vrgame.html",
-          "mtime": 1774251772.0245707,
-          "hash": "0b29630f48dd3fa65c8f78bbd94bf9a96e70b8d1",
-          "tokens": 1302,
-          "lines": 95
-        },
-        {
           "path": "index.html",
           "mtime": 1774251772.0185692,
           "hash": "185547b9b31e1d68ca1a5103c2f822416604c135",
@@ -93,10 +44,10 @@
         },
         {
           "path": "src/components/Canvas.vue",
-          "mtime": 1774261131.3471766,
-          "hash": "1cf67e051bff3fc16f68cc43462f4debc8053af5",
-          "tokens": 2734,
-          "lines": 284
+          "mtime": 1774453696.2558534,
+          "hash": "fc24ae33ca07e179898318e558e834edaeb15ab2",
+          "tokens": 2843,
+          "lines": 298
         },
         {
           "path": "src/composables/useLang.js",
@@ -107,10 +58,10 @@
         },
         {
           "path": "src/store/store.js",
-          "mtime": 1774261167.7975125,
-          "hash": "8a207e97d1f26a25694819dee98c685e9c7fd61a",
-          "tokens": 96,
-          "lines": 15
+          "mtime": 1774262301.58838,
+          "hash": "f6c0a80500ae3341a65c41f24585b568750aba48",
+          "tokens": 111,
+          "lines": 17
         },
         {
           "path": "src/views/Home.vue",
@@ -121,31 +72,31 @@
         },
         {
           "path": "src/views/Project.vue",
-          "mtime": 1774251772.02257,
-          "hash": "33e6f9691d4f93fe99ab47813a1424ece315f5ee",
-          "tokens": 1248,
-          "lines": 130
+          "mtime": 1774299393.3351777,
+          "hash": "1328da4d6c155fb32f8dc9b5addfa803200222b8",
+          "tokens": 1287,
+          "lines": 138
         },
         {
           "path": "src/views/Test.vue",
-          "mtime": 1774261381.949355,
-          "hash": "5670364079577a1141019f2033b39294abd0b056",
-          "tokens": 2057,
-          "lines": 376
+          "mtime": 1774453613.1633332,
+          "hash": "553bd7b0424fc3409ccb386eaa6692d195a184c8",
+          "tokens": 2956,
+          "lines": 533
         },
         {
           "path": "src/App.vue",
-          "mtime": 1774261378.3652563,
-          "hash": "6d8934187ce8312f8eb297cf5feca448ebe7b438",
-          "tokens": 572,
-          "lines": 62
+          "mtime": 1774443627.013596,
+          "hash": "c9c24a89db7d818ad03e2a09c204fe54af5b08a7",
+          "tokens": 927,
+          "lines": 126
         },
         {
           "path": "src/main.js",
-          "mtime": 1774260752.6087227,
-          "hash": "e3c1f295a6c2443574db60cc4399d641424c736f",
-          "tokens": 447,
-          "lines": 63
+          "mtime": 1774262163.7743838,
+          "hash": "f38aa31d3642b0b8450e7c6f743055d17acd5587",
+          "tokens": 465,
+          "lines": 65
         },
         {
           "path": "src/router.js",
@@ -156,10 +107,10 @@
         },
         {
           "path": "src/style.css",
-          "mtime": 1774251772.0215704,
-          "hash": "a6f18eaf5b54bf474b3fa0861ccf23390b746ae6",
-          "tokens": 5576,
-          "lines": 1071
+          "mtime": 1774452501.312734,
+          "hash": "347825c299234a2444cbd6bb4cce54aa6aca70a4",
+          "tokens": 5383,
+          "lines": 1035
         },
         {
           "path": "go.bat",
@@ -170,10 +121,10 @@
         },
         {
           "path": "package.json",
-          "mtime": 1774259617.9718769,
-          "hash": "ec6b3ae6faf65e016187cc97532a13d9eb768d7a",
-          "tokens": 170,
-          "lines": 22
+          "mtime": 1774291272.8562114,
+          "hash": "6a458de5839317ea0924e4cf3055978443e1ba0c",
+          "tokens": 196,
+          "lines": 24
         },
         {
           "path": "vite.config.js",
@@ -183,7 +134,7 @@
           "lines": 6
         }
       ],
-      "total_tokens": 38761,
+      "total_tokens": 30723,
       "intro_text": "This is my personal portfolio website",
       "outro_text": "DO:\n- always return full code, unless a change is VERY small (a single line or a short connected segment)\n- make sure empty lines are actually empty: avoid generating lines of spaces or tabs\nalways place closing triple backticks (```) on their own, new line\n\nDo NOT:\n- remove my original comments\n- return diff files\n- use numbered steps (e.g., \"1.\") in comments\n- use <summary> tags\n- end comments with dots (unless you are using multiple sentences)\n- call something \"final\" or \"definitive\"; it usually isn't\n- use double newlines between code\n- add comments if the code itself makes it pretty clear what it does\n\nUse the following format if you want to add temporary notification comments: `// [KEYWORD] Comment` (e.g., `[FIX] Now using correct value`, `[MODIFIED] Improved algorithm`). These comments are transient and exist only to show the user what you've changed. If you find them in code you are reviewing, remove these comments as the user will have already seen them.",
       "expanded_dirs": [
@@ -212,13 +163,6 @@
     "src/views/Project.vue",
     "src/views/Test.vue",
     "style.css",
-    "vite.config.js",
-    "work/Begrijpendbias.html",
-    "work/Boodunnit.html",
-    "work/Burgercrush.html",
-    "work/InABox.html",
-    "work/Recommender.html",
-    "work/gamification.html",
-    "work/vrgame.html"
+    "vite.config.js"
   ]
 }

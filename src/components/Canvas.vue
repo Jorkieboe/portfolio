@@ -46,18 +46,17 @@ const canvasContainer = ref(null)
 
 let renderer, scene, camera, animationId, mesh
 
-const minHeaderPx = 64 // Ensure it never gets smaller than this on mobile
+const minHeaderPx = 64
 
-const stableHeight = ref(0) // Our stable reference
+const stableHeight = ref(0)
 const dynamicZoneHeight = ref(0)
 let lastWidth = 0
 
-// Uniforms
 const uMaskScale = uniform(1) 
-const uPlaneAspect = uniform(1)  // Actual screen aspect
-const uTextureAspect = uniform(1) // Aspect of your SVG
+const uPlaneAspect = uniform(1) 
+const uTextureAspect = uniform(1)
 const uMaskStrength = uniform(0)
-const uMoveProgress = uniform(0) // 0 = Center, 1 = Top-Right Header
+const uMoveProgress = uniform(0)
 const uColourTop = uniform(new THREE.Color(colors[0].top.x, colors[0].top.y, colors[0].top.z))
 const uColourBottom = uniform(new THREE.Color(colors[0].bottom.x, colors[0].bottom.y, colors[0].bottom.z))
 const targetTop = new THREE.Color(colors[0].top.x, colors[0].top.y, colors[0].top.z)
@@ -67,7 +66,7 @@ const uMaskHeight = uniform(store.headerSize)
 
 let scrollProgress = 0
 let smoothedProgress = 0
-const lerpFactor = 0.12 // Slightly higher for more responsive smoothness
+const lerpFactor = 0.12 
 
 watch(() => store.projectActive, (newActive) => {
   if (newActive !== null) {
@@ -81,8 +80,6 @@ watch(() => store.projectActive, (newActive) => {
 })
 
 const handleScroll = () => {
-    // Use the stable height to calculate the track. 
-    // Now, even if the URL bar appears, this number stays constant.
     const zoomTrackHeight = stableHeight.value * 2.5
     const currentScroll = window.scrollY
     scrollProgress = Math.min(currentScroll / zoomTrackHeight, 1.0)
@@ -94,13 +91,10 @@ const handleResize = () => {
     const w = window.innerWidth
     const h = window.innerHeight
 
-    // ONLY update our reference if the width changed (rotation) 
-    // or if the height change is huge (more than 150px, likely not just a URL bar)
     if (w !== lastWidth || Math.abs(h - stableHeight.value) > 150) {
         stableHeight.value = h
         lastWidth = w
-        
-        // Update Three.js renderer
+
         const constrainedWidth = Math.min(w, 1920)
         renderer.setSize(w, h)
         uPlaneAspect.value = constrainedWidth / h
@@ -242,7 +236,6 @@ onMounted(async () => {
             clipAmount = Math.max(0, Math.min(rawClip, maxClip))
           }
 
-          // Apply clip instantly so it looks completely attached to the scrolling content
           const clipString = `inset(0px 0px ${clipAmount}px 0px)`
           canvasContainer.value.style.webkitClipPath = clipString
           canvasContainer.value.style.clipPath = clipString

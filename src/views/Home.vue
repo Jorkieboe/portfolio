@@ -49,7 +49,7 @@ import { useLang } from '../composables/useLang'
 
 const { t } = useLang()
 
-// The IDs corresponding to the translations JSON objects
+
 const projectIds =[
   'begrijpendBiased',
   'gamification',
@@ -74,7 +74,6 @@ const toggleMobile = (index) => {
 </script>
 
 <style scoped>
-/* Mapping vanilla JS ID manipulations to standard Vue reactive classes */
 .projectWrapper.active {
   transform: translateY(0px) !important;
   opacity: 1 !important;

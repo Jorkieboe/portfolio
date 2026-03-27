@@ -7,22 +7,12 @@ import Canvas from './components/canvas.vue';
 import { useSpring, useMotionProperties } from '@vueuse/motion';
 import gsap from 'gsap';
 
-
 const store = useMainStore()
 
 provide('store', store)
 
 const vh = window.innerHeight
 const initialHeaderPx = vh - (vh * store.headerSize)
-
-
-
-// const { motionProperties } = useMotionProperties(motionprop, {
-//   y: 0,
-// })
-
-
-
 
 const scrollTo = (id) => {
   const el = document.getElementById(id)
@@ -33,7 +23,6 @@ const onBeforeLeave = () => {
   const vh = window.innerHeight
   const headerPx = vh * store.headerSize
   
-  // Give control to the spring
   store.isTransitioning = true
 }
 

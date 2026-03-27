@@ -31,7 +31,10 @@
             "projectType": "Game",
             "projectText":  "In a Box is a work-in-progress puzzle-platform game where you play in a box that can rotate. Resulting in a change of gravity, so you must approach the puzzle from multiple dimensions."
         }],
-        "aboutmeText": "My name is Jorrik Dillisse, and I have a bachelor's degree in Communication & multimedia design and a master's degree in Data-driven Design. I have been interested in technology from an early age. I enjoy using my creativity to research the possibilities of new technologies and create new ideas to design and develop. To make life more fun, easier, and more educational. <br><br> I am a multidisciplinary developer and designer with experience in web development, game design, data science, UX design, and knowledge of the latest developments in AI and machine learning."
+        "aboutmeText": [
+            "My name is Jorrik Dillisse, and I have a bachelor's degree in Communication & multimedia design and a master's degree in Data-driven Design. I have been interested in technology from an early age. I enjoy using my creativity to research the possibilities of new technologies and create new ideas to design and develop. To make life more fun, easier, and more educational.", 
+            "I am a multidisciplinary developer and designer with experience in web development, game design, data science, UX design, and knowledge of the latest developments in AI and machine learning."
+        ]
     },
     "begrijpendBiased":{
         "projectTitle": "Begrijpend Biased",

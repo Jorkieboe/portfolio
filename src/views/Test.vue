@@ -4,12 +4,12 @@ import Canvas from '../components/canvas.vue'
 import { useLang } from '../composables/useLang'
 import { gsap } from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
+import { SplitText } from 'gsap/SplitText';
 
 
 
 const { t } = useLang()
 
-// The IDs corresponding to the translations JSON objects
 const projectIds =[
   'begrijpendBiased',
   'gamification',
@@ -40,15 +40,15 @@ let ctx;
 onMounted(() => {
   store.setContentRef(localContentRef)
   gsap.registerPlugin(ScrollTrigger);
-  
+  gsap.registerPlugin(SplitText);
+
   ctx = gsap.context(() => {
     
-    // 1. YOUR EXISTING PROJECTS TIMELINE
     const tl = gsap.timeline({
       scrollTrigger: {
         trigger: "#projects",
         start: "top 15%",  
-        end: "+=1550vh",   
+        end: "+=1000vh",   
         pin: true,    
         pinSpacing: true,    
         scrub: 1,  
@@ -61,27 +61,64 @@ onMounted(() => {
       stagger: 0.2,   
       ease: "power2.out",
       duration: 1    
-    });
+    })
 
     tl.to({}, { duration: 0.5 });
 
-    const disp = document.querySelector("feDisplacementMap");
-  const offset = document.querySelector("feOffset");
-
     const tlAbout = gsap.timeline({
-      scrollTrigger: {
-        trigger: "#about",
-        start: "top top",
-        end: "+=2000", 
-        scrub: 1,  
-        pin: true, 
-        pinSpacing: true,      
-      }
-    });
+          scrollTrigger: {
+            trigger: ".aboutMeContent", 
+            start: "5% 25%",
+            end: "72.5% 50%", 
+            scrub: 1,
+            pin: ".profilePicture", 
+            pinSpacing: false,  
+            markers: true 
+    
+          }
+        });
 
+        tlAbout.to(".profilePicture", {
+          yPercent: -25,
+          opacity: 1,
+          duration: 0.5,
+          ease: "power2.out"
+        })
+        .to({}, { duration: 0.5 })
+        .to(".profilePicture", {
+          x: -150, rotateY: '30deg', skewX: '-25deg', duration: 0.5, ease: "power1.inOut"
+        })
+        .to(".profilePicture", {
+          x: -250, rotateY: '60deg', skewX: '-50deg', scale: 0.8, duration: 0.5
+        })
+        .to(".profilePicture", {
+          x: -300, skewX: '0deg', rotateY: '0deg', scale: 0.7, duration: 0.5
+        });
 
+        tlAbout.to({}, { duration: 4 }); 
+     
+          const textElements = gsap.utils.toArray(".meText");
 
-  }, localContentRef.value);
+          textElements.forEach((el) => {
+            const split = new SplitText(el, { type: "words" });
+
+            gsap.from(split.words, {
+              scrollTrigger: {
+                trigger: el,    
+                start: "10% 90%",  
+                end: "top 50%",    
+                scrub: 0.5,       
+              },
+              scale: 0.9,
+              x: -10,
+              y: 10,
+              autoAlpha: 0,
+              stagger: { amount: 1.5 },
+              duration: 0.5,
+            });
+          });
+
+      }, localContentRef.value);
 });
 
 </script>
@@ -125,37 +162,21 @@ onMounted(() => {
             </div>
         </div>
         <div class="about" id="about">
-          <svg width="0" height="0">
-            <filter id="distort">
-              
-              <feTurbulence 
-                type="turbulence"
-                baseFrequency="0.01 0.25"
-                numOctaves="2"
-                result="noise"
-              />
-
-              <feOffset in="noise" dy="0" result="move" />
-
-              <feDisplacementMap
-                in="SourceGraphic"
-                in2="move"
-                scale="0"
-                xChannelSelector="R"
-                yChannelSelector="G"
-              />
-
-            </filter>
-          </svg>
-          <img class="profilePicture" src="/images/Jorrik.jpg">
-            <!-- <h3 class="sectionTitle">About me</h3>
-            <div class="aboutMeContent">
-                
-                <p class="meText" v-html="t.homePage.aboutmeText"></p>
-            </div> -->
+          <h3 class="sectionTitle">About me</h3>
+            <div class="aboutMeContent">  
+              <div class="pic-wrapper">
+                <img class="profilePicture" src="/images/Jorrik.jpg">
+              </div>
+              <div class="text-section">
+                <div class="dummy"></div>
+                  <div class="meTextwrapper">
+                    <p class="meText" v-for="text in t.homePage.aboutmeText" v-html="text"></p>
+                  </div>
+              </div>
+            </div>
+          </div>
         </div>
     </div>
-</div>
 </template>
 
 <style scoped lang="scss">
@@ -196,8 +217,6 @@ onMounted(() => {
   width: 100%;
   overflow: hidden;
   margin: 0 auto;
-
-  // height: 125vh;
   
 
   .projectlist {
@@ -214,7 +233,6 @@ onMounted(() => {
     .projectWrapper {
       display: flex;
       flex-shrink: 0;
-      // width: 25rem;
       height: fit-content;
       margin-left: -5rem; 
       pointer-events: all;
@@ -227,7 +245,6 @@ onMounted(() => {
       }
 
        &.active{
-          // width: 45rem;
           margin-left: 0;
           z-index: 10;
           flex-grow: 0;
@@ -256,7 +273,6 @@ onMounted(() => {
               }
 
               .projectPanel{
-                // margin-left: 0;
                 margin-right: -4rem;
               }
             }
@@ -271,7 +287,6 @@ onMounted(() => {
         justify-content: center;
         width: fit-content;
         padding-left: -10rem;
-        // flex-grow: 1;
         pointer-events: none;
         overflow: hidden;
 
@@ -301,14 +316,11 @@ onMounted(() => {
             opacity: 0;
             overflow: hidden;
             transition: all 0.6s ease-in-out;
-            // transform: translateX(-3rem);
         }
 
         .panelTextDiv {
             width: 20rem; 
             position: relative;
-            // overflow: hidden;
-            // clip-path: polygon(15% 0%, 100% 0%, 85% 100%, 0% 100%);
             min-height: 200px; 
             height: 100%;
 
@@ -324,7 +336,6 @@ onMounted(() => {
               width: 5rem;
               height: 100%;
               float: right;
-              /* We define the shape of the 'empty space' on the right */
               shape-outside: polygon(40% 0%, 100% 0%, 80% 100%, 0% 100%);
             }
 
@@ -354,44 +365,74 @@ onMounted(() => {
 
 .about {
     display: flex;
+    position: relative;
+   flex-direction: column;
     justify-content: center;
-    align-items: center;
+    align-items: flex-start;
     margin: auto;
     margin-top: 50px;
     margin-bottom: 50px;
-    max-width: 100rem;
     width: 100%;
-    height: 100vh;
+    height: fit-content;
     margin: 0 auto;
-
-    .profilePicture {
-      max-width: 30rem;
-      width: 90%;
-      object-fit: contain;
-      height: fit-content;
-      margin: 0 auto;
-      filter: url(#distort);
-    }
+    
 
     .aboutMeContent {
-    display: flex;
-    align-items: center;
-    justify-content: space-around;
- 
-    width: 100%;
-
-    .meText {
+      width: 100%;
+      height: 200vh;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: flex-start;
+      
+      .pic-wrapper{
         width: 100%;
-        font-size: 1rem;
+        height: 100vh;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+
+        .profilePicture {
+          max-width: 50vh;
+          width: 100%;
+          object-fit: contain;
+          height: fit-content;
+    
+          filter: url(#distort);
+        }
       }
-    }
+
+      .text-section{
+        width: 100%;
+        height: fit-content;
+        position: relative;
+        display: flex;
+        justify-content: flex-end;
+        padding: 5rem 0;
+        .dummy {
+           width: 50%;
+         }
+
+        .meTextwrapper{
+            display: flex;
+            flex-direction: column;
+            width: 50%;
+            
+        
+        
+          .meText {
+            font-size: 1.5rem;
+            max-width: 30rem;
+            width: 100%;
+            // width: 50%;
+            margin-bottom: 2.5rem;
+      
+          }
+        } 
+      }
+    }     
 }
-
-
-
-
-
-
 
 .p1 {
     background-image: url("/images/begrijpendbiased.jpg");

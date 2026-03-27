@@ -17,11 +17,9 @@ onMounted(()=>{
 const projectId = computed(() => route.params.id)
 const projectData = computed(() => t.value[projectId.value])
 
-// Extract fields dynamically (Accounting for inconsistent JSON keys like 'firstTitle', 'thirdText')
 const getTitle = (obj) => obj?.title || obj?.firstTitle || obj?.secondTitle || obj?.thirdTitle || ''
 const getText = (obj) => obj?.text || obj?.firstText || obj?.secondText || obj?.thirdText || ''
 
-// Explicitly mapping CSS IDs since your CSS relied heavily on custom named IDs
 const configMap = {
   begrijpendBiased: {
     prefix: 'bb',
@@ -96,7 +94,6 @@ const cfg = computed(() => configMap[projectId.value] || configMap.begrijpendBia
       <div class="projectOverview" :class="cfg.prefix">
           <div class="bigImage" :id="cfg.imgBig" v-animate="'oneway'"></div>
 
-          <!-- Special case for Gamification using a second big image -->
           <div class="bigImage" id="gf_bigImage2" v-if="projectId === 'gamification'" v-animate="'oneway'"></div>
 
           <div class="smallImageSection" v-if="cfg.hasSmall">

@@ -31,7 +31,10 @@
             "projectType": "Game",
             "projectText":  "In a box is een work in progress puzzle-platform game waar je speelt in een kartonnen doos die draaibaar is. Hierdoor verandert de zwaartekracht en moet je vanuit meerdere dimensies deze puzzels benaderen."
         }],
-        "aboutmeText": "Ik ben Jorrik Dillisse en heb mijn bachelor in Communicatie & Multimedia Design en master in Data-driven Design. Ik ben vanaf jongs af aan al geïnteresseerd in technologie. Ik vind het leuk om met mijn creativiteit verschillende technologieën te onderzoeken en nieuwe ideeën voor digitale producten te ontwerpen en ontwikkelen. Hierdoor wil ik het leven leuker, makkelijker en/of leerzamer maken. <br> <br> Ik zie mijzelf als een multidisciplinaire developer en designer met ervaring in web development, game design, data science, UX design en kennis in de laatste ontwikkeling rond AI en machine learning."
+        "aboutmeText": [
+                        "Ik ben Jorrik Dillisse en heb mijn bachelor in Communicatie & Multimedia Design en master in Data-driven Design. Ik ben vanaf jongs af aan al geïnteresseerd in technologie. Ik vind het leuk om met mijn creativiteit verschillende technologieën te onderzoeken en nieuwe ideeën voor digitale producten te ontwerpen en ontwikkelen. Hierdoor wil ik het leven leuker, makkelijker en/of leerzamer maken.", 
+                        "Ik zie mijzelf als een multidisciplinaire developer en designer met ervaring in web development, game design, data science, UX design en kennis in de laatste ontwikkeling rond AI en machine learning."
+                    ]
         
     },
     "begrijpendBiased":{
