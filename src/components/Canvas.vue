@@ -6,39 +6,13 @@ import { gsap } from 'gsap'
 import { ScrollTrigger } from 'gsap/ScrollTrigger'
 
 import { useRoute } from 'vue-router'
+import {colors} from '../utils/colors'
 
 const scrollState = {
   progress: 0
 }
 
 const route = useRoute()
-
-const colors =  [
-  {
-    "top": {x:1, y:0.2, z:0.2},
-    "bottom": {x: 0.3, y: 0.8, z: 0.2},
-  },
-  {
-    "top":  {x:0.2,  y: 0.6,z:0.7},
-    "bottom":  {x:0.5, y:  0.2, z:0.3},
-  },
-  {
-    "top":  {x:0.2,  y: 0.5, z:0.5},
-    "bottom":  {x:0.1, y:  0.9, z:0.6},
-  },
-  {
-    "top":  {x:0.9, y:  1, z:0.1},
-    "bottom":  {x:0.3, y:  0.8, z:0.2},
-  },
-  {
-    "top": {x:0.4,  y: 0.7, z:0.8},
-    "bottom": {x:0.1,  y: 0.1, z:0.3},
-  },
-  {
-    "top": {x:0.4,  y: 0.4, z:1.0},
-    "bottom": {x:0.7, y: 0.4, z:0.1},
-  }
-]
 
 const store = inject('store')
 

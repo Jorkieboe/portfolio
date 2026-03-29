@@ -135,7 +135,9 @@
         "src/components",
         "src/store"
       ],
-      "unknown_files": []
+      "unknown_files": [
+        "src/utils/colors.js"
+      ]
     }
   },
   "known_files": [
@@ -152,6 +154,7 @@
     "src/router.js",
     "src/store/store.js",
     "src/style.css",
+    "src/utils/colors.js",
     "src/views/Home.vue",
     "src/views/Project.vue",
     "src/views/Test.vue",

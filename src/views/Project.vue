@@ -5,6 +5,7 @@ import { useLang } from '../composables/useLang'
 import { gsap } from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
 import { SplitText } from 'gsap/SplitText';
+import {colors} from '../utils/colors'
 
 const route = useRoute()
 const { t } = useLang()
@@ -122,7 +123,8 @@ const cfg = computed(() => configMap[projectId.value] || configMap.begrijpendBia
           </div>
       </div>
 
-      <div v-for="(content, index) in projectData.content" :key="index" class="projectInfoSection" :class="{ 'middle': index % 2 !== 0 }">
+      <div v-for="(content, index) in projectData.content" :key="index" class="projectInfoContainer" :style="{backgroundColor: index == 0 ? colors[store.projectActive ? store.projectActive : 0].top.hex : 'transparent'}" :class="[{ 'middle': index % 2 !== 0 }, {'first': index == 0}]">
+        <div class="wrapper">
           <div class="sectionInfo">
               <h2 class="subTitle">{{ content.title }}</h2>
               <p class="text subSectionText" v-html="content.text"></p>
@@ -131,6 +133,7 @@ const cfg = computed(() => configMap[projectId.value] || configMap.begrijpendBia
           <div class="subSectionImage">
               <img :src="content.image" :alt="content.title" class="subSectionImg">
           </div>
+        </div>
       </div>
   </div>
 </template>
@@ -211,40 +214,47 @@ const cfg = computed(() => configMap[projectId.value] || configMap.begrijpendBia
         }
     }
 
-    .projectInfoSection {
-        display: flex;
-        justify-content: center;
-        align-items: center;
-        max-width: 40rem;
-        width: 90%;
-        margin-top: 20px;
-
-        .sectionInfo {
-            display: flex;
-            flex-direction: column;
-            justify-content: center;
-            margin-left: 50px;
-            margin-right: 50px;
-
-            p, h2{
-                  color: black;
-            }
+    .projectInfoContainer {
+        
+        padding: 20px 0;
+        &.first{
+            background-color: aquamarine;
         }
 
-        .subSectionImage {
-            width: 500px;
-            height: 300px;
-            object-fit: contain;
+        .wrapper{
             display: flex;
             justify-content: center;
             align-items: center;
+            max-width: 60rem;
+            width: 90%;
+            margin: 0 auto;
+            .sectionInfo {
+                display: flex;
+                flex-direction: column;
+                justify-content: center;
+                margin-left: 50px;
+                margin-right: 50px;
 
-            .subSectionImg {
-                height: 100%;
-                width: auto;
-                object-fit: contain;
+                p, h2{
+                    color: black;
+                }
             }
-        }
+
+            .subSectionImage {
+                width: 500px;
+                height: 300px;
+                object-fit: contain;
+                display: flex;
+                justify-content: center;
+                align-items: center;
+
+                .subSectionImg {
+                    height: 100%;
+                    width: auto;
+                    object-fit: contain;
+                }
+            }
+         }
     }
 
     .projectInfoSection.middle {
