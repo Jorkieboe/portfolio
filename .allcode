@@ -23,17 +23,17 @@
         },
         {
           "path": "src/assets/lang/en.json",
-          "mtime": 1774855194.4934354,
+          "mtime": 1775045037.2743447,
           "hash": "5d0e396482b029dd75ce09bb8acb427afb70a831",
           "tokens": 3023,
           "lines": 143
         },
         {
           "path": "src/assets/lang/nl.json",
-          "mtime": 1774856238.235001,
-          "hash": "857c04ff8eca9615b0af7c2d61458dcdf18f7e79",
-          "tokens": 3736,
-          "lines": 144
+          "mtime": 1775045037.273811,
+          "hash": "fb773e8c43995eedf1971a1fa98ecbb5e5749e8d",
+          "tokens": 4437,
+          "lines": 170
         },
         {
           "path": "src/components/Canvas.vue",
@@ -44,8 +44,8 @@
         },
         {
           "path": "src/composables/useLang.js",
-          "mtime": 1774251772.02057,
-          "hash": "d017d6bcaec9b7294dd037b2f9f1034c92529036",
+          "mtime": 1775027825.4884875,
+          "hash": "52ffe7decf957c88c9ba8dddc10b57798b26f118",
           "tokens": 125,
           "lines": 19
         },
@@ -65,17 +65,17 @@
         },
         {
           "path": "src/views/Project.vue",
-          "mtime": 1774863459.0385036,
-          "hash": "522a049dd3d7bc9a0b43b558fb9265a97f69ca45",
-          "tokens": 1818,
-          "lines": 286
+          "mtime": 1775046917.7115276,
+          "hash": "767f4640fc9d29412b05f795c93507d32e5af357",
+          "tokens": 3173,
+          "lines": 524
         },
         {
           "path": "src/views/Test.vue",
-          "mtime": 1774855360.9469867,
-          "hash": "f65d0296631c696ebc64e50358f8c38492689d5f",
-          "tokens": 3954,
-          "lines": 695
+          "mtime": 1775043647.7119331,
+          "hash": "f2ea23860b79976241a96b138ab067f090edb3a3",
+          "tokens": 4037,
+          "lines": 707
         },
         {
           "path": "src/App.vue",
@@ -132,43 +132,191 @@
           "hash": "7862ae1a011d426fc7db22b75305d4280179a3bb",
           "tokens": 468,
           "lines": 26
+        },
+        {
+          "path": "src/content/en/old/begrijpendBiased.js",
+          "mtime": 1775027825.4635558,
+          "hash": "f94d7cb1db6d1fb28112c2a35f54d8c737d36a5f",
+          "tokens": 511,
+          "lines": 22
+        },
+        {
+          "path": "src/content/en/old/burgerCrush.js",
+          "mtime": 1775028242.5310497,
+          "hash": "8b534bc59de9d78928a9b57cddb3d6c0d3378c06",
+          "tokens": 245,
+          "lines": 17
+        },
+        {
+          "path": "src/content/en/old/inABox.js",
+          "mtime": 1775027825.4650676,
+          "hash": "fcd17d936dd9b4ce90ca842a3059d47cada4f7eb",
+          "tokens": 375,
+          "lines": 22
+        },
+        {
+          "path": "src/content/en/festivalRecommender.js",
+          "mtime": 1775045903.9072328,
+          "hash": "716f7387bd2bcd14a0d44da5881638fe142b606b",
+          "tokens": 399,
+          "lines": 22
+        },
+        {
+          "path": "src/content/en/futurenow.js",
+          "mtime": 1775045892.5727627,
+          "hash": "965cca40abeb2342bb8b3d5bc0123d2e0252eaab",
+          "tokens": 606,
+          "lines": 27
+        },
+        {
+          "path": "src/content/en/gamification.js",
+          "mtime": 1775044685.4985332,
+          "hash": "129a60ed34d9cdacffa25d0c496450462198838c",
+          "tokens": 498,
+          "lines": 22
+        },
+        {
+          "path": "src/content/en/home.js",
+          "mtime": 1775045875.1017544,
+          "hash": "5ba736a57282b7c89a66bfde1b5a00c76ad6a248",
+          "tokens": 907,
+          "lines": 51
+        },
+        {
+          "path": "src/content/en/index.js",
+          "mtime": 1775029684.7502046,
+          "hash": "30dde7c942e2c52e29e6de5f36b18cc51cbfa7ee",
+          "tokens": 129,
+          "lines": 19
+        },
+        {
+          "path": "src/content/en/lisboastories.js",
+          "mtime": 1775045858.1675184,
+          "hash": "e9fb6f77afedf393374ef48b81e46532a346153d",
+          "tokens": 598,
+          "lines": 27
+        },
+        {
+          "path": "src/content/en/parleyStudio.js",
+          "mtime": 1775045849.0422719,
+          "hash": "8cb41625a877c70e2991306380bb70d5a124f7b3",
+          "tokens": 694,
+          "lines": 32
+        },
+        {
+          "path": "src/content/en/verhalenvangers.js",
+          "mtime": 1775045834.846674,
+          "hash": "694da599a6e12e6daa56a01ba20976c6916b4b07",
+          "tokens": 436,
+          "lines": 22
+        },
+        {
+          "path": "src/content/en/vrGame.js",
+          "mtime": 1775045827.7045057,
+          "hash": "1b2de475b7a45972bc00cd4ede1d1d91ac5df920",
+          "tokens": 385,
+          "lines": 22
+        },
+        {
+          "path": "src/content/nl/old/begrijpendBiased.js",
+          "mtime": 1775027825.4650676,
+          "hash": "8d15bac18ba7db515d45c9a2fb992205aa04cc64",
+          "tokens": 508,
+          "lines": 22
+        },
+        {
+          "path": "src/content/nl/old/burgerCrush.js",
+          "mtime": 1775028242.9403195,
+          "hash": "6e4edb5c5e2e8424d5edb0191b18f7afbc6eff9d",
+          "tokens": 303,
+          "lines": 17
+        },
+        {
+          "path": "src/content/nl/old/inABox.js",
+          "mtime": 1775027825.4732819,
+          "hash": "6ca71317e0ce0d53a390ee930a55684a427864d5",
+          "tokens": 511,
+          "lines": 22
+        },
+        {
+          "path": "src/content/nl/festivalRecommender.js",
+          "mtime": 1775045819.3652864,
+          "hash": "79ee1211b284e4b955203ad2d6c88a8c541612b2",
+          "tokens": 555,
+          "lines": 22
+        },
+        {
+          "path": "src/content/nl/futurenow.js",
+          "mtime": 1775045810.6712449,
+          "hash": "11d5c78980aff7c8b05fdde9c3cb82fd7e13b498",
+          "tokens": 675,
+          "lines": 33
+        },
+        {
+          "path": "src/content/nl/gamification.js",
+          "mtime": 1775045794.592087,
+          "hash": "bc1f816e8927a40b7df8aa781c0235bf74f03c84",
+          "tokens": 560,
+          "lines": 23
+        },
+        {
+          "path": "src/content/nl/home.js",
+          "mtime": 1775045786.661901,
+          "hash": "f6e8c4826240a971cfc09bdccea6f511f8fc7bed",
+          "tokens": 916,
+          "lines": 51
+        },
+        {
+          "path": "src/content/nl/index.js",
+          "mtime": 1775029733.60455,
+          "hash": "d36450c078847c83a5718ec58cc1d10c986677fb",
+          "tokens": 129,
+          "lines": 19
+        },
+        {
+          "path": "src/content/nl/lisboastories.js",
+          "mtime": 1775045769.337158,
+          "hash": "c63d5abc42eee25766d56be3f8c5f524cbe24255",
+          "tokens": 606,
+          "lines": 28
+        },
+        {
+          "path": "src/content/nl/parleyStudio.js",
+          "mtime": 1775045754.4444313,
+          "hash": "cabd633d1193e515304c265628625276091d4e57",
+          "tokens": 760,
+          "lines": 38
+        },
+        {
+          "path": "src/content/nl/verhalenvangers.js",
+          "mtime": 1775047176.9553337,
+          "hash": "f7087b8ba6b1790a6a479801b47c7b8b8c9671e0",
+          "tokens": 542,
+          "lines": 28
+        },
+        {
+          "path": "src/content/nl/vrGame.js",
+          "mtime": 1775045735.4382899,
+          "hash": "f6794ee1db2298cfab60e318b31f421b90f48cc3",
+          "tokens": 518,
+          "lines": 27
         }
       ],
-      "total_tokens": 22035,
+      "total_tokens": 36540,
       "intro_text": "This is my personal portfolio website",
       "outro_text": "DO:\n- always return full code, unless a change is VERY small (a single line or a short connected segment)\n- make sure empty lines are actually empty: avoid generating lines of spaces or tabs\nalways place closing triple backticks (```) on their own, new line\n\nDo NOT:\n- remove my original comments\n- return diff files\n- use numbered steps (e.g., \"1.\") in comments\n- use <summary> tags\n- end comments with dots (unless you are using multiple sentences)\n- call something \"final\" or \"definitive\"; it usually isn't\n- use double newlines between code\n- add comments if the code itself makes it pretty clear what it does\n\nUse the following format if you want to add temporary notification comments: `// [KEYWORD] Comment` (e.g., `[FIX] Now using correct value`, `[MODIFIED] Improved algorithm`). These comments are transient and exist only to show the user what you've changed. If you find them in code you are reviewing, remove these comments as the user will have already seen them.",
       "expanded_dirs": [
         "src",
         "src/components",
+        "src/content",
+        "src/content/en",
+        "src/content/en/old",
+        "src/content/nl",
+        "src/content/nl/old",
         "src/store",
         "src/utils"
       ],
-      "unknown_files": [
-        "src/content/en/festivalRecommender.js",
-        "src/content/en/futurenow.js",
-        "src/content/en/gamification.js",
-        "src/content/en/home.js",
-        "src/content/en/index.js",
-        "src/content/en/lisboastories.js",
-        "src/content/en/old/begrijpendBiased.js",
-        "src/content/en/old/burgerCrush.js",
-        "src/content/en/old/inABox.js",
-        "src/content/en/parleyStudio.js",
-        "src/content/en/verhalenvangers.js",
-        "src/content/en/vrGame.js",
-        "src/content/nl/festivalRecommender.js",
-        "src/content/nl/futurenow.js",
-        "src/content/nl/gamification.js",
-        "src/content/nl/home.js",
-        "src/content/nl/index.js",
-        "src/content/nl/lisboastories.js",
-        "src/content/nl/old/begrijpendBiased.js",
-        "src/content/nl/old/burgerCrush.js",
-        "src/content/nl/old/inABox.js",
-        "src/content/nl/parleyStudio.js",
-        "src/content/nl/verhalenvangers.js",
-        "src/content/nl/vrGame.js"
-      ]
+      "unknown_files": []
     }
   },
   "known_files": [

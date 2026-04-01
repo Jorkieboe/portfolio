@@ -13,20 +13,21 @@ const { t } = useLang()
 const store = inject('store')
 
 const localContentRef = ref()
-const selectedImage = ref(null)
+const selectedMedia = ref(null)
 
 let mm;
 
-const openImage = (image) => {
-    selectedImage.value = image
+const openMedia = (contentItem) => {
+    console.log(contentItem)
+    selectedMedia.value = contentItem.media
 }
 
-const closeImage = () => {
-    selectedImage.value = null
+const closeMedia = () => {
+    selectedMedia.value = null
 }
 
 // [FIX] Handle body scroll locking without fighting CSS specificity
-watch(selectedImage, (newVal) => {
+watch(selectedMedia, (newVal) => {
     if (newVal) {
         document.body.style.overflow = 'hidden'
     } else {
@@ -48,7 +49,7 @@ onMounted(() => {
         const tl = gsap.timeline({
             scrollTrigger: {
                 trigger: ".projectOverview",
-                start: "top 15%",
+                start: "center 60%",
                 end: "+=800",
                 pin: true,
                 pinSpacing: true,
@@ -59,7 +60,7 @@ onMounted(() => {
 
         tl.from(".bigImage", {
             scale: 0.8,
-         
+
             duration: 0.5,
             ease: "power2.out"
         })
@@ -73,7 +74,7 @@ onMounted(() => {
             y: 100,           // Slides up from 100px
             opacity: 0,       // Starts invisible
             scale: 0.9,       // Subtle scale up
-            duration: 1,      
+            duration: 1,
 
             ease: "power2.out"
         });
@@ -192,24 +193,35 @@ const cfg = computed(() => configMap[projectId.value] || configMap.begrijpendBia
       </div>
 
       <div class="projectOverview" :class="cfg.prefix">
-        <img v-if="projectData.splashImages?.length" 
-         class="bigImage" 
-         :src="projectData.splashImages[0].src">
-
+        <template v-if="projectData.splashImages?.[0]">
+          <video v-if="projectData.splashImages[0].type === 'video'"
+                 class="bigImage"
+                 autoplay muted playsinline
+                 :src="projectData.splashImages[0].src"></video>
+          <img v-else
+               class="bigImage"
+               :src="projectData.splashImages[0].src">
+        </template>
       </div>
 
         <div class="small-image-container">
-            <img v-for="(img, index) in projectData.splashImages.slice(1)" 
-                :key="index"
-                class="small-image" 
-                :src="img.src">
+            <template v-for="(media, index) in projectData.splashImages?.slice(1)" :key="index">
+                <video v-if="media.type === 'video'"
+                       class="small-image"
+                       autoplay muted loop playsinline
+                       :src="media.src"></video>
+                <img v-else
+                     class="small-image"
+                     :src="media.src">
+            </template>
         </div>
-      <
 
       <div v-for="(content, index) in projectData.content" :key="index" class="projectInfoContainer" :class="{ 'reversed': index % 2 !== 0 }">
         <div class="container">
-          <div class="subSectionImage" @click="openImage(content.image)">
-              <img :src="content.image" :alt="content.title" class="subSectionImg">
+          <div class="subSectionImage" @click="openMedia(content)">
+              <video v-if="content.media.type === 'video'" :src="content.media.src" class="subSectionImg" muted playsinline></video>
+              <img v-else :src="content.media.src" :alt="content.title" class="subSectionImg">
+              <div class="play-button"><img src="/images/svg/play-icon.svg"></div>
           </div>
           <div class="sectionInfo">
               <h2 class="subTitle">{{ content.title }}</h2>
@@ -218,13 +230,13 @@ const cfg = computed(() => configMap[projectId.value] || configMap.begrijpendBia
         </div>
       </div>
 
-      <!-- [MODIFIED] Using Teleport to avoid CSS specificity issues and !important -->
       <Teleport to="body">
         <Transition name="lightbox">
-            <div v-if="selectedImage" class="lightbox-overlay" @click="closeImage">
+            <div v-if="selectedMedia" class="lightbox-overlay" @click="closeMedia">
                 <img class="close-button" src="/images/Icons/close-icon.svg">
                 <div class="lightbox-content">
-                    <img :src="selectedImage" class="lightbox-img" />
+                    <video v-if="selectedMedia.type === 'video'" :src="selectedMedia.src" class="lightbox-vid" controls autoplay></video>
+                    <img v-else :src="selectedMedia.src" class="lightbox-img" />
                 </div>
             </div>
         </Transition>
@@ -238,7 +250,7 @@ const cfg = computed(() => configMap[projectId.value] || configMap.begrijpendBia
         max-width: 1920px;
         width: 90%;
         margin: auto;
-        margin-top: 100px;
+        margin-top: 150px;
 
         #projectType {
             font-family: Cooper;
@@ -268,17 +280,16 @@ const cfg = computed(() => configMap[projectId.value] || configMap.begrijpendBia
         display: flex;
         flex-direction: column;
         height: fit-content;
- 
+
         align-items: center;
 
         .bigImage {
             max-width: 80rem;
             width: 75vw;
-            height: auto;
+            aspect-ratio: 16/9;
             margin-bottom: 3rem;
+            object-fit: cover;
         }
-
-       
 
     }
 
@@ -286,6 +297,7 @@ const cfg = computed(() => configMap[projectId.value] || configMap.begrijpendBia
         max-width: 30rem;
         width: 100%;
         aspect-ratio: 16/9;
+        object-fit: cover;
     }
 
     .small-image-container{
@@ -293,11 +305,11 @@ const cfg = computed(() => configMap[projectId.value] || configMap.begrijpendBia
         height: fit-content;
         gap: 8rem;
         margin-bottom: 3rem;
-        margin: 0 auto;     
+        margin: 0 auto;
     }
 
     .projectInfoContainer {
-        padding: 8rem 0;
+        padding: 5rem 0;
         width: 100%;
         position: relative;
 
@@ -311,6 +323,7 @@ const cfg = computed(() => configMap[projectId.value] || configMap.begrijpendBia
             align-items: center;
 
             .subSectionImage {
+                position: relative;
                 grid-column: 1 / 8;
                 grid-row: 1;
                 z-index: 1;
@@ -330,6 +343,22 @@ const cfg = computed(() => configMap[projectId.value] || configMap.begrijpendBia
 
                     &:hover {
                         transform: scale(1.02);
+                    }
+                }
+
+                .play-button{
+                    position: absolute;
+                    display: flex;
+                    justify-content: center;
+                    align-items: center;
+                    width: 50px;
+                    height: 50px;
+                    background-color: white;
+                    border-radius: 50%;
+
+                    img{
+                        width: 80%;
+                        height: 80%;
                     }
                 }
             }
@@ -474,26 +503,24 @@ const cfg = computed(() => configMap[projectId.value] || configMap.begrijpendBia
 }
 
 .lightbox-content {
-    max-width: 75vw;
-    max-height: 75vh;
     display: flex;
     justify-content: center;
     align-items: center;
 }
 
-.lightbox-img {
-    height: 90vh;
+.lightbox-img, .lightbox-vid {
+    max-width: 80vw;
+    max-height: 90vh;
     object-fit: contain;
     border-radius: 4px;
     box-shadow: 0 20px 50px rgba(0, 0, 0, 0.5);
 }
 
-/* Lightbox Animation */
 .lightbox-enter-active,
 .lightbox-leave-active {
     transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
 
-    .lightbox-img {
+    .lightbox-img, .lightbox-vid {
         transition: transform 0.4s cubic-bezier(0.4, 0, 0.2, 1);
     }
 }
@@ -502,13 +529,13 @@ const cfg = computed(() => configMap[projectId.value] || configMap.begrijpendBia
 .lightbox-leave-to {
     opacity: 0;
 
-    .lightbox-img {
+    .lightbox-img, .lightbox-vid {
         transform: scale(0.85);
     }
 }
 
 @media (max-width: 900px) {
-    .lightbox-img {
+    .lightbox-img, .lightbox-vid {
         width: 90vw;
         height: auto;
     }
