@@ -1,5 +1,5 @@
 <script setup>
-import { computed, onMounted, inject, ref } from 'vue'
+import { computed, onMounted, inject, ref, watch } from 'vue'
 import { useRoute } from 'vue-router'
 import { useLang } from '../composables/useLang'
 import { gsap } from "gsap";
@@ -13,8 +13,26 @@ const { t } = useLang()
 const store = inject('store')
 
 const localContentRef = ref()
+const selectedImage = ref(null)
 
 let mm;
+
+const openImage = (image) => {
+    selectedImage.value = image
+}
+
+const closeImage = () => {
+    selectedImage.value = null
+}
+
+// [FIX] Handle body scroll locking without fighting CSS specificity
+watch(selectedImage, (newVal) => {
+    if (newVal) {
+        document.body.style.overflow = 'hidden'
+    } else {
+        document.body.style.overflow = ''
+    }
+})
 
 onMounted(() => {
     store.content = localContentRef
@@ -25,6 +43,7 @@ onMounted(() => {
         isDesktop: "(min-width: 766px)",
         isMobile: "(max-width: 765px)"
     }, (context) => {
+        let { isDesktop, isMobile } = context.conditions;
 
         const tl = gsap.timeline({
             scrollTrigger: {
@@ -52,6 +71,60 @@ onMounted(() => {
             duration: 0.8,
             ease: "back.out(1.7)"
         }, "-=0.5");
+
+        const infoContainers = gsap.utils.toArray(".projectInfoContainer");
+
+        infoContainers.forEach((container) => {
+            const image = container.querySelector(".subSectionImage");
+            const text = container.querySelector(".sectionInfo");
+
+            if (image) {
+                gsap.fromTo(image,
+                    { opacity: 0, y: isDesktop ? 50 : 30 },
+                    {
+                        opacity: 1,
+                        y: 0,
+                        duration: 1,
+                        ease: "power2.out",
+                        scrollTrigger: {
+                            trigger: container,
+                            start: "top 80%",
+                            toggleActions: "play none none reverse"
+                        }
+                    }
+                );
+            }
+
+            if (text) {
+                gsap.fromTo(text,
+                    { y: isDesktop ? 120 : 60 },
+                    {
+                        y: isDesktop ? -120 : -60,
+                        ease: "none",
+                        scrollTrigger: {
+                            trigger: container,
+                            start: "top 95%",
+                            end: "bottom 5%",
+                            scrub: true
+                        }
+                    }
+                );
+
+                gsap.fromTo(text,
+                    { opacity: 0 },
+                    {
+                        opacity: 1,
+                        duration: 0.8,
+                        ease: "power2.out",
+                        scrollTrigger: {
+                            trigger: container,
+                            start: "top 80%",
+                            toggleActions: "play none none reverse"
+                        }
+                    }
+                );
+            }
+        });
 
     })
 })
@@ -113,9 +186,9 @@ const cfg = computed(() => configMap[projectId.value] || configMap.begrijpendBia
       </div>
 
       <div class="projectOverview" :class="cfg.prefix">
-          <div class="bigImage" :id="cfg.imgBig" v-animate="'oneway'"></div>
+          <div class="bigImage" :id="cfg.imgBig"></div>
 
-          <div class="bigImage" id="gf_bigImage2" v-if="projectId === 'gamification'" v-animate="'oneway'"></div>
+          <div class="bigImage" id="gf_bigImage2" v-if="projectId === 'gamification'"></div>
 
           <div class="smallImageSection" v-if="cfg.hasSmall">
               <div class="smallImage1" :id="cfg.imgSmall1"></div>
@@ -123,18 +196,29 @@ const cfg = computed(() => configMap[projectId.value] || configMap.begrijpendBia
           </div>
       </div>
 
-      <div v-for="(content, index) in projectData.content" :key="index" class="projectInfoContainer" :style="{backgroundColor: index == 0 ? colors[store.projectActive ? store.projectActive : 0].top.hex : 'transparent'}" :class="[{ 'middle': index % 2 !== 0 }, {'first': index == 0}]">
-        <div class="wrapper">
+      <div v-for="(content, index) in projectData.content" :key="index" class="projectInfoContainer" :class="{ 'reversed': index % 2 !== 0 }">
+        <div class="container">
+          <div class="subSectionImage" @click="openImage(content.image)">
+              <img :src="content.image" :alt="content.title" class="subSectionImg">
+          </div>
           <div class="sectionInfo">
               <h2 class="subTitle">{{ content.title }}</h2>
               <p class="text subSectionText" v-html="content.text"></p>
           </div>
-
-          <div class="subSectionImage">
-              <img :src="content.image" :alt="content.title" class="subSectionImg">
-          </div>
         </div>
       </div>
+
+      <!-- [MODIFIED] Using Teleport to avoid CSS specificity issues and !important -->
+      <Teleport to="body">
+        <Transition name="lightbox">
+            <div v-if="selectedImage" class="lightbox-overlay" @click="closeImage">
+                <img class="close-button" src="/images/Icons/close-icon.svg">
+                <div class="lightbox-content">
+                    <img :src="selectedImage" class="lightbox-img" />
+                </div>
+            </div>
+        </Transition>
+      </Teleport>
   </div>
 </template>
 <style lang="scss" scoped>
@@ -215,61 +299,220 @@ const cfg = computed(() => configMap[projectId.value] || configMap.begrijpendBia
     }
 
     .projectInfoContainer {
-        
-        padding: 20px 0;
-        &.first{
-            background-color: aquamarine;
-        }
+        padding: 8rem 0;
+        width: 100%;
+        position: relative;
 
-        .wrapper{
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            max-width: 60rem;
+        .container {
+            display: grid;
+            grid-template-columns: repeat(12, 1fr);
+            gap: 20px;
+            max-width: 1200px;
             width: 90%;
             margin: 0 auto;
-            .sectionInfo {
-                display: flex;
-                flex-direction: column;
-                justify-content: center;
-                margin-left: 50px;
-                margin-right: 50px;
-
-                p, h2{
-                    color: black;
-                }
-            }
+            align-items: center;
 
             .subSectionImage {
-                width: 500px;
-                height: 300px;
-                object-fit: contain;
+                grid-column: 1 / 8;
+                grid-row: 1;
+                z-index: 1;
                 display: flex;
                 justify-content: center;
                 align-items: center;
+                cursor: zoom-in;
+                transition: opacity 0.4s ease;
 
                 .subSectionImg {
-                    height: 100%;
-                    width: auto;
+                    width: 100%;
+                    max-height: 600px;
                     object-fit: contain;
+                    border-radius: 8px;
+                    box-shadow: 0 10px 30px rgba(0,0,0,0.08);
+                    transition: transform 0.3s ease;
+
+                    &:hover {
+                        transform: scale(1.02);
+                    }
                 }
             }
-         }
-    }
 
-    .projectInfoSection.middle {
-        flex-direction: row-reverse;
-        .subSectionImage {
+            .sectionInfo {
+                grid-column: 6 / 13;
+                grid-row: 1;
+                z-index: 2;
+                background: rgba(255, 255, 255, 0.95);
+                padding: 4rem;
+                box-shadow: 0 20px 40px rgba(0,0,0,0.08);
+                border-radius: 12px;
+                backdrop-filter: blur(10px);
 
+                .subTitle {
+                    margin-top: 0;
+                    font-size: 2.5rem;
+                    color: #2BA69C;
+                    margin-bottom: 1.5rem;
+                }
+
+                .subSectionText {
+                    color: #444;
+                    line-height: 1.8;
+                    font-size: 1.15rem;
+                    margin: 0;
+                }
+            }
         }
-    }
 
-    @media (max-width: 765px) {
-        .projectInfoSection {
-            flex-wrap: wrap;
-            &.middle {
-                flex-direction: column-reverse;
+        &.reversed {
+            .container {
+                .subSectionImage {
+                    grid-column: 6 / 13;
+                }
+                .sectionInfo {
+                    grid-column: 1 / 8;
+                }
             }
         }
     }
+
+    @media (max-width: 900px) {
+        .projectIntro {
+            flex-direction: column;
+            margin-top: 150px;
+
+            .projectName {
+                font-size: 3rem;
+                margin-bottom: 2rem;
+            }
+        }
+
+        .projectOverview {
+            flex-direction: column;
+            height: auto;
+
+            .bigImage {
+                height: 400px;
+                background-size: cover;
+            }
+            .smallImageSection {
+                .smallImage1, .smallImage2 {
+                    height: 250px;
+                    background-size: cover;
+                }
+            }
+        }
+
+        .projectInfoContainer {
+            padding: 4rem 0;
+
+            .container {
+                display: flex;
+                flex-direction: column;
+                width: 100%;
+                gap: 0;
+
+                .subSectionImage {
+                    width: 100%;
+                    display: flex;
+                    justify-content: flex-end;
+
+                    .subSectionImg {
+                        width: 90%;
+                        max-height: 400px;
+                    }
+                }
+
+                .sectionInfo {
+                    width: 95%;
+                    margin-top: -60px;
+
+                    padding: 2.5rem;
+                    box-sizing: border-box;
+
+                    .subTitle {
+                        font-size: 2rem;
+                    }
+                    .subSectionText {
+                        font-size: 1rem;
+                    }
+                }
+            }
+
+            &.reversed {
+                .container {
+                    margin: 0;
+
+                    .subSectionImage {
+                        justify-content: flex-start;
+                    }
+                }
+            }
+        }
+    }
+</style>
+
+<style lang="scss">
+.lightbox-overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0, 0, 0, 0.25);
+    backdrop-filter: blur(8px);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    z-index: 999999;
+    cursor: zoom-out;
+}
+
+.close-button{
+    position: absolute;
+    top: 2rem;
+    left: 2rem;
+    width: 2rem;
+    height: 2rem;
+    // background-color: red;
+}
+
+.lightbox-content {
+    max-width: 75vw;
+    max-height: 75vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.lightbox-img {
+    height: 90vh;
+    object-fit: contain;
+    border-radius: 4px;
+    box-shadow: 0 20px 50px rgba(0, 0, 0, 0.5);
+}
+
+/* Lightbox Animation */
+.lightbox-enter-active,
+.lightbox-leave-active {
+    transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+
+    .lightbox-img {
+        transition: transform 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+    }
+}
+
+.lightbox-enter-from,
+.lightbox-leave-to {
+    opacity: 0;
+
+    .lightbox-img {
+        transform: scale(0.85);
+    }
+}
+
+@media (max-width: 900px) {
+    .lightbox-img {
+        width: 90vw;
+        height: auto;
+    }
+}
 </style>
