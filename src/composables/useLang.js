@@ -1,6 +1,6 @@
 import { ref, computed } from 'vue'
-import nl from '../assets/lang/nl.json'
-import en from '../assets/lang/en.json'
+import nl from '../content/nl/index.js'
+import en from '../content/en/index.js'
 
 // Global state for language
 const currentLang = ref(localStorage.getItem('language') || 'nl')

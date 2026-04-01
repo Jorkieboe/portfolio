@@ -59,18 +59,24 @@ onMounted(() => {
 
         tl.from(".bigImage", {
             scale: 0.8,
-            opacity: 0,
+         
             duration: 0.5,
             ease: "power2.out"
         })
 
-        tl.from([".smallImage1", ".smallImage2"], {
-            scale: 0,
-            opacity: 0,
-            stagger: 0.2,
-            duration: 0.8,
-            ease: "back.out(1.7)"
-        }, "-=0.5");
+        gsap.from(".small-image", {
+            scrollTrigger: {
+                trigger: ".small-image-container",
+                start: "top 85%", // Animation starts when the container is near the bottom
+                toggleActions: "play none none reverse", // Plays when scrolling down, reverses when scrolling up
+            },
+            y: 100,           // Slides up from 100px
+            opacity: 0,       // Starts invisible
+            scale: 0.9,       // Subtle scale up
+            duration: 1,      
+
+            ease: "power2.out"
+        });
 
         const infoContainers = gsap.utils.toArray(".projectInfoContainer");
 
@@ -186,15 +192,19 @@ const cfg = computed(() => configMap[projectId.value] || configMap.begrijpendBia
       </div>
 
       <div class="projectOverview" :class="cfg.prefix">
-          <div class="bigImage" :id="cfg.imgBig"></div>
+        <img v-if="projectData.splashImages?.length" 
+         class="bigImage" 
+         :src="projectData.splashImages[0].src">
 
-          <div class="bigImage" id="gf_bigImage2" v-if="projectId === 'gamification'"></div>
-
-          <div class="smallImageSection" v-if="cfg.hasSmall">
-              <div class="smallImage1" :id="cfg.imgSmall1"></div>
-              <div class="smallImage2" :id="cfg.imgSmall2"></div>
-          </div>
       </div>
+
+        <div class="small-image-container">
+            <img v-for="(img, index) in projectData.splashImages.slice(1)" 
+                :key="index"
+                class="small-image" 
+                :src="img.src">
+        </div>
+      <
 
       <div v-for="(content, index) in projectData.content" :key="index" class="projectInfoContainer" :class="{ 'reversed': index % 2 !== 0 }">
         <div class="container">
@@ -256,46 +266,34 @@ const cfg = computed(() => configMap[projectId.value] || configMap.begrijpendBia
         max-width: 1920px;
         width: 100vw;
         display: flex;
-        height: 800px;
-        margin: auto;
+        flex-direction: column;
+        height: fit-content;
+ 
+        align-items: center;
 
         .bigImage {
-            max-width: 1200px;
-            width: 100vw;
-            height: 800px;
-            background-image: url('/images/mobilescreens.jpg');
-            background-position: center;
-            background-size: auto 800px;
-            background-repeat: no-repeat;
-            overflow: hidden;
+            max-width: 80rem;
+            width: 75vw;
+            height: auto;
+            margin-bottom: 3rem;
         }
 
-        .smallImageSection {
-            display: flex;
-            flex-direction: column;
+       
 
-           .smallImage1 {
-                max-width: 720px;
-                width: 100vw;
-                height: 400px;
-                background-image: url('/images/sfeer.jpg');
-                background-position: center;
-                background-size: auto 420px;
-                background-repeat: no-repeat;
-                overflow: hidden;
-            }
+    }
 
-            .smallImage2 {
-                max-width: 720px;
-                width: 100vw;
-                height: 400px;
-                background-image: url('/images/uitlegschermronde1.jpg');
-                background-position: center;
-                background-size: auto 420px;
-                background-repeat: no-repeat;
-                overflow: hidden;
-            }
-        }
+    .small-image{
+        max-width: 30rem;
+        width: 100%;
+        aspect-ratio: 16/9;
+    }
+
+    .small-image-container{
+        display: flex;
+        height: fit-content;
+        gap: 8rem;
+        margin-bottom: 3rem;
+        margin: 0 auto;     
     }
 
     .projectInfoContainer {

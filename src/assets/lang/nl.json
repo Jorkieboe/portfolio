@@ -4,27 +4,27 @@
         "projects":[{
             "projectTitle": "Begrijpend Biased",
             "projectType": "Serious game",
-            "projectText": "Begrijpend biased is een serious game die leerlingen van de middelbare school in de Nederlandse les kritisch naar nieuws op social media laat kijken. Leerlingen stellen nieuwsberichten samen en beoordelen die van anderen op bepaalde biases in het bericht. Hiermee leren jongeren te herkennen hoe zulke nieuwsberichten gestuurd worden richting een bepaalde mening."
+            "projectText": "Begrijpend Biased is een serious game voor middelbare scholieren waarin zij leren kritisch naar nieuws op social media te kijken. Leerlingen maken en beoordelen zelf nieuwsberichten op bias en framing, waardoor ze inzicht krijgen in hoe informatie gestuurd kan worden en hoe filterbubbels ontstaan. De multiplayer applicatie is ontwikkeld met Phaser en websockets en wordt klassikaal begeleid door een docent."
         },
         {
-            "projectTitle": "Jongeren motiveren om te sporten met gepersonaliseerde gamification",
+            "projectTitle": "Gepersonaliseerde gamification",
             "projectType": "Gamification",
-            "projectText": "In mijn afstuurdeerproject word uitgezocht hoe gamification persoonlijk gemaakt kan worden om studenten meer te laten sporten.  Met behulp van machine learning algoritmes leert een applicaties wat een persoon het beste motiveert."
+            "projectText": "In mijn afstudeerproject onderzoek ik hoe gamification gepersonaliseerd kan worden om studenten te stimuleren meer te sporten. Met behulp van machine learning-algoritmes leert een applicatie welke factoren een individu het meest motiveren."
         },
         {
-            "projectTitle": "Burger Crush",
-            "projectType": "Stageopdracht",
-            "projectText": "Burger crush is een 3-match game gemaakt voor in de McDonalds app."
+            "projectTitle": "Parley Studio",
+            "projectType": "AI tool",
+            "projectText": "Parley studio is een ai-platform om historische karakters tot leven te weken. In parley staat het narratief van het personage centraal en helpt Retrieved augmented generation tegen hallucinaties. Applicatie is gemaakt met Fast api en een Vue.js frontend."
         },
         {
             "projectTitle": "Festival recommender",
             "projectType": "Machine learning",
-            "projectText": "Festival recommender beveelt jouw aan naar welke muziek festivals je moet gaan op basis van je geluisterde muziek op Spotify. Dit systeem gebruik machine learning om jouw favoriete muziek te vergelijken met de artiesten op festivals."
+            "projectText": "Festival recommender beveelt jouw aan naar welke muziek festivals je moet gaan op basis van je luistergedrag op Spotify. Het systeem verzamelt data via de Spotify API en gebruikt machine learning om je muzieksmaak te vergelijken met de line-ups van festivals. De interface is ontwikkeld met React."
         },
         {
             "projectTitle": "Peer pressure VR experience",
             "projectType": "Serious game",
-            "projectText": "Verdrinking is nog steeds een grote doodsoorzaak voor jonge mannen. In dit project word er met behulp van Virtual Reality een kleine ervaring gemaakt die jonge mannen de gevaren laat zien van water door overschatting en groepsdruk."
+            "projectText": "Verdrinking is nog steeds een grote doodsoorzaak voor jonge mannen. In deze Vr Experience worden jonge mannen geconfronteerd met de gevaren van water door overschatting en groepsdruk."
         },
         {
             "projectTitle": "In a Box",
@@ -40,7 +40,7 @@
     "begrijpendBiased":{
         "projectTitle": "Begrijpend Biased",
         "projectType": "Serious game",
-        "introText": "Begrijpend biased is een serious game die leerlingen van de middelbare school in de Nederlandse les kritisch naar nieuws op social media laat kijken. Leerlingen stellen nieuwsberichten samen en beoordelen die van anderen op bepaalde biases in het bericht. Hiermee leren jongeren te herkennen hoe zulke nieuwsberichten gestuurd worden richting een bepaalde mening.",
+        "introText": "Begrijpend Biased is een serious game voor middelbare scholieren waarin zij leren kritisch naar nieuws op social media te kijken. Leerlingen maken en beoordelen zelf nieuwsberichten op bias en framing, waardoor ze inzicht krijgen in hoe informatie gestuurd kan worden en hoe filterbubbels ontstaan. De multiplayer applicatie is ontwikkeld met Phaser en websockets en wordt klassikaal begeleid door een docent.",
         "content": [{
             "title":"Probleem",
             "text": "Steeds meer jongeren consumeren nieuws via social media in plaats van traditionele kanalen. Deze berichten zijn vaak kort, emotiegericht en geframed, waardoor confirmation bias ontstaat: mensen nemen sneller informatie aan die hun mening bevestigt en sluiten andere perspectieven uit. In combinatie met algoritmes leidt dit tot filterbubbels.",
@@ -56,27 +56,27 @@
         }]
     },
     "gamification":{
-        "projectTitle": "Jongeren motiveren om te sporten met gepersonaliseerde gamification",
+        "projectTitle": "Gepersonaliseerde gamification",
         "projectType": "Gamification",
-        "introText": "In mijn afstuurdeerproject word uitgezocht hoe gamification persoonlijk gemaakt kan worden om studenten meer te laten sporten.  Met behulp van machine learning algoritmes leert een applicaties wat een persoon het beste motiveert.",
+        "introText": "In mijn afstudeerproject onderzoek ik hoe gamification gepersonaliseerd kan worden om studenten te stimuleren meer te sporten. Met behulp van machine learning-algoritmes leert een applicatie welke factoren een individu het meest motiveren.",
         "content": [{
             "title":"Probleem",
-            "text": "Gamification is een veel gebruikte techniek om mensen meer te laten sporten. Verschillende game elementen helpen om meer motivatie te creëren. Het probleem van deze apps is dat ze maar één manier gebruiken om iedereen te motiveren. Meerdere onderzoekers zoeken naar een manier om gamification meer te personaliseren.",
+            "text": "Gamification is een veelgebruikte techniek om mensen te motiveren om meer te sporten. Verschillende game-elementen kunnen de motivatie vergroten, maar veel bestaande apps hanteren één methode voor alle gebruikers. Dit vormt een beperking, aangezien motivatie per persoon verschilt. Daarom richten steeds meer onderzoekers zich op het personaliseren van gamification.",
             "image": "/images/gamification/research.jpg"
         },{
             "title": "Concept",
-            "text": "Deze applicatie is een sport app die dagelijks gepersonaliseerde challenges voorstelt om te gaan rennen. De applicatie gebruikt reinforcement learning om de interesses van de gebruiker te herkennen. Alle challenges zijn gemaakt voor één specifiek spelertype. Bijvoorbeeld een challenge dat gaat over het verbreken van persoonlijke records hoort bij het spelertype ‘achiever’. Dus, wanneer de gebruiker een challenges kiest dat gaat over eigen records verbreken, leert het systeem dat speler mogelijk een achiever is. Het system kan vervolgens meer achiever challenges aanbevelen.",
+            "text": "Deze applicatie is een sportapp die dagelijks gepersonaliseerde hardloopchallenges voorstelt. Met behulp van reinforcement learning leert de applicatie de voorkeuren en motivaties van de gebruiker herkennen. Elke challenge is ontworpen voor een specifiek spelertype, zoals de ‘achiever’, waarbij de focus ligt op het verbreken van persoonlijke records. Wanneer een gebruiker vaker voor dit type challenge kiest, leert het systeem dat deze motivatie aansluit bij de gebruiker en kan het vergelijkbare challenges aanbevelen.",
             "image": "/images/gamification/interfacesketches.jpg"
         },{
             "title": "Development",
-            "text": "Het development proces bestond uit drie onderdelen: Creëren van de challenges, recommendation system maken met reinforcement learning algorithm en het ontwerpen van de gebruikers interface. <br> De challenges zijn gemaakt door het scrapen van 2500 challenges van strava. Deze challenges zijn weer gegroepeerd om tot nieuwe challenges te komen voor elke individuele speler type.<br> het recommendation system is gemaakt met het Thompson sampling reinforcement learning algoritme. Deze is getest in een simulatie samen met twee andere reinforcement learning algoritme. Hierdoor selecteerde de computer steeds een challenges op basis van wat een gebruiker met bepaalde voorkeuren zou kiezen. <br> Het gebruikers interface is gemaakt in figma. De applicatie moest simpliciteit uitstralen. Het doel van de applicatie is om te rennen en dus snel te bedienen onderweg. Dit is meerdere keren getest onder de doelgroep en bleek ook erg simpel en duidelijk te zijn.",
+            "text": "Het ontwikkelproces bestond uit drie onderdelen: het creëren van challenges, het ontwikkelen van een recommendation system en het ontwerpen van de gebruikersinterface. De challenges zijn gebaseerd op 2500 gescrapete Strava-challenges en gegroepeerd per spelertype. Het recommendation system maakt gebruik van het Thompson Sampling reinforcement learning-algoritme en is getest in simulaties met andere algoritmes. De gebruikersinterface is ontworpen in Figma met focus op eenvoud en gebruiksgemak tijdens het rennen. En bleek effectief te zijn onder gebruikerstesten.",
             "image": "/images/gamification/algoWorking.jpg"
         }]
     },
     "festivalRecommender":{
         "projectTitle": "Festival recommender",
         "projectType": "Machine learning",
-        "introText": "Festival recommender beveelt jouw aan naar welke muziek festivals je moet gaan op basis van je geluisterde muziek op Spotify. Dit systeem gebruik machine learning om jouw favoriete muziek te vergelijken met de artiesten op festivals.",
+        "introText": "Festival recommender beveelt jouw aan naar welke muziek festivals je moet gaan op basis van je luistergedrag op Spotify. Het systeem verzamelt data via de Spotify API en gebruikt machine learning om je muzieksmaak te vergelijken met de line-ups van festivals. De interface is ontwikkeld met React.",
         "content": [{
             "title": "Concept",
             "text": "Het hele jaar door zijn heel veel festivals door Nederland, maar naar welke moet je gaan. Op deze festivals kunnen bekenden artiesten spelen, maar ook minder bekende die je mogelijk wel heel leuk vind. Het is natuurlijk een hoop werk om alle artiesten die op het festival optreden te beluisteren. Hiervoor heb ik een recommender system gemaakt die festivals aanbeveelt op basis van je meest beluisterde muziek.",
@@ -108,18 +108,18 @@
     "vrGame":{
         "projectTitle": "Peer pressure VR experience",
         "projectType": "Serious game",
-        "introText": "Verdrinking is nog steeds een grote doodsoorzaak voor jonge mannen. In dit project word er met behulp van Virtual Reality een kleine ervaring gemaakt die jonge mannen de gevaren laat zien van water door overschatting en groepsdruk.",
+        "introText": "Verdrinking is nog steeds een grote doodsoorzaak voor jonge mannen. In deze Vr Experience gemaakt in de Unreal Engine, worden jonge mannen geconfronteerd met de gevaren van water door overschatting en groepsdruk.",
         "content": [{
             "title": "Probleem",
-            "text": "Verdrinken is nog een steeds een grote doodsoorzaak voor jonge mensen. Opvallend komen er naast jonge kinderen ook veel jonge mannen om door verdrinken. Dit ontstaat door groepsdruk rond deze leeftijd. Jonge mannen moeten aantonen dat ze niet bang zijn en sterk zijn. Zij komen door die bewijsdrang makkelijk in gevaarlijke situaties.",
+            "text": "Verdrinken is nog een steeds een grote doodsoorzaak voor jonge mensen. Opvallend komen er naast jonge kinderen ook veel jonge mannen slachtoffer zijn. Dit ontstaat vaak door groepsdruk rond deze leeftijd. Jonge mannen moeten aantonen dat ze niet bang en sterk zijn. Zij komen door die bewijsdrang makkelijk in gevaarlijke situaties.",
             "image": "/images/SOTA/beach.jpg"
         },{
             "title": "Concept",
-            "text": "In een VR experience worden jonge mannen uitgedaagd om naar een rots ver in de zee te zwemmen. Hierdoor worden ze door aantal non player characters via een dialoog overgehaald om toch te zwemmen terwijl het duidelijk best ver is. Als de gebruiker besluit om de uitdaging aan te gaan, komt hij er achter dat het best ver is en verdrinkt.",
+            "text": "In deze VR-experience worden jonge mannen uitgedaagd om naar een rots ver in de zee te zwemmen. ze worden naar aantal non player characters via een dialoog overgehaald om te zwemmen terwijl het duidelijk best ver is. Als de gebruiker besluit om de uitdaging aan te gaan, komt hij er achter dat het best ver is en verdrinkt.",
             "image": "/images/SOTA/npcs.jpg"
         },{
             "title": "Development",
-            "text": "De VR experience is gemaakt in de Unreal Engine. Dit project was onderdeel van een master opdracht en had ik daardoor maar 3 weken om dit naast andere projecten in elkaar te zetten. Ik begon met het bouwen van het strand en heb een dialoog systeem opgezet. Via verschillende gebruiker testen zijn verschillende dialogen getest en zijn de environment clues, zoals geluiden, die aangeven dat je vermoeid raakt verbeterd. ",
+            "text": "De ervaring is ontwikkeld in Unreal Engine als onderdeel van een masteropdracht om met nieuwe technieken te werken. Het proces begon met het bouwen van de strandomgeving en het opzetten van een dialogensysteem. Op basis van gebruikerstesten zijn de dialogen verfijnt en zijn omgevingssignalen, zoals geluiden die vermoeidheid aangeven, verder verbeterd.",
             "image": "/images/SOTA/dialog.jpg"
         }]
     },
@@ -138,6 +138,32 @@
         },{
             "title": "Development",
             "text": "Deze game is gemaakt in Unreal Engine 5 with visual programming met blueprints. De uitdaging van de game was dat UE5 geen andere richting van zwaartekracht ondersteunt. Dit was deels op te lossen door een plugin uit de Unreal marketplace, maar bepaalde game mechanics als movement, pathfinding moesten alsnog aangepast worden om de andere richting te ondersteunen.",
+            "image": "/images/Inabox/enemy.jpg"
+        }]
+    },
+    "parleyStudio":{
+        "projectTitle": "Parley Studio",
+        "projectType": "AI tool",
+        "introText": "Parley studio is een ai-platform om historische karakters tot leven te weken. In parley staat het narratief van het personage centraal en helpt Retrieved augmented generation tegen hallucinaties. Applicatie is gemaakt met Fast api en een Vue.js frontend.",
+        "content": [{
+            "title": "Nieuwe manier van storytelling",
+            "text": "Parley studio is een tool om ai personages tot leven te wekken. Ik zie AI niet als een doel op zich maar een nieuwe vorm van storytelling. Mijn doel was om een basis te bouwen om de taalmodellen voorspelbaarder en menselijker te maken.",
+            "image": "/images/Inabox/conceptartRot.jpg"
+        },{
+            "title": "Sturen van de LLM",
+            "text": "Het algemene probleem van taalmodellen is dat het snel terug in zijn behulpzame gedrag vallen om jouw vragen te beantwoorden. Een goed gesprek heeft een ritme en een doel. Hiervoor heb ik een hele orchestratie-engine ontwikkeld die de ai stuurt. De interactie voelt hierdoor als een lopend verhaal.",
+            "image": "/images/Inabox/boxroom.jpg"
+        },{
+            "title": "Makers tool",
+            "text": "De focus van de applicatie ligt in de creativiteit en moet ook begrijpelijk zijn voor mensen zonder technische achtergrond. Ik heb met Vue.js een interface gebouwd om op een visuelere manier een karakter te creeëren. Hiermee kunnen gebruikers via een soort behavior tree (zoals je ziet in game engines) een gesprek opbouwen.",
+            "image": "/images/Inabox/enemy.jpg"
+        },{
+            "title": "Het perspectief",
+            "text": "Wat een personage weet, bepaalt zijn identiteit. Ik heb een systeem gebouwd waarbij alle informatie wordt gefilterd door de ogen van het personage. Een soldaat uit de 15e eeuw bekijkt de wereld anders dan een gids in het nu. Door kennis te koppelen aan een specifiek standpunt (Point of View), ontstaat een consistente wereld waarin het personage alleen vertelt wat hij vanuit zijn achtergrond kan en mag weten.",
+            "image": "/images/Inabox/enemy.jpg"
+        },{
+            "title": "Latency is de vijand",
+            "text": "Op dit moment is het grootste probleem van deze ontwikkelingen latency. Voor een goede immersieve ervaring moet je haast vergeten dat je tegen een computer praat. Hiervoor heb ik een full-stack architectuur opgezet die de tijd tussen spreken en antwoord voelbaar moet verminderen. Door het streamen van de output een visuele veranderingen maak je het gevoel korter.",
             "image": "/images/Inabox/enemy.jpg"
         }]
     }

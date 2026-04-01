@@ -9,19 +9,26 @@ import { SplitText } from 'gsap/SplitText';
 const { t } = useLang()
 
 const projectIds =[
-  'begrijpendBiased',
-  'gamification',
+  'verhalenvangers',
+  'parleyStudio',
+  'futurenow',
   'festivalRecommender',
-  'burgerCrush',
+  'lisboastories',
   'vrGame',
-  'inABox'
 ]
 
 const store = inject('store')
 
 const projects = computed(() => {
   return projectIds.map((id, index) => {
-    return { id, content: t.value.homePage.projects[index] }
+    const projectDetails = t.value[id]
+    const homeInfo = t.value.homePage.projects[index]
+
+    return {
+      id,
+      content: homeInfo,
+      projectImage: homeInfo.projectImage
+    }
   })
 })
 
@@ -29,7 +36,8 @@ const activeProject = ref(null)
 const isMobile = ref(typeof navigator !== 'undefined' && /Android|webOS|iPhone|iPad|iPod|BlackBerry|Windows Phone/i.test(navigator.userAgent))
 
 const toggleMobile = (index) => {
-  store.activeProject = store.activeProject === index ? null : index
+  // [FIX] Use store.projectActive (matching store.js) instead of store.activeProject
+  store.projectActive = store.projectActive === index ? null : index
 }
 
 const localContentRef = ref(null)
@@ -39,7 +47,7 @@ onMounted(() => {
   store.setContentRef(localContentRef)
   gsap.registerPlugin(ScrollTrigger, SplitText);
   mm = gsap.matchMedia(localContentRef.value);
-  
+
    gsap.to(".scroll-cta img", {
     y: 20,
     repeat: -1,
@@ -50,14 +58,14 @@ onMounted(() => {
 
   gsap.to(".scroll-cta", {
     scrollTrigger: {
-      trigger: ".test-page-wrapper", 
-      start: "top top", 
-      end: "200px top", 
-      scrub: true,  
+      trigger: ".test-page-wrapper",
+      start: "top top",
+      end: "200px top",
+      scrub: true,
     },
     opacity: 0,
-    scale: 0.8,  
-    pointerEvents: "none"  
+    scale: 0.8,
+    pointerEvents: "none"
   });
 
   mm.add({
@@ -66,7 +74,6 @@ onMounted(() => {
   }, (context) => {
 
     let { isDesktop, isMobile } = context.conditions;
-
 
     if (isDesktop) {
       const tl = gsap.timeline({
@@ -167,8 +174,6 @@ onMounted(() => {
           });
         });
 
-
-
   });
 });
 
@@ -201,8 +206,9 @@ onUnmounted(() => {
                   @mouseleave="()=>{store.projectActive = null}"
                 >
                     <div class="project" :class="{'reversed': index > 2}">
-                        <div class="projectImage" :class="'p' + (index + 1)" @click="$router.push('/work/' + project.id)">
-                            <div class="arrow" :class="{ active: activeProject === index }" @click.stop="toggleMobile(index)"></div>
+                        <div class="projectImage" :class="'p' + (index + 1)"  @click="$router.push('/work/' + project.id)">
+                          <img v-if="project.projectImage" :src="project.projectImage">
+                          <div class="arrow" :class="{ active: activeProject === index }" @click.stop="toggleMobile(index)"></div>
                         </div>
                         <div class="projectPanel">
                             <div class="panelTextDiv">
@@ -232,9 +238,9 @@ onUnmounted(() => {
               </div>
             </div>
           </div>
-        
+
         </div>
-        
+
         <div class="scroll-cta"><img src="/images/Icons/down.svg" ></div>
     </div>
 </template>
@@ -298,7 +304,7 @@ onUnmounted(() => {
 
     pointer-events: none;
     overflow: hidden;
-    filter: drop-shadow(30px 10px 4px rgba(0,0,0,0.08));
+    filter: drop-shadow(10px 10px 4px rgba(0,0,0,0.08));
 
     .projectWrapper {
       display: flex;
@@ -321,7 +327,6 @@ onUnmounted(() => {
           flex-grow: 0;
           .project{
             .projectImage {
-
               min-width: 18rem;
               transition: all 1s;
             }
@@ -375,8 +380,14 @@ onUnmounted(() => {
           -webkit-transition: all 1s;
           transition: all 1s;
           pointer-events: auto;
-           background-size: cover;
-            background-position: center;
+          background-size: cover;
+          background-position: center;
+
+          img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+          }
         }
 
         #notActive {
@@ -389,7 +400,7 @@ onUnmounted(() => {
             overflow: hidden;
             transition: all 0.6s ease-in-out;
             // background: rgba(255, 255, 255, 0.95);
-            
+
         }
 
         .panelTextDiv {
@@ -510,44 +521,26 @@ onUnmounted(() => {
 }
 
 .p1 {
-    background-image: url("/images/begrijpendbiased.jpg");
-    background-position: center;
-    background-size: auto 30vw;
     z-index: 1;
 }
 
 .p2 {
-    background-image: url("/images/gamification/challenge screen.jpg");
-    background-position: center;
-    background-size: auto 30vw;
     z-index: 2;
 }
 
 .p3 {
-    background-image: url("/images/recommender/FR_mock_recommendation.jpg");
-    background-position: center;
-    background-size: auto 30vw;
     z-index: 3;
 }
 
 .p4 {
-    background-image: url("/images/BurgerCrush/crushBanner.jpg");
-    background-position: center;
-    background-size: auto 30vw;
     z-index: 4;
 }
 
 .p5 {
-    background-image: url("/images/SOTA/npcs.jpg");
-    background-position: center;
-    background-size: auto 30vw;
     z-index: 5;
 }
 
 .p6 {
-    background-image: url("/images/Inabox/playercharacter.jpg");
-    background-position: center;
-    background-size: auto 30vw;
     z-index: 6;
 }
 

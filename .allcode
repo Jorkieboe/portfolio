@@ -9,134 +9,165 @@
       "selected_files": [
         {
           "path": "index.html",
-          "mtime": 1774600893.7583694,
+          "mtime": 1774251772.0185692,
           "hash": "185547b9b31e1d68ca1a5103c2f822416604c135",
           "tokens": 90,
           "lines": 12
         },
         {
           "path": "script.js",
-          "mtime": 1774600893.761003,
+          "mtime": 1774251772.0195699,
           "hash": "f1b4858fe44d36ac0214db17bfc127d88cf9c01f",
           "tokens": 1631,
           "lines": 271
         },
         {
           "path": "src/assets/lang/en.json",
-          "mtime": 1774600899.7533088,
-          "hash": "0d65e4e2e7dd4c5876f82753b9e29c6fe2dbcd81",
-          "tokens": 2789,
-          "lines": 126
+          "mtime": 1774855194.4934354,
+          "hash": "5d0e396482b029dd75ce09bb8acb427afb70a831",
+          "tokens": 3023,
+          "lines": 143
         },
         {
           "path": "src/assets/lang/nl.json",
-          "mtime": 1774627314.481299,
-          "hash": "eb274b5f631012459e1c134b1e5e189c60e70ec0",
-          "tokens": 3755,
-          "lines": 127
+          "mtime": 1774856238.235001,
+          "hash": "857c04ff8eca9615b0af7c2d61458dcdf18f7e79",
+          "tokens": 3736,
+          "lines": 144
         },
         {
           "path": "src/components/Canvas.vue",
-          "mtime": 1774600899.755574,
-          "hash": "635c26cf8cab1ac2f5eef77845cb8da3f9d3714d",
-          "tokens": 2576,
-          "lines": 277
+          "mtime": 1774855194.5125315,
+          "hash": "7c2805e45e34ba0e7e41b54893c1a22b9d5109ea",
+          "tokens": 2256,
+          "lines": 251
         },
         {
           "path": "src/composables/useLang.js",
-          "mtime": 1774600893.764864,
+          "mtime": 1774251772.02057,
           "hash": "d017d6bcaec9b7294dd037b2f9f1034c92529036",
           "tokens": 125,
           "lines": 19
         },
         {
           "path": "src/store/store.js",
-          "mtime": 1774600899.757579,
+          "mtime": 1774262301.58838,
           "hash": "f6c0a80500ae3341a65c41f24585b568750aba48",
           "tokens": 111,
           "lines": 17
         },
         {
           "path": "src/views/Home.vue",
-          "mtime": 1774600899.7585747,
+          "mtime": 1774593325.280923,
           "hash": "08298a5f85c2803ac1af101d524dcd5028f3568c",
           "tokens": 882,
           "lines": 112
         },
         {
           "path": "src/views/Project.vue",
-          "mtime": 1774627613.599886,
-          "hash": "765216bbef0b18aa7a6743e94c647df41e8d0a88",
-          "tokens": 1779,
-          "lines": 264
+          "mtime": 1774863459.0385036,
+          "hash": "522a049dd3d7bc9a0b43b558fb9265a97f69ca45",
+          "tokens": 1818,
+          "lines": 286
         },
         {
           "path": "src/views/Test.vue",
-          "mtime": 1774608694.281433,
-          "hash": "20535cfc4b5eb5b491ba681ebd8d884ad0e40224",
+          "mtime": 1774855360.9469867,
+          "hash": "f65d0296631c696ebc64e50358f8c38492689d5f",
           "tokens": 3954,
           "lines": 695
         },
         {
           "path": "src/App.vue",
-          "mtime": 1774600899.7517343,
+          "mtime": 1774593325.280759,
           "hash": "1f6804b561faf0db90007a66daa93f3ea6c0062e",
           "tokens": 894,
           "lines": 115
         },
         {
           "path": "src/main.js",
-          "mtime": 1774600899.756574,
+          "mtime": 1774262163.7743838,
           "hash": "f38aa31d3642b0b8450e7c6f743055d17acd5587",
           "tokens": 465,
           "lines": 65
         },
         {
           "path": "src/router.js",
-          "mtime": 1774600893.7663329,
+          "mtime": 1774251772.0215704,
           "hash": "b967895897f3a17c477b82a707f253981e38b3b6",
           "tokens": 114,
           "lines": 18
         },
         {
           "path": "src/style.css",
-          "mtime": 1774627629.1595728,
-          "hash": "124c3af40efed2857c08c7d684a10f6b5adb6489",
-          "tokens": 4427,
-          "lines": 866
+          "mtime": 1774855194.518041,
+          "hash": "426ca441eaa40ebaf8e5406b908c8501e579d8f6",
+          "tokens": 2111,
+          "lines": 410
         },
         {
           "path": "go.bat",
-          "mtime": 1774600893.5423257,
+          "mtime": 1774251771.880605,
           "hash": "aadc8f77ab11b9334226b1710c3257dc9c765653",
           "tokens": 128,
           "lines": 18
         },
         {
           "path": "package.json",
-          "mtime": 1774600899.7504213,
+          "mtime": 1774291272.8562114,
           "hash": "6a458de5839317ea0924e4cf3055978443e1ba0c",
           "tokens": 196,
           "lines": 24
         },
         {
           "path": "vite.config.js",
-          "mtime": 1774600893.7714334,
+          "mtime": 1774251772.023571,
           "hash": "78ea177b79c86065884df657ce25dc291d4aa04a",
           "tokens": 33,
           "lines": 6
+        },
+        {
+          "path": "src/utils/colors.js",
+          "mtime": 1774855194.524099,
+          "hash": "7862ae1a011d426fc7db22b75305d4280179a3bb",
+          "tokens": 468,
+          "lines": 26
         }
       ],
-      "total_tokens": 0,
+      "total_tokens": 22035,
       "intro_text": "This is my personal portfolio website",
       "outro_text": "DO:\n- always return full code, unless a change is VERY small (a single line or a short connected segment)\n- make sure empty lines are actually empty: avoid generating lines of spaces or tabs\nalways place closing triple backticks (```) on their own, new line\n\nDo NOT:\n- remove my original comments\n- return diff files\n- use numbered steps (e.g., \"1.\") in comments\n- use <summary> tags\n- end comments with dots (unless you are using multiple sentences)\n- call something \"final\" or \"definitive\"; it usually isn't\n- use double newlines between code\n- add comments if the code itself makes it pretty clear what it does\n\nUse the following format if you want to add temporary notification comments: `// [KEYWORD] Comment` (e.g., `[FIX] Now using correct value`, `[MODIFIED] Improved algorithm`). These comments are transient and exist only to show the user what you've changed. If you find them in code you are reviewing, remove these comments as the user will have already seen them.",
       "expanded_dirs": [
         "src",
         "src/components",
-        "src/store"
+        "src/store",
+        "src/utils"
       ],
       "unknown_files": [
-        "src/utils/colors.js"
+        "src/content/en/festivalRecommender.js",
+        "src/content/en/futurenow.js",
+        "src/content/en/gamification.js",
+        "src/content/en/home.js",
+        "src/content/en/index.js",
+        "src/content/en/lisboastories.js",
+        "src/content/en/old/begrijpendBiased.js",
+        "src/content/en/old/burgerCrush.js",
+        "src/content/en/old/inABox.js",
+        "src/content/en/parleyStudio.js",
+        "src/content/en/verhalenvangers.js",
+        "src/content/en/vrGame.js",
+        "src/content/nl/festivalRecommender.js",
+        "src/content/nl/futurenow.js",
+        "src/content/nl/gamification.js",
+        "src/content/nl/home.js",
+        "src/content/nl/index.js",
+        "src/content/nl/lisboastories.js",
+        "src/content/nl/old/begrijpendBiased.js",
+        "src/content/nl/old/burgerCrush.js",
+        "src/content/nl/old/inABox.js",
+        "src/content/nl/parleyStudio.js",
+        "src/content/nl/verhalenvangers.js",
+        "src/content/nl/vrGame.js"
       ]
     }
   },
@@ -150,6 +181,30 @@
     "src/assets/lang/nl.json",
     "src/components/Canvas.vue",
     "src/composables/useLang.js",
+    "src/content/en/festivalRecommender.js",
+    "src/content/en/futurenow.js",
+    "src/content/en/gamification.js",
+    "src/content/en/home.js",
+    "src/content/en/index.js",
+    "src/content/en/lisboastories.js",
+    "src/content/en/old/begrijpendBiased.js",
+    "src/content/en/old/burgerCrush.js",
+    "src/content/en/old/inABox.js",
+    "src/content/en/parleyStudio.js",
+    "src/content/en/verhalenvangers.js",
+    "src/content/en/vrGame.js",
+    "src/content/nl/festivalRecommender.js",
+    "src/content/nl/futurenow.js",
+    "src/content/nl/gamification.js",
+    "src/content/nl/home.js",
+    "src/content/nl/index.js",
+    "src/content/nl/lisboastories.js",
+    "src/content/nl/old/begrijpendBiased.js",
+    "src/content/nl/old/burgerCrush.js",
+    "src/content/nl/old/inABox.js",
+    "src/content/nl/parleyStudio.js",
+    "src/content/nl/verhalenvangers.js",
+    "src/content/nl/vrGame.js",
     "src/main.js",
     "src/router.js",
     "src/store/store.js",
