@@ -57,13 +57,6 @@
           "lines": 524
         },
         {
-          "path": "src/views/Test.vue",
-          "mtime": 1775043647.7119331,
-          "hash": "f2ea23860b79976241a96b138ab067f090edb3a3",
-          "tokens": 4037,
-          "lines": 707
-        },
-        {
           "path": "src/App.vue",
           "mtime": 1774593325.280759,
           "hash": "1f6804b561faf0db90007a66daa93f3ea6c0062e",
@@ -302,10 +295,17 @@
         "src/store",
         "src/utils"
       ],
-      "unknown_files": []
+      "unknown_files": [
+        "dist/assets/index-Bk2ArfiQ.css",
+        "dist/assets/index-fA1LSMzz.js",
+        "dist/index.html"
+      ]
     }
   },
   "known_files": [
+    "dist/assets/index-Bk2ArfiQ.css",
+    "dist/assets/index-fA1LSMzz.js",
+    "dist/index.html",
     "go.bat",
     "index.html",
     "package.json",
@@ -344,7 +344,6 @@
     "src/utils/colors.js",
     "src/views/Home.vue",
     "src/views/Project.vue",
-    "src/views/Test.vue",
     "vite.config.js"
   ]
 }

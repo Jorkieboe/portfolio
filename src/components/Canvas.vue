@@ -202,7 +202,7 @@ onMounted(async () => {
 
     const animate = () => {
       animationId = requestAnimationFrame(animate)
-      if(route.path == '/test'){
+      if(route.path == '/'){
       smoothedProgress += (scrollProgress - smoothedProgress) * lerpFactor
 
       let zoomPhase = Math.min(smoothedProgress / 0.6, 1.0)

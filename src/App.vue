@@ -1,12 +1,14 @@
 <script setup>
 import { provide, watch, reactive, onMounted } from 'vue';
 import { useLang } from './composables/useLang'
-const { currentLang, setLang } = useLang()
+
 import { useMainStore } from './store/store'
 import Canvas from './components/canvas.vue';
-import { useSpring, useMotionProperties } from '@vueuse/motion';
 import gsap from 'gsap';
+import { useRouter } from 'vue-router'
 
+const { currentLang, setLang } = useLang()
+const router = useRouter()
 const store = useMainStore()
 
 provide('store', store)
@@ -53,30 +55,13 @@ const onEnter = (el, done) => {
 
 </script>
 <template>
-   <div ref="motionprop" style="display: none;"></div>
-  <!-- <div class="header">
-      <div class="headerContent">
-          <router-link id='title' to="/"><h2>Jorrik Dillisse</h2></router-link>
 
-          <ul v-if="$route.path === '/'">
-              <li id='clickable' @click="scrollTo('projects')">work</li>
-              <li id='clickable' @click="scrollTo('about')">about me</li>
-              <li id='clickable' @click="scrollTo('footer')">contact</li>
-          </ul>
-          <ul v-else>
-              <li id='clickable' @click="$router.push('/')">work</li>
-              <li id='clickable' @click="$router.push('/')">about me</li>
-              <li id='clickable' @click="scrollTo('footer')">contact</li>
-          </ul>
-
-          <select :value="currentLang" @change="e => setLang(e.target.value)" class="langSel">
-              <option value="nl">nl</option>
-              <option value="en">en</option>
-          </select>
-      </div>
-  </div> -->
-
+  <div class="navigation" :style="{height: store.headerSize * vh + 'px'}">
+    <div class="home-button" @click="router.push('/')"></div>
+  </div>
+  
   <Canvas></Canvas>
+  
 
   <div class="page content-wrapper">
      <router-view v-slot="{ Component }">
@@ -103,6 +88,20 @@ const onEnter = (el, done) => {
 </template>
 
 <style>
+
+.navigation{
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 20vw;
+ 
+  z-index: 200;
+
+  .home-button{
+    width: 20vw;
+    height: 100%;
+  }
+}
 
 h3, h4, p{
   margin: 0;
