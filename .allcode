@@ -22,20 +22,6 @@
           "lines": 271
         },
         {
-          "path": "src/assets/lang/en.json",
-          "mtime": 1775045037.2743447,
-          "hash": "5d0e396482b029dd75ce09bb8acb427afb70a831",
-          "tokens": 3023,
-          "lines": 143
-        },
-        {
-          "path": "src/assets/lang/nl.json",
-          "mtime": 1775045037.273811,
-          "hash": "fb773e8c43995eedf1971a1fa98ecbb5e5749e8d",
-          "tokens": 4437,
-          "lines": 170
-        },
-        {
           "path": "src/components/Canvas.vue",
           "mtime": 1774855194.5125315,
           "hash": "7c2805e45e34ba0e7e41b54893c1a22b9d5109ea",
@@ -302,7 +288,7 @@
           "lines": 27
         }
       ],
-      "total_tokens": 36540,
+      "total_tokens": 0,
       "intro_text": "This is my personal portfolio website",
       "outro_text": "DO:\n- always return full code, unless a change is VERY small (a single line or a short connected segment)\n- make sure empty lines are actually empty: avoid generating lines of spaces or tabs\nalways place closing triple backticks (```) on their own, new line\n\nDo NOT:\n- remove my original comments\n- return diff files\n- use numbered steps (e.g., \"1.\") in comments\n- use <summary> tags\n- end comments with dots (unless you are using multiple sentences)\n- call something \"final\" or \"definitive\"; it usually isn't\n- use double newlines between code\n- add comments if the code itself makes it pretty clear what it does\n\nUse the following format if you want to add temporary notification comments: `// [KEYWORD] Comment` (e.g., `[FIX] Now using correct value`, `[MODIFIED] Improved algorithm`). These comments are transient and exist only to show the user what you've changed. If you find them in code you are reviewing, remove these comments as the user will have already seen them.",
       "expanded_dirs": [
@@ -325,8 +311,6 @@
     "package.json",
     "script.js",
     "src/App.vue",
-    "src/assets/lang/en.json",
-    "src/assets/lang/nl.json",
     "src/components/Canvas.vue",
     "src/composables/useLang.js",
     "src/content/en/festivalRecommender.js",

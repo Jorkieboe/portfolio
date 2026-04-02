@@ -26,8 +26,8 @@ const stableHeight = ref(0)
 const dynamicZoneHeight = ref(0)
 let lastWidth = 0
 
-const uMaskScale = uniform(1) 
-const uPlaneAspect = uniform(1) 
+const uMaskScale = uniform(1)
+const uPlaneAspect = uniform(1)
 const uTextureAspect = uniform(1)
 const uMaskStrength = uniform(0)
 const uMoveProgress = uniform(0)
@@ -40,7 +40,7 @@ const uMaskHeight = uniform(store.headerSize)
 
 let scrollProgress = 0
 let smoothedProgress = 0
-const lerpFactor = 0.12 
+const lerpFactor = 0.12
 
 watch(() => store.projectActive, (newActive) => {
   if (newActive !== null) {
@@ -53,15 +53,47 @@ watch(() => store.projectActive, (newActive) => {
   }
 })
 
+const updateClip = () => {
+    if (!canvasContainer.value) return
+    const containerHeight = stableHeight.value
+    const targetHeaderH = containerHeight * store.headerSize
+    let clipAmount = 0
+
+    if (store.isTransitioning) {
+        clipAmount = store.transitionClipOverride
+    } else if (store.track) {
+        // Track the bottom bounding box of the zoom container for perfect stability
+        const trackEl = store.track.value || store.track
+        const trackBottom = trackEl.getBoundingClientRect().bottom
+        let rawClip = containerHeight - trackBottom
+        let maxClip = containerHeight - targetHeaderH
+        clipAmount = Math.max(0, Math.min(rawClip, maxClip))
+    } else if (store.content) {
+        const contentEl = store.content.value || store.content
+        const contentTop = contentEl.getBoundingClientRect().top
+        let rawClip = containerHeight - contentTop
+        let maxClip = containerHeight - targetHeaderH
+        clipAmount = Math.max(0, Math.min(rawClip, maxClip))
+    }
+
+    const clipString = `inset(0px 0px ${clipAmount}px 0px)`
+    canvasContainer.value.style.webkitClipPath = clipString
+    canvasContainer.value.style.clipPath = clipString
+    canvasContainer.value.style.transform = 'translateZ(0)'
+
+    dynamicZoneHeight.value = containerHeight - clipAmount
+}
+
 const handleScroll = () => {
     const zoomTrackHeight = stableHeight.value * 2.5
     const currentScroll = window.scrollY
     scrollProgress = Math.min(currentScroll / zoomTrackHeight, 1.0)
+    updateClip()
 }
 
 const handleResize = () => {
     if (!canvasContainer.value) return
-    
+
     const w = window.innerWidth
     const h = window.innerHeight
 
@@ -94,7 +126,7 @@ onMounted(async () => {
 
     const textureLoader = new THREE.TextureLoader()
     const maskTexture = await textureLoader.loadAsync('/images/Jorrik.svg')
-    
+
     const img = maskTexture.image
     uTextureAspect.value = img.width / img.height
     const maxWidth = 1920
@@ -118,7 +150,7 @@ onMounted(async () => {
       })
       const centeredUV = containUV.sub(0.5).div(uMaskScale).add(0.5)
 
-      const padding = float(0.015) 
+      const padding = float(0.015)
       const targetWidth = uMaskHeight.mul(uTextureAspect).div(uPlaneAspect)
       const targetOriginX = padding
       const targetOriginY = float(1.0).sub(uMaskHeight).add(padding.div(2))
@@ -141,12 +173,11 @@ onMounted(async () => {
       const maskAlpha = mix(normalMask, invertedMask, transition)
 
       const finalAlpha = mix(float(1.0), maskAlpha, uMaskStrength)
-      
+
       // Noise Background
       const nBig = mx_noise_float(vec2(coords.x.mul(0.5), time.mul(0.5)))
       const nSmall = mx_noise_float(vec2(coords.x.mul(4.0), time.mul(2.0)))
       const center = mix(float(0.0), float(1.0), nBig.mul(0.6).add(nSmall.mul(0.4)).mul(0.5).add(0.5))
-
 
       const offsetTransition = smoothstep(float(0.5), float(1.0), uMoveProgress);
 
@@ -175,7 +206,7 @@ onMounted(async () => {
       smoothedProgress += (scrollProgress - smoothedProgress) * lerpFactor
 
       let zoomPhase = Math.min(smoothedProgress / 0.6, 1.0)
-      zoomPhase = 1 - Math.pow(1 - zoomPhase, 3) 
+      zoomPhase = 1 - Math.pow(1 - zoomPhase, 3)
 
       let movePhase = Math.max(0, (smoothedProgress - 0.6) / 0.4)
       movePhase = movePhase * movePhase * (3.0 - 2.0 * movePhase)
@@ -193,30 +224,8 @@ onMounted(async () => {
       uColourTop.value.lerp(targetTop, 0.05)
       uColourBottom.value.lerp(targetBottom, 0.05)
 
-      
-       if (canvasContainer.value) {
-          const vh = stableHeight.value
-          const targetHeaderH = vh * store.headerSize
-          let clipAmount = 0
-          if (store.isTransitioning) {
-            console.log('targetHeaderH')
-            clipAmount = store.transitionClipOverride
-          } else if (store.content) {
-            
-            const contentTop = store.content.getBoundingClientRect().top
+      updateClip()
 
-            let rawClip = vh - contentTop 
-            let maxClip = vh - targetHeaderH
-            clipAmount = Math.max(0, Math.min(rawClip, maxClip))
-          }
-
-          const clipString = `inset(0px 0px ${clipAmount}px 0px)`
-          canvasContainer.value.style.webkitClipPath = clipString
-          canvasContainer.value.style.clipPath = clipString
-          canvasContainer.value.style.transform = 'translateZ(0)'
-          
-          dynamicZoneHeight.value = vh - clipAmount
-      }
       renderer.render(scene, camera)
   }
 
@@ -242,8 +251,8 @@ onBeforeUnmount(() => {
     left: 0;
     width: 100%;
     height: 100vh;
-    z-index: 100; 
-    pointer-events: none; 
+    z-index: 100;
+    pointer-events: none;
     background-color: black;
     will-change: clip-path, -webkit-clip-path;
     filter: drop-shadow(0 0 0.75rem crimson);

@@ -1,5 +1,5 @@
 <script setup>
-import { computed, onMounted, inject, ref, watch } from 'vue'
+import { computed, onMounted, onUnmounted, inject, ref, watch } from 'vue'
 import { useRoute } from 'vue-router'
 import { useLang } from '../composables/useLang'
 import { gsap } from "gsap";
@@ -36,7 +36,7 @@ watch(selectedMedia, (newVal) => {
 })
 
 onMounted(() => {
-    store.content = localContentRef
+    store.setContentRef(localContentRef.value)
     gsap.registerPlugin(ScrollTrigger, SplitText);
     mm = gsap.matchMedia(localContentRef.value);
 
@@ -136,6 +136,10 @@ onMounted(() => {
     })
 })
 
+onUnmounted(() => {
+    store.setContentRef(null);
+})
+
 const projectId = computed(() => route.params.id)
 const projectData = computed(() => t.value[projectId.value])
 
@@ -221,7 +225,7 @@ const cfg = computed(() => configMap[projectId.value] || configMap.begrijpendBia
           <div class="subSectionImage" @click="openMedia(content)">
               <video v-if="content.media.type === 'video'" :src="content.media.src" class="subSectionImg" muted playsinline></video>
               <img v-else :src="content.media.src" :alt="content.title" class="subSectionImg">
-              <div class="play-button"><img src="/images/svg/play-icon.svg"></div>
+              <div v-if="content.media.type === 'video'" class="play-button"><img src="/images/svg/play-icon.svg"></div>
           </div>
           <div class="sectionInfo">
               <h2 class="subTitle">{{ content.title }}</h2>

@@ -32,7 +32,7 @@ export default {
         {
             title: "Latency is de vijand",
             text: `Op dit moment is het grootste probleem van deze ontwikkelingen latency. Voor een goede immersieve ervaring moet je haast vergeten dat je tegen een computer praat. Hiervoor heb ik een full-stack architectuur opgezet die de tijd tussen spreken en antwoord voelbaar moet verminderen. Door het streamen van de output een visuele veranderingen maak je het gevoel korter.`,
-            media: {type: 'image', src: "/images/Inabox/enemy.jpg"}
+            media: {type: 'image', src: "/images/parley/latency.jpg"}
         }
     ]
 }

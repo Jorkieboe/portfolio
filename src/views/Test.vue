@@ -36,15 +36,16 @@ const activeProject = ref(null)
 const isMobile = ref(typeof navigator !== 'undefined' && /Android|webOS|iPhone|iPad|iPod|BlackBerry|Windows Phone/i.test(navigator.userAgent))
 
 const toggleMobile = (index) => {
-  // [FIX] Use store.projectActive (matching store.js) instead of store.activeProject
   store.projectActive = store.projectActive === index ? null : index
 }
 
 const localContentRef = ref(null)
+const trackRef = ref(null)
 let mm;
 
 onMounted(() => {
-  store.setContentRef(localContentRef)
+  store.setContentRef(localContentRef.value)
+  store.setTrackRef(trackRef.value)
   gsap.registerPlugin(ScrollTrigger, SplitText);
   mm = gsap.matchMedia(localContentRef.value);
 
@@ -104,7 +105,6 @@ onMounted(() => {
             trigger: wrapper,
             start: "top 85%",
             toggleActions: "play none none reverse",
-            markers: true,
           },
           y: 50,
           opacity: 0,
@@ -114,65 +114,104 @@ onMounted(() => {
       });
     }
 
+    // [FIX] New Pin-Both-Sides About Logic
+    const aboutContent = document.querySelector('.aboutMeContent');
+    const profilePic = document.querySelector('.profilePicture');
+
+    const getCenterOffset = () => {
+        if (!aboutContent || !profilePic) return 0;
+        const screenMid = window.innerWidth / 2;
+        const picRect = profilePic.getBoundingClientRect();
+        const picMid = picRect.left + (picRect.width / 2);
+        // Returns pixels needed to move pic center to screen center
+        return screenMid - picMid;
+    };
+
     const tlAbout = gsap.timeline({
       scrollTrigger: {
-        trigger: ".aboutMeContent",
-        start: isDesktop ? "5% 25%" : "5% 80%",
-        end: isDesktop ? "72.5% 50%" : "30% 60%",
+        trigger: ".about",
+        start: "top 10%",
+        end: "+=200%", // Length of the pin
         scrub: 1,
-        pin: isDesktop ? ".profilePicture" : false,
-        pinSpacing: false,
-
+        pin: isDesktop ? ".aboutMeContent" : false,
+        pinSpacing: true,
       }
     });
 
     if (isDesktop) {
-      tlAbout.to(".profilePicture", {
-        yPercent: -25, opacity: 1, duration: 0.5, ease: "power2.out"
-      })
-      .to({}, { duration: 0.5 })
-      .to(".profilePicture", {
-        x: -150, rotateY: '30deg', skewX: '-25deg', duration: 0.5, ease: "power1.inOut"
-      })
-      .to(".profilePicture", {
-        x: -250, rotateY: '60deg', skewX: '-50deg', scale: 0.8, duration: 0.5
-      })
-      .to(".profilePicture", {
-        x: -300, skewX: '0deg', rotateY: '0deg', scale: 0.7, duration: 0.5
+      // Step 1: Image starts in the center of the screen
+      tlAbout
+        .fromTo(".profilePicture",
+          { x: getCenterOffset(), scale: 1.2 }, // ✅ start here
+          { x: getCenterOffset() / 2, rotateY: '30deg',  skewX: '-25deg', scale: 1.0, duration: 0.5 }
+        )
+        .to(".profilePicture", {
+          x: getCenterOffset() / 4, rotateY: '60deg', skewX: '-50deg', scale: 0.9, duration: 0.5
+        })
+        .to(".profilePicture", {
+            x: 0, skewX: '0deg', rotateY: '0deg', scale: 0.8, duration: 0.5
+        });
+
+      // Step 2: Fade in text paragraphs one by one
+      const paragraphs = gsap.utils.toArray(".meText");
+      paragraphs.forEach((p, i) => {
+          const split = new SplitText(p, { type: "lines" });
+
+          tlAbout.from(split.lines, {
+            autoAlpha: 0,
+            y: 30,
+            duration: 0.5,
+            stagger: 0.1
+          }, ">-0.5");
+
+          // if (i < paragraphs.length - 1) {
+          //   tlAbout.to(p, { opacity: 0.3, duration: 1 });
+          // }
       });
-      tlAbout.to({}, { duration: 4 });
+
+      // const textElements = gsap.utils.toArray(".meText");
+
+      // textElements.forEach((el) => {
+      //     const split = new SplitText(el, { type: "words" });
+
+      //     gsap.from(split.words, {
+      //       scrollTrigger: {
+      //         trigger: el,
+      //         start: isDesktop ? "50% 90%" : "30% 90%",
+      //         end: isDesktop ? "top 50%" : "center 75%",
+      //         scrub: 0.5,
+
+      //       },
+      //       scale: 0.9,
+      //       x: -10,
+      //       y: 10,
+      //       autoAlpha: 0,
+      //       stagger: { amount: isDesktop ? 1.5 : 0.8 },
+      //       duration: 0.5,
+      //     });
+      //   });
+
+
+      tlAbout.to({}, { duration: 1 });
     } else {
       tlAbout.from(".profilePicture", {
-        rotateZ: '30deg',
-        xPercent: 50,
-        opacity: 1,
-        scale: 1,
-        duration: 0.5,
-        ease: "power1.inOut"
+        y: 50,
+        opacity: 0,
+        duration: 0.8,
+        ease: "power2.out"
+      });
+
+      gsap.from(".meText", {
+          scrollTrigger: {
+              trigger: ".text-side",
+              start: "top 80%",
+          },
+          opacity: 0,
+          y: 20,
+          stagger: 0.3,
+          duration: 1
       });
     }
-
-        const textElements = gsap.utils.toArray(".meText");
-
-        textElements.forEach((el) => {
-          const split = new SplitText(el, { type: "words" });
-
-          gsap.from(split.words, {
-            scrollTrigger: {
-              trigger: el,
-              start: isDesktop ? "50% 90%" : "30% 90%",
-              end: isDesktop ? "top 50%" : "center 75%",
-              scrub: 0.5,
-
-            },
-            scale: 0.9,
-            x: -10,
-            y: 10,
-            autoAlpha: 0,
-            stagger: { amount: isDesktop ? 1.5 : 0.8 },
-            duration: 0.5,
-          });
-        });
 
   });
 });
@@ -181,6 +220,8 @@ onUnmounted(() => {
   if (mm) {
     mm.revert();
   }
+  store.setContentRef(null);
+  store.setTrackRef(null);
 });
 
 </script>
@@ -188,7 +229,7 @@ onUnmounted(() => {
 <template>
  <div class="test-page-wrapper">
 
-   <div class="zoom-scroll-track" :style="{ height: ('100%' * store.headerSize) + 'px' }"></div>
+   <div class="zoom-scroll-track" ref="trackRef"></div>
     <div class="content" ref="localContentRef">
         <div class="projects" id="projects">
             <h3 class="sectionTitle">Work</h3>
@@ -224,24 +265,26 @@ onUnmounted(() => {
                 </div>
             </div>
         </div>
+
         <div class="about" id="about">
-          <h3 class="sectionTitle">About me</h3>
-            <div class="aboutMeContent">
+          <div class="aboutMeContent">
+            <h3 class="sectionTitle abs">About me</h3>
+            <div class="pic-side">
               <div class="pic-wrapper">
                 <img class="profilePicture" src="/images/Jorrik.jpg">
               </div>
-              <div class="text-section">
-                <div class="dummy"></div>
-                  <div class="meTextwrapper">
-                    <p class="meText" v-for="text in t.homePage.aboutmeText" v-html="text"></p>
-                  </div>
+            </div>
+            <div class="text-side">
+              <div class="meTextwrapper">
+                <p class="meText" v-for="text in t.homePage.aboutmeText" v-html="text"></p>
               </div>
             </div>
           </div>
-
         </div>
 
-        <div class="scroll-cta"><img src="/images/Icons/down.svg" ></div>
+      </div>
+
+      <div class="scroll-cta"><img src="/images/Icons/down.svg" ></div>
     </div>
 </template>
 
@@ -255,7 +298,6 @@ onUnmounted(() => {
   z-index: 999;
   left: 50%;
   transform: translateX(-50%);
-
 }
 
 .zoom-scroll-track {
@@ -275,17 +317,6 @@ onUnmounted(() => {
   }
 }
 
-.zone {
-  width: 100%;
-  background-color: transparent;
-  pointer-events: none;
-}
-
-.pin-scacer{
-  pointer-events: none;
-
-}
-
 .projects{
   padding-top: 25px;
   padding-bottom: 25px;
@@ -293,6 +324,10 @@ onUnmounted(() => {
   width: 100%;
   overflow: hidden;
   margin: 0 auto;
+
+  .sectionTitle{
+      padding-bottom: 2rem;
+  }
 
   .projectlist {
     display: flex;
@@ -305,6 +340,8 @@ onUnmounted(() => {
     pointer-events: none;
     overflow: hidden;
     filter: drop-shadow(10px 10px 4px rgba(0,0,0,0.08));
+
+    
 
     .projectWrapper {
       display: flex;
@@ -323,12 +360,13 @@ onUnmounted(() => {
 
        &.active{
           margin-left: 0;
-          z-index: 10;
+          // z-index: 10;
           flex-grow: 0;
           .project{
             .projectImage {
               min-width: 18rem;
               transition: all 1s;
+              z-index: 50;
             }
 
             .projectPanel{
@@ -344,7 +382,6 @@ onUnmounted(() => {
               .panelTextDiv {
                 opacity: 1;
               }
-
             }
 
             &.reversed{
@@ -357,7 +394,6 @@ onUnmounted(() => {
               }
             }
           }
-
         }
 
       .project {
@@ -390,17 +426,11 @@ onUnmounted(() => {
           }
         }
 
-        #notActive {
-            pointer-events: none;
-        }
-
         .projectPanel {
             width: 0;
             opacity: 0;
             overflow: hidden;
             transition: all 0.6s ease-in-out;
-            // background: rgba(255, 255, 255, 0.95);
-
         }
 
         .panelTextDiv {
@@ -417,7 +447,6 @@ onUnmounted(() => {
               height: 100%;
               float: left;
               shape-outside: polygon(80% 0%, 100% 0%, 40% 100%, 0% 100%);
-
             }
 
             .right-guard {
@@ -432,276 +461,148 @@ onUnmounted(() => {
               word-wrap: break-word;
               &.title{
                 font-size: 1.5rem;
-
               }
-
               &.type{
                  font-size: 1.2rem;
               }
-
               &.description{
                  font-size: 0.8rem;
-
               }
             }
         }
       }
     }
   }
-
 }
 
 .about {
-    display: flex;
-    position: relative;
-    flex-direction: column;
-    justify-content: center;
-    align-items: flex-start;
-    margin: auto;
-    margin-top: 50px;
-    margin-bottom: 50px;
     width: 100%;
-    height: fit-content;
-    margin: 0 auto;
+    margin-top: 50px;
 
     .aboutMeContent {
-      width: 100%;
-      height: 200vh;
       display: flex;
-      flex-direction: column;
+      flex-direction: row;
+      max-width: 100rem;
+      width: 100%;
+      height: 90vh;
+     
+      margin: 0 auto;
+      position: relative;
       align-items: center;
-      justify-content: flex-start;
 
-      .pic-wrapper{
-        width: 100%;
-        height: 100vh;
+      .sectionTitle.abs {
+          position: absolute;
+          top: 5vh;
+          left: 0;
+      }
+
+      .pic-side {
+        width: 50%;
         display: flex;
-        flex-direction: column;
-        align-items: center;
         justify-content: center;
-        margin: 2rem 0;
+        align-items: center;
 
-        .profilePicture {
-          max-width: 50vh;
+        .pic-wrapper {
           width: 100%;
-          object-fit: contain;
-          height: fit-content;
+          display: flex;
+          justify-content: center;
 
-          filter: url(#distort);
+          .profilePicture {
+            max-width: 25rem;
+            width: 80%;
+            height: auto;
+            border-radius: 4px;
+            box-shadow: 0 20px 40px rgba(0,0,0,0.1);
+          }
         }
       }
 
-      .text-section{
-        width: 100%;
-        height: fit-content;
-        position: relative;
+      .text-side {
+        width: 50%;
         display: flex;
-        justify-content: flex-end;
-        padding: 5rem 0;
-        .dummy {
-           width: 50%;
-         }
+        align-items: center;
+        padding-right: 5%;
 
-        .meTextwrapper{
-            display: flex;
-            flex-direction: column;
-            width: 50%;
+        .meTextwrapper {
+          display: flex;
+          flex-direction: column;
+          gap: 3rem;
 
           .meText {
-            font-size: 1.4rem;
-            max-width: 30rem;
-            width: 100%;
-            // width: 50%;
-            margin-bottom: 2.5rem;
-
+            font-size: 1.3rem;
+            line-height: 1.8;
+            max-width: 35rem;
+            color: #333;
           }
         }
       }
     }
-}
-
-.p1 {
-    z-index: 1;
-}
-
-.p2 {
-    z-index: 2;
-}
-
-.p3 {
-    z-index: 3;
-}
-
-.p4 {
-    z-index: 4;
-}
-
-.p5 {
-    z-index: 5;
-}
-
-.p6 {
-    z-index: 6;
-}
-
-.project:hover .panelText {
-    display: block;
 }
 
 @media (max-width: 765px) {
   .projects{
     .projectlist {
         flex-direction: column;
-        flex-wrap: wrap;
-        cursor: pointer;
-
       .projectWrapper {
-        max-width: 100vw;
-        height: 300px;
         width: 100vw;
-        margin-left: 0px;
-        cursor: pointer;
+        height: 300px;
+        margin-left: 0;
         &.active{
           .project{
             .projectImage {
               width: 30vw;
-              min-width: unset;
             }
-
             .projectPanel{
-              padding: 0;
-              padding-left: 1rem;
-              padding-right: 1rem;
+              padding: 0 1rem;
               width: 70vw;
               height: 300px;
-              box-sizing: border-box;
-              margin-top: 0.5rem;
-
-              .panelTextDiv {
-                  width: 100%;
-              }
-            }
-
-            &.reversed{
-              .projectImage {
-                clip-path: polygon(0% 0%, 100% 0%, 75% 100%, 0% 100%);
-              }
-              .projectPanel{
-                margin-right: 0;
-              }
             }
           }
         }
-
       .project {
         justify-content: space-between;
-        width: 100%;
-        .panelTextDiv {
-
-          .left-guard{
-            display: none;
-          }
-          .right-guard{
-            display: none;
-          }
-          width: 100%;
-        }
-
-        &.reversed{
-          flex-direction: row;
-
-          .projectImage{
-            clip-path: polygon(0% 0%, 100% 0%, 100% 100%, 0% 100%);
-          }
-        }
-
         .projectImage {
-            height: 300px;
             width: 100vw;
-            max-width: 100vw;
-            clip-path: polygon(0% 0%, 100% 0%, 100% 100%, 0% 100%);
-            position: relative;
-            cursor: pointer;
-
-            &.p1 {
-              background-size: auto 80vw;
-            }
-
-            &.p2 {
-              background-size: auto 80vw;
-            }
-
-            &.p3 {
-              background-size: auto 80vw;
-            }
-
-            &.p4 {
-                background-size: auto 80vw;
-            }
-
-            &.p5 {
-              background-size: auto 80vw;
-            }
-
-            &.p6 {
-              background-size: auto 80vw;
-            }
+            height: 300px;
+            clip-path: none !important;
           }
         }
       }
     }
-
   }
 
   .about {
-
     .aboutMeContent {
-      width: 100%;
-      height: fit-content;
+      flex-direction: column;
+      height: auto;
+      padding: 50px 20px;
 
-      .pic-wrapper{
-        width: 100%;
-        height: fit-content;
-        display: flex;
-        padding: 1rem 0;
-
-        .profilePicture {
-          max-width: 50vh;
-          width: 100%;
-          object-fit: contain;
-          height: fit-content;
-
-          filter: url(#distort);
-        }
+      .sectionTitle.abs {
+          position: relative;
+          top: 0;
+          margin-bottom: 2rem;
       }
 
-      .text-section{
-        width: 90%;
-        height: fit-content;
-        position: relative;
-        display: flex;
-        flex-direction: column;
-        padding: 0;
-        .dummy {
-           display: none;
-         }
-
-        .meTextwrapper{
-            display: flex;
-            flex-direction: column;
-            width: 100%;
+      .pic-side {
+        width: 100%;
+        margin-bottom: 3rem;
+        .profilePicture {
+          max-width: 300px;
+          transform: none !important;
+          opacity: 1 !important;
+        }
+      }
+      .text-side {
+        width: 100%;
+        padding-right: 0;
+        .meTextwrapper {
           .meText {
-            font-size: 1.5rem;
-            max-width: 30rem;
-            width: 100%;
-            // width: 50%;
-            margin-bottom: 2.5rem;
-
+            font-size: 1.2rem;
+            max-width: 100%;
           }
         }
       }
     }
   }
-
 }
 </style>

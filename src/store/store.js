@@ -6,12 +6,16 @@ export const useMainStore = defineStore('main', {
     projectActive: null,
     headerSize: 0.08,
     content: null,
+    track: null,
     isTransitioning: false,
     transitionClipOverride: 0,
   }),
   actions: {
     setContentRef(el) {
-      this.content = el; // Note: if this is a DOM element, don't use .value inside the action
+      this.content = el;
+    },
+    setTrackRef(el) {
+      this.track = el;
     }
   }
 });
