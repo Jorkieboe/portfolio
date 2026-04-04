@@ -14,7 +14,6 @@ const store = useMainStore()
 provide('store', store)
 
 const vh = window.innerHeight
-const initialHeaderPx = vh - (vh * store.headerSize)
 
 const scrollTo = (id) => {
   const el = document.getElementById(id)
@@ -22,30 +21,50 @@ const scrollTo = (id) => {
 }
 
 const onBeforeLeave = () => {
-  const vh = window.innerHeight
-  const headerPx = vh * store.headerSize
-  
   store.isTransitioning = true
 }
 
 const onLeave = (el, done) => {
   store.isTransitioning = true
-   gsap.to(store, {
-    transitionClipOverride: 0,
+
+    const isHome = router.currentRoute.value.path === '/'
+    const targetClip = isHome ? 0 : vh - (vh * store.headerSize)
+
+  if(isHome){
+    gsap.to(store, {
+      transitionClipOverride: targetClip,
+      duration: 0.2,
+      onComplete: ()=>{
+      // store.isTransitioning = false
+      done()
+    }
+    })
+  }else{
+    gsap.from(store, {
+    transitionClipOverride: vh - (vh * store.headerSize),
     duration: 0.4,
     onComplete: ()=>{
-      store.isTransitioning = false
+      // store.isTransitioning = false
       done()
     }
   })
+  }
+   
 }
 
 const onEnter = (el, done) => {
-  store.isTransitioning = true
+  // store.isTransitioning = true
+  const vh = window.innerHeight
+  const headerClip = vh - (vh * store.headerSize)
+
+  const isHome = router.currentRoute.value.path === '/'
+  const targetClip = isHome ? 0 : headerClip
+
   gsap.to(store, {
-    transitionClipOverride: initialHeaderPx,
-    delay: 0.5,
-    duration: 0.4,
+    transitionClipOverride: targetClip,
+    delay: 0.1,
+    duration: isHome ? 0.2 : 0.5,
+    ease: "power2.out",
     onComplete: ()=>{
       store.isTransitioning = false
       done()
@@ -59,14 +78,13 @@ const onEnter = (el, done) => {
   <div class="navigation" :style="{height: store.headerSize * vh + 'px'}">
     <div class="home-button" @click="router.push('/')"></div>
   </div>
-  
+
   <Canvas></Canvas>
-  
 
   <div class="page content-wrapper">
      <router-view v-slot="{ Component }">
-      <transition 
-        mode="out-in" 
+      <transition
+        mode="out-in"
         :css="false"
         @before-leave="onBeforeLeave"
         @leave="onLeave"
@@ -94,7 +112,7 @@ const onEnter = (el, done) => {
   top: 0;
   left: 0;
   width: 20vw;
- 
+
   z-index: 200;
 
   .home-button{

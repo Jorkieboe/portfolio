@@ -6,6 +6,8 @@ import { gsap } from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
 import { SplitText } from 'gsap/SplitText';
 
+import ProfilePic from '../components/ProfilePic.vue';
+
 const { t } = useLang()
 
 const projectIds =[
@@ -39,6 +41,7 @@ const toggleMobile = (index) => {
   store.projectActive = store.projectActive === index ? null : index
 }
 
+const aboutScrollProgress = ref(0)
 const localContentRef = ref(null)
 const trackRef = ref(null)
 let mm;
@@ -129,28 +132,20 @@ onMounted(() => {
     const tlAbout = gsap.timeline({
       scrollTrigger: {
         trigger: ".about",
-        start: "top 10%",
-        end: "+=200%", // Length of the pin
+        start: isDesktop ? "top 10%" : "30% 50%",
+        end: "+=200%",
         scrub: 1,
         pin: isDesktop ? ".aboutMeContent" : false,
         pinSpacing: true,
+        // markers: true,
+        onUpdate: (self) => {
+          aboutScrollProgress.value = Math.min(1, self.progress * 2);; // Track the progress 0-1
+        }
       }
     });
 
     if (isDesktop) {
-      tlAbout
-        .fromTo(".profilePicture",
-          { x: getCenterOffset(), scale: 1.2 }, // ✅ start here
-          { x: getCenterOffset() / 2, rotateY: '30deg',  skewX: '-25deg', scale: 1.0, duration: 0.5 }
-        )
-        .to(".profilePicture", {
-          x: getCenterOffset() / 4, rotateY: '60deg', skewX: '-50deg', scale: 0.9, duration: 0.5
-        })
-        .to(".profilePicture", {
-            x: 0, skewX: '0deg', rotateY: '0deg', scale: 0.8, duration: 0.5
-        });
 
-      // Step 2: Fade in text paragraphs one by one
       const paragraphs = gsap.utils.toArray(".meText");
       paragraphs.forEach((p, i) => {
           const split = new SplitText(p, { type: "lines" });
@@ -163,28 +158,8 @@ onMounted(() => {
           }, ">-0.5");
       });
 
-
-
       tlAbout.to({}, { duration: 1 });
-    } else {
-      tlAbout.from(".profilePicture", {
-        y: 50,
-        opacity: 0,
-        duration: 0.8,
-        ease: "power2.out"
-      });
-
-      gsap.from(".meText", {
-          scrollTrigger: {
-              trigger: ".text-side",
-              start: "top 80%",
-          },
-          opacity: 0,
-          y: 20,
-          stagger: 0.3,
-          duration: 1
-      });
-    }
+    } 
 
   });
 });
@@ -244,7 +219,7 @@ onUnmounted(() => {
             <h3 class="sectionTitle abs">About me</h3>
             <div class="pic-side">
               <div class="pic-wrapper">
-                <img class="profilePicture" src="/images/Jorrik.jpg">
+                <ProfilePic :scrollProgress="aboutScrollProgress" />
               </div>
             </div>
             <div class="text-side">
@@ -313,8 +288,6 @@ onUnmounted(() => {
     pointer-events: none;
     overflow: hidden;
     filter: drop-shadow(10px 10px 4px rgba(0,0,0,0.08));
-
-    
 
     .projectWrapper {
       display: flex;
@@ -453,36 +426,43 @@ onUnmounted(() => {
     margin-top: 50px;
 
     .aboutMeContent {
-      display: flex;
-      flex-direction: row;
-      max-width: 100rem;
-      width: 100%;
-      height: 90vh;
-     
-      margin: 0 auto;
       position: relative;
-      align-items: center;
+      width: 100%;
+      height: 100vh;
+      margin: 0 auto;
+      max-width: 160rem;
 
       .sectionTitle.abs {
-          position: absolute;
+          // position: absolute;
+          max-width: 100rem;
+          width: 100%;
           top: 5vh;
-          left: 0;
+          left: 5%;
+          z-index: 20;
+          margin: 0 auto;
       }
 
       .pic-side {
-        width: 50%;
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
         display: flex;
         justify-content: center;
         align-items: center;
 
         .pic-wrapper {
+          position: relative;
           width: 100%;
+          height: 100%;
           display: flex;
-          justify-content: center;
+          justify-content: flex-start;
+          align-items: center;
 
           .profilePicture {
             max-width: 25rem;
-            width: 80%;
+            width: 30vw;
             height: auto;
             border-radius: 4px;
             box-shadow: 0 20px 40px rgba(0,0,0,0.1);
@@ -491,15 +471,21 @@ onUnmounted(() => {
       }
 
       .text-side {
-        width: 50%;
+        position: absolute;
+        right: 5%;
+        top: 50%;
+        transform: translateY(-50%);
+        width: 40%;
+        z-index: 10;
         display: flex;
         align-items: center;
-        padding-right: 5%;
+        pointer-events: none;
 
         .meTextwrapper {
           display: flex;
           flex-direction: column;
           gap: 3rem;
+          pointer-events: all;
 
           .meText {
             font-size: 1.3rem;
@@ -512,7 +498,7 @@ onUnmounted(() => {
     }
 }
 
-@media (max-width: 765px) {
+@media (max-width: 1024px) {
   .projects{
     .projectlist {
       flex-direction: column;
@@ -535,7 +521,7 @@ onUnmounted(() => {
               margin-top: 2rem;
 
               .panelTextDiv{
-              
+
                 width: 80%;
                 .left-guard, .right-guard{
                   display: none;
@@ -552,7 +538,7 @@ onUnmounted(() => {
         }
 
         .projectImage {
-            
+
             width: 100vw;
             height: 300px;
             clip-path: none !important;
@@ -573,19 +559,32 @@ onUnmounted(() => {
 
   .about {
     .aboutMeContent {
+      display: flex;
       flex-direction: column;
-      height: auto;
-      padding: 50px 20px;
+      height: fit-content;
+      padding: 50px 0px;
 
       .sectionTitle.abs {
           position: relative;
           top: 0;
+          left: 0;
           margin-bottom: 2rem;
       }
 
       .pic-side {
+        position: relative;
         width: 100%;
+        height: auto;
         margin-bottom: 3rem;
+
+        .pic-wrapper {
+            width: 100vw;
+            aspect-ratio: 9/16;
+           
+            padding-left: 0;
+            justify-content: center;
+        }
+
         .profilePicture {
           max-width: 300px;
           transform: none !important;
@@ -593,9 +592,16 @@ onUnmounted(() => {
         }
       }
       .text-side {
+        position: relative;
+        top: 0;
+        right: 0;
+        transform: none;
         width: 100%;
         padding-right: 0;
+
         .meTextwrapper {
+          width: 90%;
+          margin: 0 auto;
           .meText {
             font-size: 1.2rem;
             max-width: 100%;

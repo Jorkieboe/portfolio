@@ -41,43 +41,32 @@ onMounted(() => {
     mm = gsap.matchMedia(localContentRef.value);
 
     mm.add({
-        isDesktop: "(min-width: 766px)",
-        isMobile: "(max-width: 765px)"
+        isDesktop: "(min-width: 768px)",
+        isMobile: "(max-width: 767px)"
     }, (context) => {
         let { isDesktop, isMobile } = context.conditions;
 
-        const tl = gsap.timeline({
-            scrollTrigger: {
-                trigger: ".projectOverview",
-                start: "center 60%",
-                end: "+=800",
-                pin: true,
-                pinSpacing: true,
-                scrub: 1,
-                markers: false
-            }
-        });
+        if(isDesktop){
+            const tl = gsap.timeline({
+                scrollTrigger: {
+                    trigger: ".projectOverview",
+                    start: "center 60%",
+                    end: isDesktop ? "+=800" : 'bottom bottom',
+                    pin: true,
+                    pinSpacing: true,
+                    scrub: 1,
+                    markers: false
+                }
+            });
 
-        tl.from(".bigImage", {
-            scale: 0.8,
+            tl.from(".bigImage", {
+                scale: 0.8,
 
-            duration: 0.5,
-            ease: "power2.out"
-        })
-
-        gsap.from(".small-image", {
-            scrollTrigger: {
-                trigger: ".small-image-container",
-                start: "top 85%", // Animation starts when the container is near the bottom
-                toggleActions: "play none none reverse", // Plays when scrolling down, reverses when scrolling up
-            },
-            y: 100,           // Slides up from 100px
-            opacity: 0,       // Starts invisible
-            scale: 0.9,       // Subtle scale up
-            duration: 1,
-
-            ease: "power2.out"
-        });
+                duration: 0.5,
+                ease: "power2.out"
+            })
+        }
+      
 
         const infoContainers = gsap.utils.toArray(".projectInfoContainer");
 
@@ -196,7 +185,7 @@ const cfg = computed(() => configMap[projectId.value] || configMap.begrijpendBia
           </div>
       </div>
 
-      <div class="projectOverview" :class="cfg.prefix">
+      <div class="projectOverview">
         <template v-if="projectData.splashImages?.[0]">
           <video v-if="projectData.splashImages[0].type === 'video'"
                  class="bigImage"
@@ -254,7 +243,7 @@ const cfg = computed(() => configMap[projectId.value] || configMap.begrijpendBia
         max-width: 1920px;
         width: 90%;
         margin: auto;
-        margin-top: 150px;
+        margin-top: 9.5rem;
 
         #projectType {
             font-family: Cooper;
@@ -284,14 +273,15 @@ const cfg = computed(() => configMap[projectId.value] || configMap.begrijpendBia
         display: flex;
         flex-direction: column;
         height: fit-content;
-
+        justify-content: center;
         align-items: center;
+        margin: 0 auto;
 
         .bigImage {
             max-width: 80rem;
             width: 75vw;
             aspect-ratio: 16/9;
-            margin-bottom: 3rem;
+            margin: 0 auto 3rem;
             object-fit: cover;
         }
 
@@ -341,7 +331,7 @@ const cfg = computed(() => configMap[projectId.value] || configMap.begrijpendBia
                     width: 100%;
                     max-height: 600px;
                     object-fit: contain;
-                    border-radius: 8px;
+                    border-radius: 0.1rem;
                     box-shadow: 0 10px 30px rgba(0,0,0,0.08);
                     transition: transform 0.3s ease;
 
@@ -359,6 +349,8 @@ const cfg = computed(() => configMap[projectId.value] || configMap.begrijpendBia
                     height: 50px;
                     background-color: white;
                     border-radius: 50%;
+                    left: 50%;
+                    transform: translateX(-50%);
 
                     img{
                         width: 80%;
@@ -405,10 +397,28 @@ const cfg = computed(() => configMap[projectId.value] || configMap.begrijpendBia
         }
     }
 
-    @media (max-width: 900px) {
+    @media (max-width: 1024px) {
+        .small-image-container{
+            // flex-direction: column;
+            gap: 0.1rem;
+
+            .small-image{
+                width: 50%;
+            }
+        }
+
+       .projectOverview .bigImage{
+        max-width: 80rem;
+        width: 90vw;
+        margin: 0 auto 0.1rem
+       }
+    }
+
+    @media (max-width: 768px) {
         .projectIntro {
             flex-direction: column;
-            margin-top: 150px;
+            margin-top: 8.3rem;
+            margin-bottom: 2rem;
 
             .projectName {
                 font-size: 3rem;
@@ -421,16 +431,13 @@ const cfg = computed(() => configMap[projectId.value] || configMap.begrijpendBia
             height: auto;
 
             .bigImage {
-                height: 400px;
+                width: 100%;
+                height: auto;
                 background-size: cover;
             }
-            .smallImageSection {
-                .smallImage1, .smallImage2 {
-                    height: 250px;
-                    background-size: cover;
-                }
-            }
         }
+
+        
 
         .projectInfoContainer {
             padding: 4rem 0;

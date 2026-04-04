@@ -10,7 +10,7 @@
 body {
     margin: auto;
     margin-top: 0;
-    background-color: black;
+    /* [FIX] Removed background-color: black; so it doesn't bleed into mobile browser UI */
 }
 
 p {
@@ -291,14 +291,12 @@ h4 {
 }
 
 /* mobile */
-@media (max-width: 765px) {
+@media (max-width: 1024px) {
     .projectlist {
         flex-direction: column;
         flex-wrap: wrap;
         cursor: pointer;
     }
-
-
 
     h3 {
         font-size: 22px;
@@ -357,11 +355,11 @@ h4 {
         margin: auto;
     }
 
-    .bigImage {
+    /* .bigImage {
         height: 300px;
         background-size: auto 300px;
         z-index: 0;
-    }
+    } */
 
     .arrow {
         display: block;

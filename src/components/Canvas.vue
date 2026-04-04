@@ -42,6 +42,10 @@ let scrollProgress = 0
 let smoothedProgress = 0
 const lerpFactor = 0.12
 
+// Internal smooth targets for route transitions
+let smoothZoomPhase = 0
+let smoothMovePhase = 0
+
 watch(() => store.projectActive, (newActive) => {
   if (newActive !== null) {
     const nextCol = colors[newActive]
@@ -101,9 +105,11 @@ const handleResize = () => {
         stableHeight.value = h
         lastWidth = w
 
-        const constrainedWidth = Math.min(w, 1920)
-        renderer.setSize(w, h)
-        uPlaneAspect.value = constrainedWidth / h
+        const maxWidth = 1920
+        const renderScale = Math.min(1.0, maxWidth / w)
+
+        renderer.setSize(w * renderScale, h * renderScale, false)
+        uPlaneAspect.value = w / h
     }
 }
 
@@ -121,7 +127,11 @@ onMounted(async () => {
 
     renderer = new THREE.WebGPURenderer({ antialias: true })
     renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2))
-    renderer.setSize(window.innerWidth, window.innerHeight)
+
+    const maxWidth = 1920
+    const renderScale = Math.min(1.0, maxWidth / window.innerWidth)
+    renderer.setSize(window.innerWidth * renderScale, window.innerHeight * renderScale, false)
+
     canvasContainer.value.appendChild(renderer.domElement)
 
     const textureLoader = new THREE.TextureLoader()
@@ -129,13 +139,8 @@ onMounted(async () => {
 
     const img = maskTexture.image
     uTextureAspect.value = img.width / img.height
-    const maxWidth = 1920
-    const scale = Math.min(1.0, maxWidth / window.innerWidth)
 
-    const planeWidth = window.innerWidth * scale
-    const planeHeight = window.innerHeight * scale
-
-    uPlaneAspect.value = planeWidth / planeHeight
+    uPlaneAspect.value = window.innerWidth / window.innerHeight
 
     const main = Fn(() => {
       const coords = uv()
@@ -175,8 +180,8 @@ onMounted(async () => {
       const finalAlpha = mix(float(1.0), maskAlpha, uMaskStrength)
 
       // Noise Background
-      const nBig = mx_noise_float(vec2(coords.x.mul(0.5), time.mul(0.5)))
-      const nSmall = mx_noise_float(vec2(coords.x.mul(4.0), time.mul(2.0)))
+      const nBig = mx_noise_float(vec2(coords.x.mul(0.5), time.mul(0.1)))
+      const nSmall = mx_noise_float(vec2(coords.x.mul(4.0), time.mul(0.4)))
       const center = mix(float(0.0), float(1.0), nBig.mul(0.6).add(nSmall.mul(0.4)).mul(0.5).add(0.5))
 
       const offsetTransition = smoothstep(float(0.5), float(1.0), uMoveProgress);
@@ -202,24 +207,35 @@ onMounted(async () => {
 
     const animate = () => {
       animationId = requestAnimationFrame(animate)
-      if(route.path == '/'){
-      smoothedProgress += (scrollProgress - smoothedProgress) * lerpFactor
 
-      let zoomPhase = Math.min(smoothedProgress / 0.6, 1.0)
-      zoomPhase = 1 - Math.pow(1 - zoomPhase, 3)
+      let targetZoom = 0
+      let targetMove = 0
+      let targetStrength = 0
 
-      let movePhase = Math.max(0, (smoothedProgress - 0.6) / 0.4)
-      movePhase = movePhase * movePhase * (3.0 - 2.0 * movePhase)
+      if (route.path === '/') {
+        smoothedProgress += (scrollProgress - smoothedProgress) * lerpFactor
 
-      uMaskScale.value = 100.0 + (1.0 - 100.0) * zoomPhase
-      uMoveProgress.value = movePhase
-      uMaskStrength.value = Math.min(smoothedProgress * 10.0, 1.0)
+        targetZoom = Math.min(smoothedProgress / 0.6, 1.0)
+        targetZoom = 1 - Math.pow(1 - targetZoom, 3)
 
-      }else{
-        uMaskScale.value = 100.0 + (1.0 - 100.0) * 1
-        uMoveProgress.value = 1
-        uMaskStrength.value = Math.min(1 * 10.0, 1.0)
+        targetMove = Math.max(0, (smoothedProgress - 0.6) / 0.4)
+        targetMove = targetMove * targetMove * (3.0 - 2.0 * targetMove)
+
+        targetStrength = Math.min(smoothedProgress * 10.0, 1.0)
+      } else {
+        // Targets for Project pages
+        targetZoom = 1
+        targetMove = 1
+        targetStrength = 1
       }
+
+      // [FIX] Smoothly lerp towards targets to avoid snapping when route changes
+      smoothZoomPhase += (targetZoom - smoothZoomPhase) * 0.1
+      smoothMovePhase += (targetMove - smoothMovePhase) * 0.1
+
+      uMaskScale.value = 100.0 + (1.0 - 100.0) * smoothZoomPhase
+      uMoveProgress.value = smoothMovePhase
+      uMaskStrength.value = Math.min(smoothZoomPhase * 10.0, 1.0)
 
       uColourTop.value.lerp(targetTop, 0.05)
       uColourBottom.value.lerp(targetBottom, 0.05)
@@ -256,5 +272,10 @@ onBeforeUnmount(() => {
     background-color: black;
     will-change: clip-path, -webkit-clip-path;
     filter: drop-shadow(0 0 0.75rem crimson);
+
+    :deep(canvas) {
+        width: 100% !important;
+        height: 100% !important;
+    }
     }
 </style>
