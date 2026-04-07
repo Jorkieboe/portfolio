@@ -10,7 +10,6 @@
 body {
     margin: auto;
     margin-top: 0;
-    /* [FIX] Removed background-color: black; so it doesn't bleed into mobile browser UI */
 }
 
 p {
@@ -120,23 +119,9 @@ li {
     font-size: 1.2vw;
 }
 
-.footer {
-    width: 100%;
-    background-color: #F2A227;
-    display: flex;
-    justify-content: center;
-    padding-top: 50px;
-    padding-bottom: 50px;
-    flex-wrap: wrap;
-}
 
-.link {
-    width: 50px;
-    height: auto;
-    padding: 5px;
-    align-self: flex-start;
-    cursor: pointer;
-}
+
+
 
 .contact:hover {
     color: #2BA69C
@@ -263,13 +248,7 @@ h4 {
     background-size: auto;
 }
 
-.footerText {
-    font-family: Cooper;
-    text-align: center;
-    color: #fff;
-    margin-bottom: 0px;
-    max-width: 90%;
-}
+
 
 @media (max-width: 1000px) and (min-width: 765px) {
     .homeText {

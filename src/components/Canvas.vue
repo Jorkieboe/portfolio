@@ -125,6 +125,7 @@ onMounted(async () => {
     scene = new THREE.Scene()
     camera = new THREE.OrthographicCamera(-1, 1, 1, -1, 0, 1)
 
+    // [MODIFIED] WebGPURenderer is a unified renderer that handles Fallback to WebGL automatically.
     renderer = new THREE.WebGPURenderer({ antialias: true })
     renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2))
 
@@ -245,7 +246,9 @@ onMounted(async () => {
       renderer.render(scene, camera)
   }
 
+    // [FIX] renderer.init() determines the backend. We log it here to verify fallback.
     await renderer.init()
+    console.log(`Canvas.vue: Rendering with ${renderer.backend.isWebGPUBackend ? 'WebGPU' : 'WebGL'} fallback`)
     animate()
 })
 

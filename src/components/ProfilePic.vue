@@ -19,18 +19,19 @@ const bendProgress = uniform(0.0)
 
 // 2. Function to check if display is mobile
 const checkMobile = () => {
-  isMobile.value = window.innerWidth < 768 // Standard mobile breakpoint
+  isMobile.value = window.innerWidth <= 1024 // Standard mobile breakpoint
 }
 
 const initThree = async () => {
   scene = new THREE.Scene()
-  
+
   const width = container.value.clientWidth
   const height = container.value.clientHeight
-  
+
   camera = new THREE.PerspectiveCamera(35, width / height, 0.1, 1000)
   camera.position.z = 5
 
+  // [MODIFIED] Using WebGPURenderer for automatic WebGL fallback support via Unified Backend
   renderer = new THREE.WebGPURenderer({ antialias: true, alpha: true })
   renderer.setSize(width, height)
   renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2))
@@ -38,10 +39,10 @@ const initThree = async () => {
 
   const loader = new THREE.TextureLoader()
   const texture = await loader.loadAsync('/images/Jorrik.jpg')
-  
+
   const geometry = new THREE.BoxGeometry(2, 2.5, 0.05, 32, 32, 2)
-  
-  const material = new THREE.MeshStandardNodeMaterial({ 
+
+  const material = new THREE.MeshStandardNodeMaterial({
     map: texture,
     side: THREE.DoubleSide,
     roughness: 0.4,
@@ -65,9 +66,11 @@ const initThree = async () => {
   mesh = new THREE.Mesh(geometry, material)
   scene.add(mesh)
 
+  mesh.position.z = isMobile.value ?  -5 : 0;
+
   const ambient = new THREE.AmbientLight(0xffffff, 1.5)
   scene.add(ambient)
-  
+
   const light = new THREE.PointLight(0xffffff, 10)
   light.position.set(2, 2, 5)
   scene.add(light)
@@ -80,7 +83,9 @@ const initThree = async () => {
     renderer.render(scene, camera)
   }
 
+  // [FIX] Explicitly initialize and log backend selection
   await renderer.init()
+  console.log(`ProfilePic.vue: Rendering with ${renderer.backend.isWebGPUBackend ? 'WebGPU' : 'WebGL'} fallback`)
   animate()
 }
 
@@ -91,28 +96,37 @@ function easeInOutSineBump(t) {
 
 watch(() => props.scrollProgress, (progress) => {
   if (!mesh || !bendProgress) return
-  
+
   gsap.to(mesh.rotation, {
-    y: THREE.MathUtils.degToRad(0), 
-    x:  THREE.MathUtils.degToRad(easeInOutSineBump(progress) * 90),
-    z: isMobile.value ? 0 : THREE.MathUtils.degToRad(easeInOutSineBump(progress) * -45 ),
+    y: THREE.MathUtils.degToRad(0),
+    x: THREE.MathUtils.degToRad(easeInOutSineBump(progress) * 90),
+    z: isMobile.value ? 0 : THREE.MathUtils.degToRad(easeInOutSineBump(progress) * -45),
     duration: 1.2,
-    ease: "expo.out" 
+    ease: "expo.out"
   })
 
-  // 3. Modified horizontal movement logic
+  let targetX = 0;
+  let targetZ = 0;
+
+  if (isMobile.value) {
+    targetZ = -5 * (1 - progress);
+    targetX = 0;
+  } else {
+    targetZ = -5 * Math.min(progress / 0.25, 1);
+    targetX = -(2.5 * progress);
+  }
+
   gsap.to(mesh.position, {
+    x: targetX,
+    z: targetZ,
     y: 0,
-    // If mobile, x stays 0. If desktop, it moves to the side.
-    x: isMobile.value ? 0 : -(3 * progress), 
-    z: -5 * Math.min(progress / 0.25, 1), 
     duration: 1.2,
     overwrite: true,
-    ease: "expo.out" 
+    ease: "expo.out"
   })
 
   gsap.to(bendProgress, {
-    value: progress, 
+    value: progress,
     duration: 1.2,
     ease: "expo.out",
     overwrite: true
@@ -121,7 +135,7 @@ watch(() => props.scrollProgress, (progress) => {
 
 const handleResize = () => {
   if (!container.value) return
-  checkMobile() 
+  checkMobile()
   const w = container.value.clientWidth
   const h = container.value.clientHeight
   camera.aspect = w / h
@@ -130,7 +144,7 @@ const handleResize = () => {
 }
 
 onMounted(() => {
-  checkMobile() 
+  checkMobile()
   initThree()
   window.addEventListener('resize', handleResize)
 })

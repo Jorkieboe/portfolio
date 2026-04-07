@@ -117,27 +117,15 @@ onMounted(() => {
       });
     }
 
-    const aboutContent = document.querySelector('.aboutMeContent');
-    const profilePic = document.querySelector('.profilePicture');
-
-    const getCenterOffset = () => {
-        if (!aboutContent || !profilePic) return 0;
-        const screenMid = window.innerWidth / 2;
-        const picRect = profilePic.getBoundingClientRect();
-        const picMid = picRect.left + (picRect.width / 2);
-        // Returns pixels needed to move pic center to screen center
-        return screenMid - picMid;
-    };
-
     const tlAbout = gsap.timeline({
       scrollTrigger: {
         trigger: ".about",
-        start: isDesktop ? "top 10%" : "35% 50%",
-        end: "+=200%",
+        start: isDesktop ? "top 10%" : "0% 20%",
+        end: isDesktop ? "+=200%" : "60% 50%",
         scrub: 1,
         pin: isDesktop ? ".aboutMeContent" : false,
         pinSpacing: true,
-        // markers: true,
+        markers: false,
         onUpdate: (self) => {
           aboutScrollProgress.value = Math.min(1, self.progress * 2); 
         }
@@ -274,6 +262,12 @@ onUnmounted(() => {
   margin: 0 auto;
 
   .sectionTitle{
+      max-width: 100rem;
+      width: 99%;
+      top: 5vh;
+      left: 5%;
+      z-index: 20;
+      margin: 0 auto;
       padding-bottom: 2rem;
   }
 
@@ -306,12 +300,10 @@ onUnmounted(() => {
 
        &.active{
           margin-left: 0;
-          // z-index: 10;
           flex-grow: 0;
           .project{
             .projectImage {
               min-width: 18rem;
-              // transition: all 1s;
               z-index: 50;
             }
 
@@ -435,7 +427,7 @@ onUnmounted(() => {
       .sectionTitle.abs {
           // position: absolute;
           max-width: 100rem;
-          width: 100%;
+          width: 99%;
           top: 5vh;
           left: 5%;
           z-index: 20;
@@ -579,7 +571,7 @@ onUnmounted(() => {
 
         .pic-wrapper {
             width: 100vw;
-            aspect-ratio: 9/16;
+            aspect-ratio: 9/10;
            
             padding-left: 0;
             justify-content: center;
