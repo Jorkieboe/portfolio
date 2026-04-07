@@ -8,7 +8,7 @@ export default {
     content: [
         {
             title: "Concept",
-            text: `Het hele jaar door zijn heel veel festivals door Nederland, maar naar welke moet je gaan. Op deze festivals kunnen bekenden artiesten spelen, maar ook minder bekende die je mogelijk wel heel leuk vind. Het is natuurlijk een hoop werk om ze allemaal vooraf te beluisteren. Hiervoor heb ik een recommender system gemaakt die festivals aanbeveelt op basis van je meest beluisterde muziek.`,
+            text: `Het hele jaar door zijn heel veel festivals door Nederland, maar naar welke moet je gaan. Op deze festivals kunnen bekenden artiesten spelen, maar ook minder bekende die je mogelijk wel heel leuk vind. Het is natuurlijk een hoop werk om ze allemaal uit te zoeken. Hiervoor heb ik een recommender system gemaakt die festivals aanbeveelt op basis van je meest beluisterde muziek.`,
             media: { type: 'image', src: "/images/recommender/output2.jpg" }
         },
         {
@@ -18,7 +18,7 @@ export default {
         },
         {
             title: "Development",
-            text: `Uiteindelijk wordt jouw muziekprofiel vergeleken met elk festival via de cosine similarity. Hieruit komt een getal tussen de nul en één. Hoe hoger dit getal is, hoe meer gelijk het festival is aan jouw muzieksmaak. Na mijn studie ben ik dit recommender system gaan verwerken in een react.js app. Deze applicatie gebruikt pyscript om direct in de browser python code te runnen. Daarnaast is het recommender system verder ontwikkeld door de muziek te clusteren zodat een gevarieerde muziek smaak niet gegeneraliseerd wordt.`,
+            text: `Uiteindelijk wordt jouw muziekprofiel vergeleken met elk festival via de cosine similarity. Hieruit komt een getal tussen de nul en één. Hoe hoger dit getal is, hoe meer gelijk het festival is aan jouw muzieksmaak. Na mijn studie ben ik dit recommender system gaan verwerken in een React.js app. Deze applicatie gebruikt pyscript om direct in de browser python code te runnen. Daarnaast is het recommender system verder ontwikkeld door de muziek te clusteren zodat een gevarieerde muziek smaak niet gegeneraliseerd wordt.`,
             media: { type: 'image', src: "/images/recommender/FR_cosine.jpg" }
         }
     ]

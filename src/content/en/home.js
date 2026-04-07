@@ -1,51 +1,51 @@
 export default {
-    subText: "Creativiteit, technologie en doorzettingsvermogen zijn de gouden combinatie.",
+    subText: "Creativity, technology, and perseverance are the golden combination.",
     projects: [
         {
-            projectTitle: "Verhalen vangers.",
+            projectTitle: "Story Catchers",
             projectType: "Tablet experience",
-            projectText: "In opdracht van de Grote kerk in Alkmaar heb ik een multimedia tool gebouwd in react native en verspreid via scalefusion.",
-            projectImage: '/images/parley/neel.png'
-        },
-        {
-            projectTitle: "Future is Now",
-            projectType: "Werk project",
-            projectText: "Mijn tweede grote opdracht was voor een tentoonstelling in het Hong Kong Science Museum over de toekomst in transport, eten, en dagelijks leven. Hiervoor heb ik gewerkt aan een aantal applicaties.",
-            projectImage: '/images/parley/neel.png'
-        },
-        {
-            projectTitle: "Lisboa stories",
-            projectType: "Werk project",
-            projectText: "Voor een tentoonstelling in de Lisboa hotels in Macau (China) ontwikkelde ik meerdere interatieve applicaties over de geschiedenis van de handel met de portugezen. Ik werkte aan diverse applicaties, waaronder webapplicaties, een game en applicatie met computer vision -toepassing. Zie hieronder de verschillende onderdelen.",
-            projectImage: '/images/parley/neel.png'
+            projectText: "Commissioned by the Grote Sint-Laurenskerk in Alkmaar, I built a multimedia tour to discover the secrets of the church. The application is built with React Native and managed on Samsung tablets via ScaleFusion.",
+            projectImage: '/images/verhalenvangers/storycatchers.jpg'
         },
         {
             projectTitle: "Parley Studio",
             projectType: "AI tool",
-            projectText: "Parley studio is een ai-platform om historische karakters tot leven te weken. In parley staat het narratief van het personage centraal en helpt Retrieved augmented generation tegen hallucinaties. Applicatie is gemaakt met Fast api en een Vue.js frontend.",
+            projectText: "Parley studio is an AI platform to bring historical characters to life. In Parley, the character's narrative takes center stage and Retrieval-Augmented Generation helps prevent hallucinations. The application is built with Fast API and a Vue.js frontend.",
             projectImage: '/images/parley/neel.png'
+        },
+        {
+            projectTitle: "Future is Now",
+            projectType: "Museum Exhibition",
+            projectText: "My second major assignment was for an exhibition at the Hong Kong Science Museum about the future of transportation, food, and daily life. For this, I worked on a number of applications using Vue, Three.js, Unity, and LED strips.",
+            projectImage: '/images/futurenow/overview.jpg'
         },
         {
             projectTitle: "Festival recommender",
             projectType: "Machine learning",
-            projectText: "Festival recommender beveelt jouw aan naar welke muziek festivals je moet gaan op basis van je luistergedrag op Spotify. Het systeem verzamelt data via de Spotify API en gebruikt machine learning om je muzieksmaak te vergelijken met de line-ups van festivals. De interface is ontwikkeld met React.",
-            projectImage: '/images/parley/neel.png'
+            projectText: "Festival recommender recommends which music festivals you should go to based on your listening behavior on Spotify. The system collects data via the Spotify API and uses machine learning to compare your music taste with festival lineups. The interface was developed with React.",
+            projectImage: '/images/recommender/FR_mock_recommendation.jpg'
+        },
+        {
+            projectTitle: "Lisboa stories",
+            projectType: "Museum Exhibition",
+            projectText: "For an exhibition in the Lisboa hotels in Macau (China), I developed several interactive applications about the history of trade between Macau and the Portuguese. I worked on various applications, including web applications, a game, and an application with a computer vision implementation. See the different components below.",
+            projectImage: '/images/lisboa/diary.jpg'
         },
         {
             projectTitle: "Peer pressure VR experience",
             projectType: "Serious game",
-            projectText: "Verdrinking is nog steeds een grote doodsoorzaak voor jonge mannen. In deze Vr Experience worden jonge mannen geconfronteerd met de gevaren van water door overschatting en groepsdruk.",
-            projectImage: '/images/parley/neel.png'
+            projectText: "Drowning is still a major cause of death among young men. In this VR Experience, young men are confronted with the dangers of water through overestimation and peer pressure.",
+            projectImage: '/images/SOTA/npcs.jpg'
         },
         {
-            projectTitle: "Gepersonaliseerde gamification",
+            projectTitle: "Personalized gamification",
             projectType: "Gamification",
-            projectText: "In mijn afstudeerproject onderzoek ik hoe gamification gepersonaliseerd kan worden om studenten te stimuleren meer te sporten. Met behulp van machine learning-algoritmes leert een applicatie welke factoren een individu het meest motiveren.",
+            projectText: "In my graduation project, I investigate how gamification can be personalized to encourage students to exercise more. Using machine learning algorithms, an application learns which factors motivate an individual the most.",
             projectImage: '/images/parley/neel.png'
         },
     ],
     aboutmeText: [
-        "Ik ben Jorrik Dillisse en heb mijn bachelor in Communicatie & Multimedia Design en master in Data-driven Design. Ik ben vanaf jongs af aan al geïnteresseerd in technologie. Ik vind het leuk om met mijn creativiteit verschillende technologieën te onderzoeken en nieuwe ideeën voor digitale producten te ontwerpen en ontwikkelen. Hierdoor wil ik het leven leuker, makkelijker en/of leerzamer maken.",
-        "Ik zie mijzelf als een multidisciplinaire developer en designer met ervaring in web development, game design, data science, UX design en kennis in de laatste ontwikkeling rond AI en machine learning."
+        "My name is Jorrik Dillisse, a creative developer and technologist specialized in interactive installations, games, and AI applications. I enjoy using technology as a means to design and build meaningful experiences, from physical installations to data-driven web apps.",
+        "With a background in Communication & Multimedia Design and a master's in Data-Driven Design, I focus on creating unique interactions where technique and concept come together."
     ]
 }

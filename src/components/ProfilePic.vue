@@ -1,7 +1,6 @@
 <script setup>
 import { onMounted, ref, onBeforeUnmount, watch } from 'vue'
 import * as THREE from 'three/webgpu'
-// Import TSL (Three.js Shading Language) nodes
 import { uniform, positionLocal, float, vec3, Fn } from 'three/tsl'
 import { gsap } from 'gsap'
 
@@ -13,10 +12,15 @@ const props = defineProps({
 })
 
 const container = ref(null)
+const isMobile = ref(false) // 1. Added mobile state
 let renderer, scene, camera, mesh, animationId
 
-// Uniform to track the raw scroll progress in the shader
 const bendProgress = uniform(0.0)
+
+// 2. Function to check if display is mobile
+const checkMobile = () => {
+  isMobile.value = window.innerWidth < 768 // Standard mobile breakpoint
+}
 
 const initThree = async () => {
   scene = new THREE.Scene()
@@ -32,11 +36,9 @@ const initThree = async () => {
   renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2))
   container.value.appendChild(renderer.domElement)
 
-  // Load Texture
   const loader = new THREE.TextureLoader()
   const texture = await loader.loadAsync('/images/Jorrik.jpg')
   
-  // High segments so the S-curve has enough geometry to bend smoothly
   const geometry = new THREE.BoxGeometry(2, 2.5, 0.05, 32, 32, 2)
   
   const material = new THREE.MeshStandardNodeMaterial({ 
@@ -46,24 +48,15 @@ const initThree = async () => {
     metalness: 0.2
   })
 
-  // --- TSL VERTEX SHADER LOGIC ---
   const bendVertexNode = Fn(() => {
     const pos = positionLocal;
-    
     const yLocal = pos.y.add(1.25).div(2.5);
-    
     const t = bendProgress.div(0.5).clamp(0.0, 1.0);
-    
     const envelope = t.mul(Math.PI).sin();
-    
-
     const phase = yLocal.mul(Math.PI * 1.0).sub(t.mul(Math.PI * 1.0));
     const wave = phase.sin();
-    
     const zOffset = wave.mul(envelope).mul(1.2);
-    
     const yOffset = zOffset.abs().mul(-0.1);
-    
     return pos.add(vec3(0.0, yOffset, zOffset));
   });
 
@@ -72,7 +65,6 @@ const initThree = async () => {
   mesh = new THREE.Mesh(geometry, material)
   scene.add(mesh)
 
-  // Lighting to give it depth
   const ambient = new THREE.AmbientLight(0xffffff, 1.5)
   scene.add(ambient)
   
@@ -82,12 +74,9 @@ const initThree = async () => {
 
   const animate = () => {
     animationId = requestAnimationFrame(animate)
-    
-    // Subtle floating movement  
     if (mesh) {
         mesh.position.y = Math.sin(Date.now() * 0.001) * 0.05
     }
-    
     renderer.render(scene, camera)
   }
 
@@ -97,7 +86,7 @@ const initThree = async () => {
 
 function easeInOutSineBump(t) {
   const s = Math.sin(Math.PI * t)
-  return s * s * (3 - 2 * s) // smoothstep on sine
+  return s * s * (3 - 2 * s)
 }
 
 watch(() => props.scrollProgress, (progress) => {
@@ -105,15 +94,17 @@ watch(() => props.scrollProgress, (progress) => {
   
   gsap.to(mesh.rotation, {
     y: THREE.MathUtils.degToRad(0), 
-    x: THREE.MathUtils.degToRad(easeInOutSineBump(progress) * 90),
-    z: THREE.MathUtils.degToRad(easeInOutSineBump(progress) * -45 ),
+    x:  THREE.MathUtils.degToRad(easeInOutSineBump(progress) * 90),
+    z: isMobile.value ? 0 : THREE.MathUtils.degToRad(easeInOutSineBump(progress) * -45 ),
     duration: 1.2,
     ease: "expo.out" 
   })
 
+  // 3. Modified horizontal movement logic
   gsap.to(mesh.position, {
     y: 0,
-    x: -(2 * progress), 
+    // If mobile, x stays 0. If desktop, it moves to the side.
+    x: isMobile.value ? 0 : -(3 * progress), 
     z: -5 * Math.min(progress / 0.25, 1), 
     duration: 1.2,
     overwrite: true,
@@ -130,6 +121,7 @@ watch(() => props.scrollProgress, (progress) => {
 
 const handleResize = () => {
   if (!container.value) return
+  checkMobile() 
   const w = container.value.clientWidth
   const h = container.value.clientHeight
   camera.aspect = w / h
@@ -138,6 +130,7 @@ const handleResize = () => {
 }
 
 onMounted(() => {
+  checkMobile() 
   initThree()
   window.addEventListener('resize', handleResize)
 })

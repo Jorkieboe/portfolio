@@ -1,32 +1,38 @@
 export default {
+    id: 'parleyStudio',
     projectTitle: "Parley Studio",
     projectType: "AI tool",
-    introText: "Parley studio is een ai-platform om historische karakters tot leven te weken. In parley staat het narratief van het personage centraal en helpt Retrieved augmented generation tegen hallucinaties. Applicatie is gemaakt met Fast api en een Vue.js frontend.",
+    introText: "Parley studio is an AI platform to bring historical characters to life. In Parley, the character's narrative takes center stage and Retrieval-Augmented Generation helps prevent hallucinations. The application is built with Fast API and a Vue.js frontend.",
+    splashImages: [
+        { type: 'image', src: '/images/parley/neel.png' },
+        { type: 'image', src: '/images/parley/neel.png' },
+        { type: 'image', src: '/images/parley/neel.png' },
+    ],
     content: [
         {
-            title: "Nieuwe manier van storytelling",
-            text: `Parley studio is een tool om ai personages tot leven te wekken. Ik zie AI niet als een doel op zich maar een nieuwe vorm van storytelling. Mijn doel was om een basis te bouwen om de taalmodellen voorspelbaarder en menselijker te maken.`,
-            media: {type: 'image', src: "/images/Inabox/conceptartRot.jpg"}
+            title: "New way of storytelling",
+            text: `Parley studio is a tool to bring AI characters to life. I do not see AI as a goal in itself but as a new form of storytelling. My goal was to build a foundation to make the language models more predictable and human.`,
+            media: { type: 'image', src: "/images/parley/guillaume.png" }
         },
         {
-            title: "Sturen van de LLM",
-            text: `Het algemene probleem van taalmodellen is dat het snel terug in zijn behulpzame gedrag vallen om jouw vragen te beantwoorden. Een goed gesprek heeft een ritme en een doel. Hiervoor heb ik een hele orchestratie-engine ontwikkeld die de ai stuurt. De interactie voelt hierdoor als een lopend verhaal.`,
-            media: {type: 'image', src: "/images/Inabox/boxroom.jpg"}
+            title: "Guiding the LLM",
+            text: `The general problem with language models is that they quickly fall back into their helpful behavior to answer your questions. A good conversation has a rhythm and a goal. For this, I developed an entire orchestration engine that guides the AI. This makes the interaction feel like an ongoing story.`,
+            media: { type: 'image', src: "/images/parley/tree.png" }
         },
         {
-            title: "Makers tool",
-            text: `De focus van de applicatie ligt in de creativiteit en moet ook begrijpelijk zijn voor mensen zonder technische achtergrond. Ik heb met Vue.js een interface gebouwd om op een visuelere manier een karakter te creeëren. Hiermee kunnen gebruikers via een soort behavior tree (zoals je ziet in game engines) een gesprek opbouwen.`,
-            media: {type: 'image', src: "/images/Inabox/enemy.jpg"}
+            title: "Creator tool",
+            text: `The focus of the application is on creativity and must also be understandable for people without a technical background. I built an interface with Vue.js to create a character in a more visual way. This allows users to build a conversation via a kind of behavior tree (as you see in game engines).`,
+            media: { type: 'image', src: "/images/parley/fred.png" }
         },
         {
-            title: "Het perspectief",
-            text: `Wat een personage weet, bepaalt zijn identiteit. Ik heb een systeem gebouwd waarbij alle informatie wordt gefilterd door de ogen van het personage. Een soldaat uit de 15e eeuw bekijkt de wereld anders dan een gids in het nu. Door kennis te koppelen aan een specifiek standpunt (Point of View), ontstaat een consistente wereld waarin het personage alleen vertelt wat hij vanuit zijn achtergrond kan en mag weten.`,
-            media: {type: 'image', src: "/images/Inabox/enemy.jpg"}
+            title: "The perspective",
+            text: `What a character knows determines their identity. I built a system where all information is filtered through the eyes of the character. A 15th-century soldier views the world differently than a modern-day guide. This allows us to create a consistent world in which a character can and may only tell things from their Point of View.`,
+            media: { type: 'image', src: "/images/parley/characters.png" }
         },
         {
-            title: "Latency is de vijand",
-            text: `Op dit moment is het grootste probleem van deze ontwikkelingen latency. Voor een goede immersieve ervaring moet je haast vergeten dat je tegen een computer praat. Hiervoor heb ik een full-stack architectuur opgezet die de tijd tussen spreken en antwoord voelbaar moet verminderen. Door het streamen van de output een visuele veranderingen maak je het gevoel korter.`,
-            media: {type: 'image', src: "/images/Inabox/enemy.jpg"}
+            title: "Latency is the enemy",
+            text: `Currently, the biggest problem with these developments is latency. For a good immersive experience, you should almost forget that you are talking to a computer. For this, I set up a full-stack architecture that noticeably reduces the time between speaking and answering. By streaming the output to a visual change, you make the wait feel shorter.`,
+            media: { type: 'image', src: "/images/parley/latency.jpg" }
         }
     ]
 }

@@ -21,12 +21,12 @@ export default {
         },
         {
             title: "Makers tool",
-            text: `De focus van de applicatie ligt in de creativiteit en moet ook begrijpelijk zijn voor mensen zonder technische achtergrond. Ik heb met Vue.js een interface gebouwd om op een visuelere manier een karakter te creëren. Hiermee kunnen gebruikers via een soort behavior tree (zoals je ziet in game engines) een gesprek opbouwen.`,
+            text: `De focus van de applicatie ligt in de creativiteit en moet ook begrijpelijk zijn voor mensen zonder technische achtergrond. Ik heb met Vue.js een interface gebouwd om op een visuele manier een karakter te creëren. Hiermee kunnen gebruikers via een soort behavior tree (zoals je ziet in game engines) een gesprek opbouwen.`,
             media: { type: 'image', src: "/images/parley/fred.png" }
         },
         {
             title: "Het perspectief",
-            text: `Wat een personage weet, bepaalt zijn identiteit. Ik heb een systeem gebouwd waarbij alle informatie wordt gefilterd door de ogen van het personage. Een soldaat uit de 15e eeuw bekijkt de wereld anders dan een gids in het nu. Door kennis te koppelen aan een specifiek standpunt (Point of View), ontstaat een consistente wereld waarin het personage alleen vertelt wat hij vanuit zijn achtergrond kan en mag weten.`,
+            text: `Wat een personage weet, bepaalt zijn identiteit. Ik heb een systeem gebouwd waarbij alle informatie wordt gefilterd door de ogen van het personage. Een soldaat uit de 15e eeuw bekijkt de wereld anders dan een gids in het nu.Daardoor kunnen we een consistente wereld creëren waarin een personage alleen vanuit zijn standpunt (Point of View) kan en mag vertellen.`,
             media: { type: 'image', src: "/images/parley/characters.png" }
         },
         {

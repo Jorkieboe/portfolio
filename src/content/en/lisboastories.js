@@ -1,27 +1,28 @@
 export default {
+    id: 'lisboaStories',
     projectTitle: "Lisboa stories",
-    projectType: "Werk project",
-    introText: "Voor een tentoonstelling in de Lisboa hotels in Macau (China) ontwikkelde ik meerdere interatieve applicaties over de geschiedenis van de handel met de portugezen. Ik werkte aan diverse applicaties, waaronder webapplicaties, een game en applicatie met computer vision -toepassing. Zie hieronder de verschillende onderdelen",
+    projectType: "Museum Exhibition",
+    introText: "For an exhibition in the Lisboa hotels in Macau (China), I developed several interactive applications about the history of trade between Macau and the Portuguese. I worked on various applications, including web applications, a game, and an application with a computer vision implementation. See the different components below.",
     splashImages: [
-        { type: 'image', src: '/images/parley/neel.png' },
-        { type: 'image', src: '/images/parley/neel.png' },
-        { type: 'image', src: '/images/parley/neel.png' },
+        { type: 'image', src: '/images/lisboa/diary.jpg' },
+        { type: 'image', src: '/images/lisboa/trading.jpg' },
+        { type: 'image', src: '/images/lisboa/facade.jpg' },
     ],
     content: [
         {
-            title: "Harriet Low’s Dairy",
-            text: `Een van de interacties was een geprojecteerde video dagboek waar bezoekers doorheen konden bladeren. De interactie bestond uit een fysiek boek met markers in de hoeken, geplaatst onder een camera en projector. Een camera detecteerde met behulp van machine learning welke marker in beeld waren. En projecteerde de bijbehorende video. Om een soepele video te behouden werd de python backend van de videoplayer gescheiden.`,
-            media: { type: 'image', src: "/images/Inabox/conceptartRot.jpg" }
+            title: "Harriet Low’s Diary",
+            text: `One of the interactions was a projected video diary that visitors could browse through. The interaction consisted of a physical book with markers in the corners, placed under a camera and projector. A camera detected which markers were in view using machine learning and projected the corresponding video. During development, I noticed that it is very important not to run an interface in Python, as that causes a lot of delay in, for example, a video player.`,
+            media: { type: 'video', src: "/videos/lisboa-diary.mp4" }
         },
         {
             title: "Trading game",
-            text: `Trading game is een applicatie ontwikkeld met Vue.js, waarin je een handelsreis maakte in het oude China. Hier in ontwikkelde ik een minigame met Phaser waarbij je zo veilig naar je bestemming moest komen tussen piraten, rotsen en tyfoons. De grootste uitdaging was de performance. De applicatie draaide op 3 pc’s waar één pc een extra centrale kaart aanstuurde. De framerate van de game bepaalde de snelheid van de boot en wat optimalisatie kwam van pas.`,
-            media: { type: 'image', src: "/images/Inabox/boxroom.jpg" }
+            text: `Trading game is an application developed with Vue.js, in which you make a trading journey in ancient China. In this, I developed a minigame with Phaser where you have to sail safely to your destination between pirates, rocks, and typhoons. The biggest challenge was the performance. The application ran on 3 PCs where one PC controlled an extra central map. The framerate of the game determined the speed of the boat and that had to be the same across all PCs.`,
+            media: { type: 'video', src: "/videos/lisboa-trading.mp4" }
         },
         {
             title: "Façade:",
-            text: `In de tentoonstelling stond een geschaalde replica van de oude façade, waarop via projection mapping visuals werden geprojecteerd. Onder de replica bevond zich een touchscreen met een React applicatie. Hierin deden spelers een quiz waar ze de façade moest restoreren door de juiste figureren te herkennen. Bij een goed antwoord kregen ze een plekje op de façade.`,
-            media: { type: 'image', src: "/images/Inabox/enemy.jpg" }
+            text: `In the exhibition stood a scaled replica of the old façade, onto which visuals were projected via projection mapping. Beneath the replica was a touchscreen with a React application. In this, players played a quiz where they had to restore the façade by recognizing the correct figures. With a correct answer, they got a spot on the façade.`,
+            media: { type: 'video', src: "/videos/lisboa-facade.mp4" }
         },
     ]
 }

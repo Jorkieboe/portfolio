@@ -132,14 +132,14 @@ onMounted(() => {
     const tlAbout = gsap.timeline({
       scrollTrigger: {
         trigger: ".about",
-        start: isDesktop ? "top 10%" : "30% 50%",
+        start: isDesktop ? "top 10%" : "35% 50%",
         end: "+=200%",
         scrub: 1,
         pin: isDesktop ? ".aboutMeContent" : false,
         pinSpacing: true,
         // markers: true,
         onUpdate: (self) => {
-          aboutScrollProgress.value = Math.min(1, self.progress * 2);; // Track the progress 0-1
+          aboutScrollProgress.value = Math.min(1, self.progress * 2); 
         }
       }
     });

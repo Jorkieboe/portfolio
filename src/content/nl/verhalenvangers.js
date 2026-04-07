@@ -2,7 +2,7 @@ export default {
     id: "verhalenVangers",
     projectTitle: "Verhalen Vangers",
     projectType: "Werk project",
-    introText: "In opdracht van de Grote kerk in Alkmaar heb ik een multimedia tool gebouwd in react native en verspreid via scalefusion.",
+    introText: "In opdracht van de Grote Sint-Laurenskerk in Alkmaar heb ik een multimedia tour gebouwd om de geheimen van de kerk te ontdekken. De applicatie is gebouwd met React Native en gemanaged op Samsung tablets via ScaleFusion.",
     splashImages: [
         { type: "image", src: "/images/verhalenvangers/storycatchers.jpg" },
         { type: "image", src: "/images/verhalenvangers/organ.jpg" },
@@ -11,12 +11,12 @@ export default {
     content: [
         {
             title: "De tour",
-            text: `Het doel van de tour was om verschillende plekken in het museum te ontdekken. Je kreeg een ingezoomde foto van een plek. De bezoekers moesten naar die plek toe en daar een vraag beantwoorden. Daarna gingen ze in een interactie in om meer over die plek te weten te komen. Dit konden verschillende dingen zijn als een puzzel, licht in de kerk aanzetten, een audio verhaal.`,
+            text: `Het doel van de multimedia tour is om verschillende plekken in het museum te ontdekken. De bezoeker krijgt een ingezoomde foto van een plek. Zij moesten deze plek zien te vinden en daar een vraag beantwoorden. Daarna gingen ze in een interactie in om meer over die plek te weten te komen. Dit konden diverse interacties zijn als een puzzel maken, licht in de kerk aanzetten of een audio verhaal beluisteren.`,
             media: { type: "image", src: "/images/verhalenvangers/church.jpg" }
         },
         {
             title: "Frontend",
-            text: `De applicatie is gebouwd in react native. Al kende ik React al, React Native is nog wel iets meer om al die native functies te laten werken. Bovendien was er naast diverse libraries om bepaalde interactives te laten werken zoals Three js of een gesture plugin, ook een hele logica in om de vertalingen te regelen voorzowel teksten, plaatjes, als videos. In dit project heb ik het meeste werk gehad aan de audio omdat de tablet aan de server liet weten als die klaar was. En dat gaf problemen als de audio niet speelde of vroegtijdige stopte.`,
+            text: `De applicatie is gebouwd in React Native. Al kende ik React al, React Native is nog wel een stapje verder om al die native functies te laten werken. Bovendien waren er naast diverse libraries om bepaalde interactives te laten werken zoals Three js of een gesture plugin, ook een hele logica in om de vertalingen te regelen voorzowel teksten, plaatjes, als videos. In dit project heb ik het meeste werk gehad aan de audio omdat de tablet aan de server liet weten als die klaar was. En dat gaf problemen als de audio niet speelde of vroegtijdige stopte.`,
             media: { type: "image", src: "/images/verhalenvangers/screens.jpg" }
         },
         {

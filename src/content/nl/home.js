@@ -4,7 +4,7 @@ export default {
         {
             projectTitle: "Verhalen Vangers",
             projectType: "Tablet experience",
-            projectText: "In opdracht van de Grote kerk in Alkmaar heb ik een multimedia tool gebouwd in react native en gemanaged op tablets via ScaleFusion",
+            projectText: "In opdracht van de Grote Sint-Laurenskerk in Alkmaar heb ik een multimedia tour gebouwd om de geheimen van de kerk te ontdekken. De applicatie is gebouwd met React Native en gemanaged op Samsung tablets via ScaleFusion.",
             projectImage: '/images/verhalenvangers/storycatchers.jpg'
         },
         {
@@ -15,8 +15,8 @@ export default {
         },
         {
             projectTitle: "Future is Now",
-            projectType: "Werk project",
-            projectText: "Mijn tweede grote opdracht was voor een tentoonstelling in het Hong Kong Science Museum over de toekomst in transport, eten, en dagelijks leven. Hiervoor heb ik gewerkt aan een aantal applicaties.",
+            projectType: "Museum Exhibition",
+            projectText: "Mijn tweede grote opdracht was voor een tentoonstelling in het Hong Kong Science Museum over de toekomst in transport, eten, en dagelijks leven. Hiervoor heb ik gewerkt aan een aantal applicaties met Vue, Three.js, Unity en ledstrips.",
             projectImage: '/images/futurenow/overview.jpg'
         },
         {
@@ -27,7 +27,7 @@ export default {
         },
         {
             projectTitle: "Lisboa stories",
-            projectType: "Werk project",
+            projectType: "Museum Exhibition",
             projectText: "Voor een tentoonstelling in de Lisboa hotels in Macau (China) ontwikkelde ik meerdere interatieve applicaties over de geschiedenis van de handel met de portugezen. Ik werkte aan diverse applicaties, waaronder webapplicaties, een game en applicatie met computer vision -toepassing. Zie hieronder de verschillende onderdelen.",
             projectImage: '/images/lisboa/diary.jpg'
         },

@@ -1,22 +1,25 @@
 export default {
     projectTitle: "Festival recommender",
     projectType: "Machine learning",
-    introText: "Festival recommender suggests which music festivals you should go to based on the music you listen to on Spotify. This system uses machine learning to compare your favorite music with the performing artists at festivals.",
+    introText: "Festival recommender recommends which music festivals you should go to based on your listening behavior on Spotify. The system collects data via the Spotify API and uses machine learning to compare your music taste with festival lineups. The interface was developed with React.",
+    splashImages: [
+        { type: 'image', src: '/images/recommender/FR_mock_recommendation.jpg' },
+    ],
     content: [
         {
             title: "Concept",
-            text: `There are many festivals throughout the year in the Netherlands, but which one should you go to? You will hear many known artists at those festivals, but you also might like lesser-known artists. However, it is a lot of work to listen to all artists performing at certain festivals. Therefore. I created a recommender system that suggests festivals based on your most listened-to tracks.`,
-            media: {type: 'image', src: "/images/recommender/output2.jpg"}
+            text: `There are many festivals throughout the Netherlands all year round, but which one should you go to? At these festivals, famous artists might play, but also less famous ones that you might really like. Of course, it is a lot of work to sort them all out. For this, I made a recommender system that recommends festivals based on your most listened-to music.`,
+            media: { type: 'image', src: "/images/recommender/output2.jpg" }
         },
         {
             title: "Data collection",
-            text: `This recommender system will compare data about all the artists with your most listened-to tracks. So, I used the Spotify API to collect data about music. The Spotify API gives you access to metadata about tracks, such as danceability, valence, and tempo. I will compare these datapoints with each other. Finally, I can use the data to create a profile for your music and every festival.`,
-            media: {type: 'image', src: "/images/recommender/output.jpg"} 
+            text: `The recommender system has to compare data about the artists' music with your most listened-to music. For this, I used the Spotify API to collect data about music. The Spotify API gives you access to metadata about tracks such as danceability, valence, and tempo. I am going to compare these values with each other. Ultimately, I can use all the collected data to create a profile of your music and each individual festival.`,
+            media: { type: 'image', src: "/images/recommender/output.jpg" }
         },
         {
             title: "Development",
-            text: `The last step is to compare your music with every festival using the cosine similarity. That will give a number between zero and one. The higher the number, the more similar the festival in comparison to your music taste. After the master's, I started implementing the recommendation model into a react.js app. The application uses Pyscript to run Python code directly in the browser. Furthermore, improving the model by clustering music to prevent generalization of music taste.`,
-            media: {type: 'image', src: "/images/recommender/FR_cosine.jpg"} 
+            text: `Finally, your music profile is compared with each festival using cosine similarity. This results in a number between zero and one. The higher this number, the more similar the festival is to your music taste. After my studies, I started integrating this recommender system into a React.js app. This application uses PyScript to run Python code directly in the browser. In addition, the recommender system was further developed by clustering the music so that a varied music taste is not generalized.`,
+            media: { type: 'image', src: "/images/recommender/FR_cosine.jpg" }
         }
     ]
 }

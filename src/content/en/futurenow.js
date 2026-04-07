@@ -1,27 +1,33 @@
 export default {
-    projectTitle: "futurenow",
-    projectType: "Werk project",
-    introText: "Mijn tweede grote opdracht was voor een tentoonstelling in het Hong Kong Science Museum over de toekomst in transport, eten, en dagelijks leven. Hiervoor heb ik gewerkt aan een aantal applicaties.",
+    id: "futurenow",
+    projectTitle: "Future is Now",
+    projectType: "Museum Exhibition",
+    introText: "My second major assignment was for an exhibition at the Hong Kong Science Museum about the future of transportation, food, and daily life. For this, I worked on a number of applications using Vue, Three.js, Unity, and LED strips.",
+    splashImages: [
+        {type: 'image', src: '/images/futurenow/overview.jpg'},
+        {type: 'image', src: '/images/futurenow/autonomous_driving.jpg'},
+        {type: 'image', src: '/images/futurenow/iot.jpg'},
+    ],
     content: [
         {
             title: "Fly with Betsy",
-            text: `De DC3 (Betsy) was een van de eerste commerciële vliegtuigen in de regio Hong Kong. Dit vliegtuig wordt tentoongesteld in het Hong Kong Science Museum. Hiervoor heb ik een three js applicatie gemaakt om meer te weten te komen over Betsy. Je kan rondkijken en hotspots inspecteren. Het vliegtuig model was best wel groot om te draaien in een webomgeving. Hierin heb ik wat extra optimalisatie gedaan om de framerate op 60 fps te houden.`,
-            media: {type: 'image', src: "/images/Inabox/conceptartRot.jpg"}
+            text: `The DC3 (Betsy) was one of the first commercial aircraft in the Hong Kong region. This aircraft is exhibited in the Hong Kong Science Museum. For this, I created a Three.js application to learn more about Betsy. You can look around and inspect hotspots. The aircraft model was quite large to run in a web environment. I did some extra optimization here to keep the framerate at 60 fps.`,
+            media: {type: 'video', src:"/videos/futurenow_betsy.mp4"}
         },
         {
             title: "Internet of Things",
-            text: `In de toekomst zijn al onze apparaten verbonden en zullen ze taken uitvoeren voordat wij er aan denken. In deze applicatie, gemaakt met Vue.js, gaan bezoekers scenario’s spelen waarin slimme apparaten hun helpen. De interactive draait op één pc met 4 schermen in een soort kruis. Boven de schermen hangen ledjes die reageren op het gebruik van de app. `,
-            media: {type: 'image', src: "/images/Inabox/boxroom.jpg"}
+            text: `In the future, all our devices will be connected and will perform tasks before we even think about them. In this application, made with Vue.js, visitors play scenarios in which smart devices help them. The interactive runs on one PC with 4 screens in a cross shape. Above the screens hang LEDs that are controlled via Node.js and react to the use of the app.`,
+            media: {type: 'video', src:"/videos/futurenow_iot.mp4"}
         },
         {
             title: "Autonomous driving",
-            text: `De volledig zelfrijdende auto is er nog niet maar gaat binnenkort wel komen. In deze interactive gaan bezoekers de AI van een auto trainen via een quiz en daarna een reactie verkeerstest doen tegen de AI en een andere speler. Deze applicatie draait op twee kleine schermen met daarboven een breed scherm als voorruit. Het draait in een venster verspreid over meerdere schermen. Hierbij synchroniseren we de progressie met Pinia state manager van Vue.js.`,
-            media: {type: 'image', src: "/images/Inabox/enemy.jpg"}
+            text: `The fully self-driving car is not here yet but will arrive soon. In this interactive, visitors train the AI of a car via a quiz and then do a reaction traffic test against the AI and another player. This application runs on two small screens with a wide screen above them acting as a windshield. It runs in one window spread over multiple screens. Here we synchronize the progression with the Pinia state manager of Vue.js.`,
+            media: {type: 'image', src: "/images/futurenow/driving.jpg" }
         },
         {
             title: "Chasing perfection",
-            text: `Ik heb voor chasing perfection een ondersteunende rol gehad, waarin ik hielp bij bepaalde onderdelen zoals UI en Testing. Deze interactive is een unity applicatie met een ai fitness die met je meekijkt via body tracking met een diepte camera.`,
-            media: {type: 'image', src: "/images/Inabox/enemy.jpg"}
+            text: `I had a supporting role for chasing perfection, in which I helped with certain components such as UI and Testing. This interactive is a Unity application with an AI fitness coach that watches you via body tracking on a depth camera.`,
+            media: {type: 'image', src: "/images/futurenow/posturetraining.jpg"}
         },
     ]
 }
