@@ -10,7 +10,7 @@ export function useLang() {
   const setLang = (lang) => {
     currentLang.value = lang
     localStorage.setItem('language', lang)
-  }
+  } 
 
   // Computed property updates instantly when language changes
   const t = computed(() => translations[currentLang.value])

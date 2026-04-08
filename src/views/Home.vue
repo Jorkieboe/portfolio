@@ -324,11 +324,12 @@ onUnmounted(() => {
 
             &.reversed{
               .projectImage{
-                clip-path: polygon(15% 0%, 100% 0%, 100% 100%, 0% 100%);
+                clip-path: polygon(20% 0%, 100% 0%, 100% 100%, 0% 100%);
               }
 
               .projectPanel{
-                margin-right: -4rem;
+                margin-right: -3.5rem;
+                padding-left: 0.6rem;
               }
             }
           }

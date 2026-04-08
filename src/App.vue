@@ -42,8 +42,6 @@ const onLeave = (el, done) => {
       transitionClipOverride: targetClip,
       duration: 0.2,
       onComplete: ()=>{
-        
-      // store.isTransitioning = false
       done()
     }
     })
@@ -52,7 +50,6 @@ const onLeave = (el, done) => {
     transitionClipOverride: vh - (vh * store.headerSize),
     duration: 0.4,
     onComplete: ()=>{
-      // store.isTransitioning = false
       done()
     }
   })
@@ -61,7 +58,6 @@ const onLeave = (el, done) => {
 }
 
 const onEnter = (el, done) => {
-  // store.isTransitioning = true
   const vh = window.innerHeight
   const headerClip = vh - (vh * store.headerSize)
 

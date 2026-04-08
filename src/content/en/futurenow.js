@@ -2,7 +2,7 @@ export default {
     id: "futurenow",
     projectTitle: "Future is Now",
     projectType: "Museum Exhibition",
-    introText: "My second major assignment was for an exhibition at the Hong Kong Science Museum about the future of transportation, food, and daily life. For this, I worked on a number of applications using Vue, Three.js, Unity, and LED strips.",
+    introText: "One of my bigger assignments was for an exhibition at the Hong Kong Science Museum about the future of transportation, food, and daily life. For this, I worked on a number of applications using Vue, Three.js, Unity, and Phidgets.",
     splashImages: [
         {type: 'image', src: '/images/futurenow/overview.jpg'},
         {type: 'image', src: '/images/futurenow/autonomous_driving.jpg'},
@@ -16,12 +16,12 @@ export default {
         },
         {
             title: "Internet of Things",
-            text: `In the future, all our devices will be connected and will perform tasks before we even think about them. In this application, made with Vue.js, visitors play scenarios in which smart devices help them. The interactive runs on one PC with 4 screens in a cross shape. Above the screens hang LEDs that are controlled via Node.js and react to the use of the app.`,
+            text: `In the future, all our devices will be connected and will perform tasks before we even think about them. In this application, made with Vue.js, visitors play scenarios in which smart devices help them. The interactive runs on one PC with 4 screens in a cross shape. Above the screens hang LEDs that are controlled via phidgets and Node.js. These lights reacts to the use of the app.`,
             media: {type: 'video', src:"/videos/futurenow_iot.mp4"}
         },
         {
             title: "Autonomous driving",
-            text: `The fully self-driving car is not here yet but will arrive soon. In this interactive, visitors train the AI of a car via a quiz and then do a reaction traffic test against the AI and another player. This application runs on two small screens with a wide screen above them acting as a windshield. It runs in one window spread over multiple screens. Here we synchronize the progression with the Pinia state manager of Vue.js.`,
+            text: `The fully self-driving car is not here yet but will arrive soon. In this interactive, visitors train the AI of a car via a quiz and then compete in a reaction traffic test against the AI and another player. This application runs on two small screens with a wide screen above them acting as a windshield. It runs in one window spread over multiple screens. Here we synchronize the progression with the Pinia state manager of Vue.js.`,
             media: {type: 'image', src: "/images/futurenow/driving.jpg" }
         },
         {

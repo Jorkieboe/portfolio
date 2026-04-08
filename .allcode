@@ -23,16 +23,16 @@
         },
         {
           "path": "src/components/Canvas.vue",
-          "mtime": 1775544845.5444474,
-          "hash": "6ce5ddb29e9f42ad7fd1f825da8b3044e9afdb0c",
-          "tokens": 2488,
-          "lines": 281
+          "mtime": 1775575132.0096583,
+          "hash": "5752e3a675b82d6091400476fbb5c08d98a4a963",
+          "tokens": 2657,
+          "lines": 299
         },
         {
           "path": "src/composables/useLang.js",
-          "mtime": 1775027825.4884875,
-          "hash": "52ffe7decf957c88c9ba8dddc10b57798b26f118",
-          "tokens": 125,
+          "mtime": 1775634684.3068216,
+          "hash": "4a7836ab4ce70e5e1a382bad5645d826df940705",
+          "tokens": 126,
           "lines": 19
         },
         {
@@ -44,10 +44,10 @@
         },
         {
           "path": "src/views/Home.vue",
-          "mtime": 1775546354.342888,
-          "hash": "92f68f5de59f184dd43580501c657ffcfe89618b",
-          "tokens": 3598,
-          "lines": 614
+          "mtime": 1775652280.6684103,
+          "hash": "7a686c04b5fdd42ed94838edbcb4b7b31e896587",
+          "tokens": 3537,
+          "lines": 607
         },
         {
           "path": "src/views/Project.vue",
@@ -58,10 +58,10 @@
         },
         {
           "path": "src/App.vue",
-          "mtime": 1775544845.527062,
-          "hash": "bd6b82ab2f922fc5f7a5864ef1ee2d2fcf75accb",
-          "tokens": 849,
-          "lines": 132
+          "mtime": 1775574507.258996,
+          "hash": "a5717e00f76f7aa3476df0bab8fe875291534883",
+          "tokens": 1263,
+          "lines": 199
         },
         {
           "path": "src/main.js",
@@ -79,10 +79,10 @@
         },
         {
           "path": "src/style.css",
-          "mtime": 1775544845.7532482,
-          "hash": "e26cd2be91d03283dac28478c2b927b5a2a3c472",
-          "tokens": 1929,
-          "lines": 413
+          "mtime": 1775561872.3516119,
+          "hash": "2ba656d6d15d92e0c68acdb252f795210cb4a5e1",
+          "tokens": 1785,
+          "lines": 392
         },
         {
           "path": "go.bat",
@@ -135,30 +135,30 @@
         },
         {
           "path": "src/content/en/festivalRecommender.js",
-          "mtime": 1775049726.2498057,
-          "hash": "00eae93a7fd027d2f5c3bff341f1cb1433d77b9e",
-          "tokens": 425,
-          "lines": 22
+          "mtime": 1775649798.9807794,
+          "hash": "1f2730aac0c4e1e2c24acc641850a32261cdd4df",
+          "tokens": 475,
+          "lines": 25
         },
         {
           "path": "src/content/en/futurenow.js",
-          "mtime": 1775049726.2498057,
-          "hash": "1b9bb56b0e7a08da83b47573f95964f004e4a4f8",
-          "tokens": 638,
-          "lines": 27
+          "mtime": 1775649160.940799,
+          "hash": "2bcebdd058c28f508419ad493af382c9200c7e28",
+          "tokens": 598,
+          "lines": 33
         },
         {
           "path": "src/content/en/gamification.js",
-          "mtime": 1775049726.2498057,
-          "hash": "afe44ea847362b19c54046976ce0692a7d8b9bb1",
-          "tokens": 519,
-          "lines": 22
+          "mtime": 1775555796.9442253,
+          "hash": "b59ddc1e904b0123e1db7973a4dd864ebff58ed0",
+          "tokens": 409,
+          "lines": 23
         },
         {
           "path": "src/content/en/home.js",
-          "mtime": 1775045875.1017544,
-          "hash": "5ba736a57282b7c89a66bfde1b5a00c76ad6a248",
-          "tokens": 907,
+          "mtime": 1775652780.2177987,
+          "hash": "91fe901d0fffce29fad5a8619e9689b03fe241fe",
+          "tokens": 739,
           "lines": 51
         },
         {
@@ -170,31 +170,31 @@
         },
         {
           "path": "src/content/en/lisboastories.js",
-          "mtime": 1775544845.5738432,
-          "hash": "25ec8390ad468b7a5e06d24a9d0970535858eba1",
-          "tokens": 639,
-          "lines": 27
+          "mtime": 1775650758.3508794,
+          "hash": "02a836c5739780a2b0c12d2fd68f4735c7ee3d30",
+          "tokens": 518,
+          "lines": 28
         },
         {
           "path": "src/content/en/parleyStudio.js",
-          "mtime": 1775049726.2498057,
-          "hash": "93cd3903dbafd81689616ff4ff6b21fff8c017c3",
-          "tokens": 734,
-          "lines": 32
+          "mtime": 1775648399.8830128,
+          "hash": "253f02fe36193767a2a7f6ed6901c830b3ea0487",
+          "tokens": 637,
+          "lines": 38
         },
         {
           "path": "src/content/en/verhalenvangers.js",
-          "mtime": 1775049726.2498057,
-          "hash": "1d95f09c29d50fb6603681f9128ca87c98bd395b",
-          "tokens": 460,
-          "lines": 22
+          "mtime": 1775651819.6297755,
+          "hash": "6ec53f202581473e0355c159fa66def7520076fd",
+          "tokens": 535,
+          "lines": 28
         },
         {
           "path": "src/content/en/vrGame.js",
-          "mtime": 1775049726.2498057,
-          "hash": "9d1b2105406cc83f7304f4932970ebcdd8b6e8b5",
-          "tokens": 409,
-          "lines": 22
+          "mtime": 1775651993.5630333,
+          "hash": "64e8e870cec26b7c3de4b5270b3e728c0e3a9bd3",
+          "tokens": 424,
+          "lines": 26
         },
         {
           "path": "src/content/nl/old/begrijpendBiased.js",
@@ -219,16 +219,16 @@
         },
         {
           "path": "src/content/nl/festivalRecommender.js",
-          "mtime": 1775549327.442601,
-          "hash": "14c38a464e9769c86fad5e4c0516b1d0d8d08203",
-          "tokens": 602,
+          "mtime": 1775649613.8488424,
+          "hash": "c08ce9cf76eff71941a688a5032123a972c8c362",
+          "tokens": 599,
           "lines": 25
         },
         {
           "path": "src/content/nl/futurenow.js",
-          "mtime": 1775549793.8570504,
-          "hash": "32d9e0e72c97b0fb5848ba0a70a1dfcc672fbe9a",
-          "tokens": 732,
+          "mtime": 1775649161.5942402,
+          "hash": "1d448884ccc2c1057a5f2178a7fb4f583e7c9778",
+          "tokens": 740,
           "lines": 33
         },
         {
@@ -240,9 +240,9 @@
         },
         {
           "path": "src/content/nl/home.js",
-          "mtime": 1775549544.0436773,
-          "hash": "def4ef8b64eb628b088075784526847e503bf891",
-          "tokens": 932,
+          "mtime": 1775652534.9994295,
+          "hash": "e85046b798f459d9b0019237da29b076edf95102",
+          "tokens": 941,
           "lines": 51
         },
         {
@@ -254,41 +254,41 @@
         },
         {
           "path": "src/content/nl/lisboastories.js",
-          "mtime": 1775555003.6644914,
-          "hash": "5f6050e55aba37000ba2f4b3b76140525bf9d850",
-          "tokens": 672,
+          "mtime": 1775650755.4650438,
+          "hash": "2b47baf7d1eca55d500d8caf167184155ac0e330",
+          "tokens": 688,
           "lines": 28
         },
         {
           "path": "src/content/nl/parleyStudio.js",
-          "mtime": 1775550538.4942186,
-          "hash": "2fb45ef02756163101683f818b6a460a6105ebce",
-          "tokens": 794,
+          "mtime": 1775647489.841818,
+          "hash": "be5db27e670bbbdf03f0b07ce1b4ac26cbfe2ec8",
+          "tokens": 797,
           "lines": 38
         },
         {
           "path": "src/content/nl/verhalenvangers.js",
-          "mtime": 1775549142.4571383,
-          "hash": "7b3bf37711cf9a3561a833edccdc3a6a3fe5f114",
-          "tokens": 651,
+          "mtime": 1775651974.5865426,
+          "hash": "19f5a8b82c2a900e9a99a3891451ae8e284bf458",
+          "tokens": 639,
           "lines": 28
         },
         {
           "path": "src/content/nl/vrGame.js",
-          "mtime": 1775550966.40952,
-          "hash": "c6ec09eee2b747e412225c6dfc0da3db1f2eb5d2",
-          "tokens": 518,
+          "mtime": 1775652549.844456,
+          "hash": "1ec0825f23f3d7aec2f8bf458dcc2f54c3ef503f",
+          "tokens": 525,
           "lines": 26
         },
         {
           "path": "src/components/ProfilePic.vue",
-          "mtime": 1775546166.5207355,
-          "hash": "7cc81f5c04fc8310e7bb6cf7d0ce6943a69e49cf",
-          "tokens": 1154,
-          "lines": 156
+          "mtime": 1775561620.5497518,
+          "hash": "3ebe112626127f7e602eb760720c5188841e666a",
+          "tokens": 1249,
+          "lines": 170
         }
       ],
-      "total_tokens": 29663,
+      "total_tokens": 29769,
       "intro_text": "This is my personal portfolio website",
       "outro_text": "DO:\n- always return full code, unless a change is VERY small (a single line or a short connected segment)\n- make sure empty lines are actually empty: avoid generating lines of spaces or tabs\nalways place closing triple backticks (```) on their own, new line\n\nDo NOT:\n- remove my original comments\n- return diff files\n- use numbered steps (e.g., \"1.\") in comments\n- use <summary> tags\n- end comments with dots (unless you are using multiple sentences)\n- call something \"final\" or \"definitive\"; it usually isn't\n- use double newlines between code\n- add comments if the code itself makes it pretty clear what it does\n\nUse the following format if you want to add temporary notification comments: `// [KEYWORD] Comment` (e.g., `[FIX] Now using correct value`, `[MODIFIED] Improved algorithm`). These comments are transient and exist only to show the user what you've changed. If you find them in code you are reviewing, remove these comments as the user will have already seen them.",
       "expanded_dirs": [
@@ -306,8 +306,6 @@
     }
   },
   "known_files": [
-    "dist/assets/index-Bk2ArfiQ.css",
-    "dist/assets/index-fA1LSMzz.js",
     "dist/index.html",
     "go.bat",
     "index.html",

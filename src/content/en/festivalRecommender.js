@@ -18,7 +18,7 @@ export default {
         },
         {
             title: "Development",
-            text: `Finally, your music profile is compared with each festival using cosine similarity. This results in a number between zero and one. The higher this number, the more similar the festival is to your music taste. After my studies, I started integrating this recommender system into a React.js app. This application uses PyScript to run Python code directly in the browser. In addition, the recommender system was further developed by clustering the music so that a varied music taste is not generalized.`,
+            text: `Finally, your music profile is compared with each festival using cosine similarity, resulting in a score between zero and one. A higher score indicates a closer match between the festival and your music taste. After completing my studies, I began integrating this recommender system into a React.js application. This application uses PyScript to run Python code directly in the browser. Additionally, the recommender system was further improved by clustering the music, ensuring that diverse musical preferences are preserved rather than averaged out.`,
             media: { type: 'image', src: "/images/recommender/FR_cosine.jpg" }
         }
     ]

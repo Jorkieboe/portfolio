@@ -9,12 +9,12 @@ export default {
     content: [
         {
             title: "Problem",
-            text: `Drowning is still a major cause of death among young people. Strikingly, besides young children, many young men also become victims. This often arises due to peer pressure around this age. Young men have to prove that they are not afraid and are strong. Because of this need to prove themselves, they easily end up in dangerous situations.`,
+            text: `Drowning is still a major cause of death among young people. Notably, in addition to young children, a significatn number of young men also become victims. This often arises due to peer pressure around this age. Young men have to prove that they are not afraid and are strong. As a result, they are more likely to take risks and end up in dangerous situations.`,
             media: { type: 'image', src: "/images/SOTA/beach.jpg" }
         },
         {
             title: "Concept",
-            text: `In this VR experience, young men are challenged to go to a rock far out in the sea. Through dialogues with non-player characters, they are persuaded, even though the distance is clearly great. If the user decides to participate, it soon turns out that it is indeed too far, and they drown.`,
+            text: `In this VR experience, young men are challenged to swim to a rock far out in the sea. Through conversations with non-player characters, they are persuaded to take on the challenge, even though the distance is clearly far way. If the user chooses to participate, it quickly becomes apparent that the distance is too great, ultimately leading to them drowning.`,
             media: { type: 'image', src: "/images/SOTA/npcs.jpg" }
         },
         {

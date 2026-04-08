@@ -66,7 +66,6 @@ const updateClip = () => {
     if (store.isTransitioning) {
         clipAmount = store.transitionClipOverride
     } else if (store.track) {
-        // Track the bottom bounding box of the zoom container for perfect stability
         const trackEl = store.track.value || store.track
         const trackBottom = trackEl.getBoundingClientRect().bottom
         let rawClip = containerHeight - trackBottom
@@ -86,6 +85,8 @@ const updateClip = () => {
     canvasContainer.value.style.transform = 'translateZ(0)'
 
     dynamicZoneHeight.value = containerHeight - clipAmount
+    
+    return clipAmount
 }
 
 const handleScroll = () => {
@@ -241,8 +242,22 @@ onMounted(async () => {
       uColourTop.value.lerp(targetTop, 0.05)
       uColourBottom.value.lerp(targetBottom, 0.05)
 
-      updateClip()
+      let clipAmount = updateClip()
 
+      const drawingSize = new THREE.Vector2()
+      renderer.getSize(drawingSize)
+
+      const scaleFactor = drawingSize.y / stableHeight.value
+
+      const scissorX = 0
+      const scissorY = 0
+      const scissorW = drawingSize.x
+      const scissorH = (stableHeight.value - clipAmount) * scaleFactor
+
+      renderer.setScissorTest(true)
+      renderer.setScissor(scissorX, scissorY, scissorW, scissorH)
+
+      renderer.setViewport(0, 0, drawingSize.x, drawingSize.y)
       renderer.render(scene, camera)
   }
 
@@ -274,7 +289,7 @@ onBeforeUnmount(() => {
     pointer-events: none;
     background-color: black;
     will-change: clip-path, -webkit-clip-path;
-    filter: drop-shadow(0 0 0.75rem crimson);
+
 
     :deep(canvas) {
         width: 100% !important;

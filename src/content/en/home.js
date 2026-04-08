@@ -16,7 +16,7 @@ export default {
         {
             projectTitle: "Future is Now",
             projectType: "Museum Exhibition",
-            projectText: "My second major assignment was for an exhibition at the Hong Kong Science Museum about the future of transportation, food, and daily life. For this, I worked on a number of applications using Vue, Three.js, Unity, and LED strips.",
+            projectText: "One of my bigger assignments was for an exhibition at the Hong Kong Science Museum about the future of transportation, food, and daily life. For this, I worked on a number of applications using Vue, Three.js, Unity, and Phidgets.",
             projectImage: '/images/futurenow/overview.jpg'
         },
         {
@@ -34,7 +34,7 @@ export default {
         {
             projectTitle: "Peer pressure VR experience",
             projectType: "Serious game",
-            projectText: "Drowning is still a major cause of death among young men. In this VR Experience, young men are confronted with the dangers of water through overestimation and peer pressure.",
+            projectText: "Drowning is still a major cause of death among young men. In this VR Experience created in the Unreal Engine, young men are confronted with the dangers of water through overestimation and peer pressure.",
             projectImage: '/images/SOTA/npcs.jpg'
         },
         {

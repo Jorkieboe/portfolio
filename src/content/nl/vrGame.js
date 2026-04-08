@@ -9,17 +9,17 @@ export default {
     content: [
         {
             title: "Probleem",
-            text: `Verdrinken is nog een steeds een grote doodsoorzaak voor jonge mensen. Opvallend worden er naast jonge kinderen ook veel jonge mannen slachtoffer. Dit ontstaat vaak door groepsdruk rond deze leeftijd. Jonge mannen moeten aantonen dat ze niet bang en sterk zijn. Zij komen door die bewijsdrang makkelijk in gevaarlijke situaties.`,
+            text: `Verdrinken is nog steeds een grote doodsoorzaak voor jonge mensen. Opvallend is dat er naast jonge kinderen ook veel jonge mannen slachtoffer worden. Dit ontstaat vaak door groepsdruk rond deze leeftijd. Jonge mannen moeten aantonen dat ze niet bang en sterk zijn. Zij komen door die bewijsdrang makkelijk in gevaarlijke situaties.`,
             media: { type: 'image', src: "/images/SOTA/beach.jpg" }
         },
         {
             title: "Concept",
-            text: `In deze VR-experience worden jonge mannen uitgedaagd om naar een rots ver in zee te gaan. Via dialogen met non-player characters worden ze overgehaald, ondanks dat de afstand duidelijk groot is. Besluit de gebruiker mee te doen, dan blijkt al snel dat het inderdaad te ver is en verdrinkt`,
+            text: `In deze VR-experience worden jonge mannen uitgedaagd om naar een rots ver op zee te zwemmen. Via gesprekken met non-player characters worden ze overgehaald om de overduidelijk gevaarlijke afstand af te leggen. Wanneer de gebruiker het accepteerd wordt hij geconfronteerd met de gevolgen en verdrinkt hij.`,
             media: { type: 'image', src: "/images/SOTA/npcs.jpg" }
         },
         {
             title: "Development",
-            text: `De ervaring is ontwikkeld in Unreal Engine als onderdeel van een masteropdracht om met nieuwe technieken te werken. Het proces begon met het bouwen van de strandomgeving en het opzetten van een dialogensysteem. Op basis van gebruikerstesten zijn de dialogen verfijnt en zijn omgevingssignalen, zoals geluiden die vermoeidheid aangeven, verder verbeterd.`,
+            text: `De ervaring is ontwikkeld in Unreal Engine als onderdeel van een masteropdracht om met nieuwe technieken te werken. Het proces begon met het bouwen van de strandomgeving en het opzetten van een dialogensysteem. Op basis van gebruikerstesten zijn de dialogen verfijnd en zijn omgevingssignalen, zoals geluiden die vermoeidheid aangeven, verder verbeterd.`,
             media: { type: 'image', src: "/images/SOTA/dialog.jpg" }
         }
     ]
