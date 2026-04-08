@@ -2,13 +2,26 @@
 import { ref, computed, inject, onMounted, onUnmounted } from 'vue'
 import Canvas from '../components/canvas.vue'
 import { useLang } from '../composables/useLang'
+import { useHead } from '@unhead/vue'
 import { gsap } from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
 import { SplitText } from 'gsap/SplitText';
+import { useRoute } from 'vue-router';
 
 import ProfilePic from '../components/ProfilePic.vue';
 
 const { t } = useLang()
+const route = useRoute()
+
+useHead({
+  title: 'Portfolio - Jorrik Dillisse',
+  meta: [
+    {
+      name: 'description',
+      content: 'Creative Developer and Technologist specializing in interactive installations, games, and AI.'
+    }
+  ]
+})
 
 const projectIds =[
   'verhalenvangers',
@@ -127,7 +140,7 @@ onMounted(() => {
         pinSpacing: true,
         markers: false,
         onUpdate: (self) => {
-          aboutScrollProgress.value = Math.min(1, self.progress * 2); 
+          aboutScrollProgress.value = Math.min(1, self.progress * 2);
         }
       }
     });
@@ -147,7 +160,7 @@ onMounted(() => {
       });
 
       tlAbout.to({}, { duration: 1 });
-    } 
+    }
 
   });
 });
@@ -180,7 +193,7 @@ onUnmounted(() => {
                   ]"
 
                   @mouseenter="()=>{store.projectActive = index}"
-                  @mouseleave="()=>{store.projectActive = null}"
+                  @mouseleave="()=>{ if(route.path === '/') store.projectActive = null}"
                 >
                     <div class="project" :class="{'reversed': index > 2}">
                         <div class="projectImage" :class="'p' + (index + 1)"  @click="$router.push('/work/' + project.id)">
@@ -573,7 +586,7 @@ onUnmounted(() => {
         .pic-wrapper {
             width: 100vw;
             aspect-ratio: 9/10;
-           
+
             padding-left: 0;
             justify-content: center;
         }

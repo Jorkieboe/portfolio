@@ -31,7 +31,6 @@ const initThree = async () => {
   camera = new THREE.PerspectiveCamera(35, width / height, 0.1, 1000)
   camera.position.z = 5
 
-  // [MODIFIED] Using WebGPURenderer for automatic WebGL fallback support via Unified Backend
   renderer = new THREE.WebGPURenderer({ antialias: true, alpha: true })
   renderer.setSize(width, height)
   renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2))
@@ -83,7 +82,6 @@ const initThree = async () => {
     renderer.render(scene, camera)
   }
 
-  // [FIX] Explicitly initialize and log backend selection
   await renderer.init()
   console.log(`ProfilePic.vue: Rendering with ${renderer.backend.isWebGPUBackend ? 'WebGPU' : 'WebGL'} fallback`)
   animate()

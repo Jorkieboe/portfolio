@@ -90,6 +90,7 @@ const updateClip = () => {
 }
 
 const handleScroll = () => {
+    if (typeof window === 'undefined') return
     const zoomTrackHeight = stableHeight.value * 2.5
     const currentScroll = window.scrollY
     scrollProgress = Math.min(currentScroll / zoomTrackHeight, 1.0)
@@ -97,7 +98,7 @@ const handleScroll = () => {
 }
 
 const handleResize = () => {
-    if (!canvasContainer.value) return
+    if (typeof window === 'undefined' || !canvasContainer.value) return
 
     const w = window.innerWidth
     const h = window.innerHeight
@@ -115,7 +116,7 @@ const handleResize = () => {
 }
 
 onMounted(async () => {
-
+    if (typeof window === 'undefined') return
     stableHeight.value = window.innerHeight
     lastWidth = window.innerWidth
     dynamicZoneHeight.value = window.innerHeight
@@ -126,7 +127,6 @@ onMounted(async () => {
     scene = new THREE.Scene()
     camera = new THREE.OrthographicCamera(-1, 1, 1, -1, 0, 1)
 
-    // [MODIFIED] WebGPURenderer is a unified renderer that handles Fallback to WebGL automatically.
     renderer = new THREE.WebGPURenderer({ antialias: true })
     renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2))
 
@@ -231,7 +231,6 @@ onMounted(async () => {
         targetStrength = 1
       }
 
-      // [FIX] Smoothly lerp towards targets to avoid snapping when route changes
       smoothZoomPhase += (targetZoom - smoothZoomPhase) * 0.1
       smoothMovePhase += (targetMove - smoothMovePhase) * 0.1
 
@@ -261,15 +260,16 @@ onMounted(async () => {
       renderer.render(scene, camera)
   }
 
-    // [FIX] renderer.init() determines the backend. We log it here to verify fallback.
     await renderer.init()
     console.log(`Canvas.vue: Rendering with ${renderer.backend.isWebGPUBackend ? 'WebGPU' : 'WebGL'} fallback`)
     animate()
 })
 
 onBeforeUnmount(() => {
-    window.removeEventListener('scroll', handleScroll)
-    window.removeEventListener('resize', handleResize)
+    if (typeof window !== 'undefined') {
+        window.removeEventListener('scroll', handleScroll)
+        window.removeEventListener('resize', handleResize)
+    }
     cancelAnimationFrame(animationId)
     renderer.dispose()
 })

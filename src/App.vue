@@ -1,5 +1,5 @@
 <script setup>
-import { provide, ref } from 'vue';
+import { provide, ref, watch } from 'vue';
 import { useLang } from './composables/useLang'
 
 import { useMainStore } from './store/store'
@@ -13,9 +13,31 @@ const store = useMainStore()
 
 const langSwitch = ref(null)
 
+const projectIds =[
+  'verhalenvangers',
+  'parleyStudio',
+  'futurenow',
+  'festivalRecommender',
+  'lisboastories',
+  'vrGame',
+]
+
 provide('store', store)
 
 const vh = window.innerHeight
+
+watch(() => router.currentRoute.value.path, (path) => {
+  if (path.startsWith('/work/')) {
+    const id = path.split('/').pop()
+    const index = projectIds.indexOf(id)
+    if (index !== -1) {
+      store.projectActive = index
+    }
+  } else if (path === '/') {
+    // Only reset if we are actually on the home page (hover handles it there)
+    store.projectActive = null
+  }
+}, { immediate: true })
 
 const scrollTo = (id) => {
   const el = document.getElementById(id)
@@ -54,7 +76,7 @@ const onLeave = (el, done) => {
     }
   })
   }
-   
+
 }
 
 const onEnter = (el, done) => {

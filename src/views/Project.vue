@@ -2,6 +2,7 @@
 import { computed, onMounted, onUnmounted, inject, ref, watch } from 'vue'
 import { useRoute } from 'vue-router'
 import { useLang } from '../composables/useLang'
+import { useHead } from '@unhead/vue'
 import { gsap } from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
 import { SplitText } from 'gsap/SplitText';
@@ -17,6 +18,19 @@ const selectedMedia = ref(null)
 
 let mm;
 
+const projectId = computed(() => route.params.id)
+const projectData = computed(() => t.value[projectId.value])
+
+useHead({
+  title: () => projectData.value ? `${projectData.value.projectTitle} - Jorrik Dillisse` : 'Project - Jorrik Dillisse',
+  meta: [
+    {
+      name: 'description',
+      content: () => projectData.value ? projectData.value.introText : 'Project details'
+    }
+  ]
+})
+
 const openMedia = (contentItem) => {
     console.log(contentItem)
     selectedMedia.value = contentItem.media
@@ -26,7 +40,6 @@ const closeMedia = () => {
     selectedMedia.value = null
 }
 
-// [FIX] Handle body scroll locking without fighting CSS specificity
 watch(selectedMedia, (newVal) => {
     if (newVal) {
         document.body.style.overflow = 'hidden'
@@ -66,7 +79,6 @@ onMounted(() => {
                 ease: "power2.out"
             })
         }
-      
 
         const infoContainers = gsap.utils.toArray(".projectInfoContainer");
 
@@ -128,9 +140,6 @@ onMounted(() => {
 onUnmounted(() => {
     store.setContentRef(null);
 })
-
-const projectId = computed(() => route.params.id)
-const projectData = computed(() => t.value[projectId.value])
 
 const configMap = {
   begrijpendBiased: {
@@ -437,8 +446,6 @@ const cfg = computed(() => configMap[projectId.value] || configMap.begrijpendBia
             }
         }
 
-        
-
         .projectInfoContainer {
             padding: 4rem 0;
 
@@ -510,7 +517,6 @@ const cfg = computed(() => configMap[projectId.value] || configMap.begrijpendBia
     left: 2rem;
     width: 2rem;
     height: 2rem;
-    // background-color: red;
 }
 
 .lightbox-content {
