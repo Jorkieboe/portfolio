@@ -47,7 +47,6 @@ const projects = computed(() => {
   })
 })
 
-const activeProject = ref(null)
 const isMobile = ref(typeof navigator !== 'undefined' && /Android|webOS|iPhone|iPad|iPod|BlackBerry|Windows Phone/i.test(navigator.userAgent))
 
 const toggleMobile = (index) => {
@@ -189,16 +188,17 @@ onUnmounted(() => {
                   class="projectWrapper"
                   :class="[
                     'pj' + (index + 1),
-                    { active: store.projectActive === index || activeProject === index }
+                    { active: store.projectActive === index }
                   ]"
-
-                  @mouseenter="()=>{store.projectActive = index}"
-                  @mouseleave="()=>{ if(route.path === '/') store.projectActive = null}"
+                  v-on="!isMobile ? {
+                    mouseenter: () => store.projectActive = index,
+                    mouseleave: () => { if(route.path === '/') store.projectActive = null }
+                  } : {}"
                 >
                     <div class="project" :class="{'reversed': index > 2}">
                         <div class="projectImage" :class="'p' + (index + 1)"  @click="$router.push('/work/' + project.id)">
                           <img v-if="project.projectImage" :src="project.projectImage">
-                          <div class="arrow" :class="{ active: activeProject === index }" @click.stop="toggleMobile(index)"></div>
+                          <div class="arrow" :class="{ active: store.projectActive === index }" @click.stop="toggleMobile(index)"></div>
                         </div>
                         <div class="projectPanel">
                             <div class="panelTextDiv">
