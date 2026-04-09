@@ -1,5 +1,5 @@
 <script setup>
-import { ref, computed, inject, onMounted, onUnmounted } from 'vue'
+import { ref, computed, inject, onMounted, onUnmounted, watch } from 'vue'
 import Canvas from '../components/canvas.vue'
 import { useLang } from '../composables/useLang'
 import { useHead } from '@unhead/vue'
@@ -47,18 +47,130 @@ const projects = computed(() => {
   })
 })
 
-const isMobile = ref(typeof navigator !== 'undefined' && /Android|webOS|iPhone|iPad|iPod|BlackBerry|Windows Phone/i.test(navigator.userAgent))
+const isMobile = ref(false)
+
+const updateIsMobile = () => {
+    const wasMobile = isMobile.value
+    isMobile.value = window.innerWidth <= 1024
+
+    if (wasMobile !== isMobile.value) {
+      // Crossing breakpoint: Reset state and clear inline styles
+      store.projectActive = null
+      isAnimating.value = false
+
+      // Stop any running animations
+      gsap.killTweensOf(".projectWrapper, .projectImage, .projectPanel, .panelTextDiv");
+
+      // Strip GSAP inline styles so CSS Media Queries can take over
+      gsap.set(".projectWrapper, .projectImage, .projectPanel, .panelTextDiv", { clearProps: "all" });
+    }
+}
 
 const toggleMobile = (index) => {
+  if (isAnimating.value) return;
   store.projectActive = store.projectActive === index ? null : index
 }
 
 const aboutScrollProgress = ref(0)
 const localContentRef = ref(null)
 const trackRef = ref(null)
+const isAnimating = ref(false)
 let mm;
+let hoverDelayedCall = null;
+
+// const skewedPath = "polygon(15% 0%, 100% 0%, 85% 100%, 0% 100%)";
+// const rectPath = "polygon(0% 0%, 100% 0%, 100% 100%, 0% 100%)";
+
+const animateProject = (index, isOpen) => {
+  const wrapper = document.querySelector(`.pj${index + 1}`);
+  if (!wrapper) return;
+
+  const panel = wrapper.querySelector('.projectPanel');
+  const textDiv = wrapper.querySelector('.panelTextDiv');
+  const image = wrapper.querySelector('.projectImage');
+
+  isAnimating.value = true;
+
+  const tl = gsap.timeline({
+    defaults: { ease: "power3.inOut", duration: 0.6, overwrite: "auto" },
+    onComplete: () => {
+        isAnimating.value = false;
+        if (!isOpen) {
+            gsap.set(panel, { display: "none" });
+        }
+    }
+  });
+
+  if (isOpen) {
+    gsap.set(panel, { display: "block" });
+    tl.to(wrapper, { marginLeft: 0 }, 0);
+    if(isMobile.value){
+      tl.fromTo(image, {
+        width: "100vw",
+        minWidth: "100vw",
+      }, {
+        minWidth: 'unset',
+        width: "25vw",
+      }, 0);
+      tl.fromTo(panel, {
+        width: 0,
+        opacity: 0
+      }, {
+        width: "75vw",
+        opacity: 1
+      }, 0);
+    }else{
+      tl.to(image, {
+        width: "20rem",
+        minWidth: "20rem",
+      }, 0);
+      tl.to(panel, { width: "20rem", opacity: 1 }, 0);
+    }
+    tl.to(textDiv, { opacity: 1, duration: 0.4 }, 0.3);
+  } else {
+    const isFirst = index === 0;
+    tl.to(wrapper, { marginLeft: isFirst || isMobile.value ? 0 : "-5rem" }, 0);
+    tl.to(image, {
+        minWidth: isMobile.value ? "100vw" : "20rem",
+        width: isMobile.value ? "100vw" : "20rem",
+    }, 0);
+    tl.to(panel, { width: 0, opacity: 0 }, 0);
+    tl.to(textDiv, { opacity: 0, duration: 0.2 }, 0);
+  }
+}
+
+const handleHover = (index) => {
+  if (isMobile.value) return;
+
+  if (hoverDelayedCall) hoverDelayedCall.kill();
+
+  hoverDelayedCall = gsap.delayedCall(0.1, () => {
+    if (store.projectActive !== index && !isAnimating.value) {
+      store.projectActive = index;
+    }
+  });
+}
+
+const handleMouseLeave = () => {
+  if (isMobile.value) return;
+  if (hoverDelayedCall) hoverDelayedCall.kill();
+
+  hoverDelayedCall = gsap.delayedCall(0.1, () => {
+    if (route.path === '/' && !isAnimating.value) {
+      store.projectActive = null;
+    }
+  });
+}
+
+watch(() => store.projectActive, (newVal, oldVal) => {
+  if (oldVal !== null) animateProject(oldVal, false);
+  if (newVal !== null) animateProject(newVal, true);
+});
 
 onMounted(() => {
+  updateIsMobile();
+  window.addEventListener('resize', updateIsMobile);
+
   store.setContentRef(localContentRef.value)
   store.setTrackRef(trackRef.value)
   gsap.registerPlugin(ScrollTrigger, SplitText);
@@ -85,11 +197,11 @@ onMounted(() => {
   });
 
   mm.add({
-    isDesktop: "(min-width: 766px)",
-    isMobile: "(max-width: 765px)"
+    isDesktop: "(min-width: 1025px)",
+    isMobile: "(max-width: 1024px)"
   }, (context) => {
 
-    let { isDesktop, isMobile } = context.conditions;
+    let { isDesktop, isMobile: mobileEnv } = context.conditions;
 
     if (isDesktop) {
       const tl = gsap.timeline({
@@ -108,23 +220,25 @@ onMounted(() => {
         opacity: 0,
         stagger: 0.2,
         ease: "power2.out",
-        duration: 1
+        duration: 1,
+        clearProps: "transform,opacity"
       }).to({}, { duration: 0.5 });
     }
 
-    if (isMobile) {
+    if (mobileEnv) {
       const wrappers = gsap.utils.toArray(".projectWrapper");
       wrappers.forEach((wrapper) => {
         gsap.from(wrapper, {
           scrollTrigger: {
             trigger: wrapper,
             start: "top 85%",
-            toggleActions: "play none none reverse",
+            toggleActions: "play none none none",
           },
           y: 50,
           opacity: 0,
           duration: 0.8,
-          ease: "power2.out"
+          ease: "power2.out",
+          clearProps: "all"
         });
       });
     }
@@ -165,9 +279,11 @@ onMounted(() => {
 });
 
 onUnmounted(() => {
+  window.removeEventListener('resize', updateIsMobile);
   if (mm) {
     mm.revert();
   }
+  if (hoverDelayedCall) hoverDelayedCall.kill();
   store.setContentRef(null);
   store.setTrackRef(null);
 });
@@ -190,12 +306,10 @@ onUnmounted(() => {
                     'pj' + (index + 1),
                     { active: store.projectActive === index }
                   ]"
-                  v-on="!isMobile ? {
-                    mouseenter: () => store.projectActive = index,
-                    mouseleave: () => { if(route.path === '/') store.projectActive = null }
-                  } : {}"
+                  @mouseenter="handleHover(index)"
+                  @mouseleave="handleMouseLeave"
                 >
-                    <div class="project" :class="{'reversed': index > 2}">
+                    <div class="project" :class="{'reversed': !isMobile && index > 2}">
                         <div class="projectImage" :class="'p' + (index + 1)"  @click="$router.push('/work/' + project.id)">
                           <img v-if="project.projectImage" :src="project.projectImage">
                           <div class="arrow" :class="{ active: store.projectActive === index }" @click.stop="toggleMobile(index)"></div>
@@ -302,7 +416,6 @@ onUnmounted(() => {
       height: fit-content;
       margin-left: -5rem;
       pointer-events: all;
-      transition: width 0.75s;
       opacity: 1;
 
       cursor: pointer;
@@ -312,37 +425,21 @@ onUnmounted(() => {
       }
 
        &.active{
-          margin-left: 0;
           flex-grow: 0;
           .project{
             .projectImage {
-              min-width: 18rem;
-              z-index: 50;
+              // z-index: 50;
             }
 
-            .projectPanel{
-              padding-top: 25px;
-              padding-left: 5px;
-              margin-left: -4rem;
-              width: 20rem;
-              display: block;
-              transition: 1s;
-              left: 0;
-              opacity: 1;
-
-              .panelTextDiv {
-                opacity: 1;
-              }
-            }
+            // .projectPanel{
+            //   margin-left: -4rem;
+            //   left: 0;
+            // }
 
             &.reversed{
-              .projectImage{
-                clip-path: polygon(20% 0%, 100% 0%, 100% 100%, 0% 100%);
-              }
-
               .projectPanel{
                 margin-right: -3.5rem;
-                padding-left: 0.6rem;
+                // removed padding-left from active to prevent jump
               }
             }
           }
@@ -365,11 +462,10 @@ onUnmounted(() => {
           width: 20rem;
           aspect-ratio: 3/4;
           clip-path: polygon(15% 0%, 100% 0%, 85% 100%, 0% 100%);
-          -webkit-transition: all 1s;
-          transition: all 1s;
           pointer-events: auto;
-          background-size: cover;
+          background-size: 20rem auto;
           background-position: center;
+          position: relative;
 
           img {
             width: 100%;
@@ -378,24 +474,44 @@ onUnmounted(() => {
           }
         }
 
+        .arrow {
+            display: none;
+            background-image: url('/images/Icons/ArrowPointer.png');
+            background-size: 50px 50px;
+            background-repeat: no-repeat;
+            width: 50px;
+            height: 50px;
+            position: absolute;
+            z-index: 60;
+            right: 10px;
+            bottom: 20px;
+            pointer-events: auto;
+            cursor: pointer;
+
+            &.active {
+                transform: scaleX(-1);
+            }
+        }
+
         .projectPanel {
             width: 0;
             opacity: 0;
             overflow: hidden;
-            transition: all 0.6s ease-in-out;
+            // display: none;
+            padding-top: 25px;
+            padding-left: 5px;
+            box-sizing: border-box;
         }
 
         .panelTextDiv {
-            width: 20rem;
+            width: 19rem;
             position: relative;
             min-height: 200px;
             height: 100%;
             opacity: 0;
-            transition: opacity 0.5s;
-            transition-delay: 0.5s;
 
             .left-guard {
-              width: 5rem;
+              width: 1rem;
               height: 100%;
               float: left;
               shape-outside: polygon(80% 0%, 100% 0%, 40% 100%, 0% 100%);
@@ -439,7 +555,6 @@ onUnmounted(() => {
       max-width: 160rem;
 
       .sectionTitle.abs {
-          // position: absolute;
           max-width: 100rem;
           width: 99%;
           top: 5vh;
@@ -511,24 +626,24 @@ onUnmounted(() => {
       .projectWrapper {
         width: 100vw;
         height: 300px;
-        margin-left: 0;
+        margin-left: 0 !important;
+        max-width: 100vw;
+        overflow: hidden;
+
         &.active{
           .project{
+            width: 100%;
             .projectImage {
-              clip-path: polygon(15% 0%, 100% 0%, 85% 100%, 0% 100%);
-              min-width: unset;
-              width: 20vw;
+              flex-shrink: 0;
             }
             .projectPanel{
               padding: 0 1rem;
-              width: 80vw;
               height: 300px;
               margin-left: 0;
               margin-top: 2rem;
 
               .panelTextDiv{
 
-                width: 80%;
                 .left-guard, .right-guard{
                   display: none;
                 }
@@ -537,22 +652,37 @@ onUnmounted(() => {
           }
         }
       .project {
-        justify-content: space-between;
+        justify-content: flex-start;
+        overflow: visible;
+        flex-direction: row;
+        width: 100%;
+        max-width: 100vw;
+        padding-left: 0;
 
         &.reversed{
           flex-direction: row;
         }
 
         .projectImage {
-
-            width: 100vw;
+            width: 100%;
             height: 300px;
-            clip-path: none !important;
+            clip-path: polygon(0% 0%, 100% 0%, 100% 100%, 0% 100%);
+            flex-shrink: 0;
+          }
+
+          .arrow {
+              display: block;
+              bottom: 125px;
+              right: 15px;
           }
 
           .projectPanel{
-            // width: 80vw;
+            padding: 0 1rem;
+            height: 300px;
+            margin-left: 0;
+            margin-top: 2rem;
             .panelTextDiv{
+               width: 60vw;
               .left-guard, .right-guard{
                   display: none;
               }

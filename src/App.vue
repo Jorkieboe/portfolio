@@ -1,5 +1,5 @@
 <script setup>
-import { provide, ref, watch } from 'vue';
+import { provide, ref, watch, onMounted, onUnmounted } from 'vue';
 import { useLang } from './composables/useLang'
 
 import { useMainStore } from './store/store'
@@ -24,7 +24,19 @@ const projectIds =[
 
 provide('store', store)
 
-const vh = window.innerHeight
+const vh = ref(window.innerHeight)
+
+const handleResize = () => {
+  vh.value = window.innerHeight
+}
+
+onMounted(() => {
+  window.addEventListener('resize', handleResize)
+})
+
+onUnmounted(() => {
+  window.removeEventListener('resize', handleResize)
+})
 
 watch(() => router.currentRoute.value.path, (path) => {
   if (path.startsWith('/work/')) {
@@ -51,8 +63,9 @@ const onBeforeLeave = () => {
 const onLeave = (el, done) => {
   store.isTransitioning = true
 
+  const vhVal = vh.value
   const isHome = router.currentRoute.value.path === '/'
-  const targetClip = isHome ? 0 : vh - (vh * store.headerSize)
+  const targetClip = isHome ? 0 : vhVal - (vhVal * store.headerSize)
 
   gsap.to(langSwitch.value,{
     yPercent: -100,
@@ -69,7 +82,7 @@ const onLeave = (el, done) => {
     })
   }else{
     gsap.from(store, {
-    transitionClipOverride: vh - (vh * store.headerSize),
+    transitionClipOverride: vhVal - (vhVal * store.headerSize),
     duration: 0.4,
     onComplete: ()=>{
       done()
@@ -80,8 +93,8 @@ const onLeave = (el, done) => {
 }
 
 const onEnter = (el, done) => {
-  const vh = window.innerHeight
-  const headerClip = vh - (vh * store.headerSize)
+  const vhVal = vh.value
+  const headerClip = vhVal - (vhVal * store.headerSize)
 
   const isHome = router.currentRoute.value.path === '/'
   const targetClip = isHome ? 0 : headerClip

@@ -12,14 +12,63 @@ const props = defineProps({
 })
 
 const container = ref(null)
-const isMobile = ref(false) // 1. Added mobile state
+const isMobile = ref(false)
 let renderer, scene, camera, mesh, animationId
+let lastWidth = 0
+let lastHeight = 0
 
 const bendProgress = uniform(0.0)
 
-// 2. Function to check if display is mobile
 const checkMobile = () => {
-  isMobile.value = window.innerWidth <= 1024 // Standard mobile breakpoint
+  isMobile.value = window.innerWidth <= 1024
+}
+
+function easeInOutSineBump(t) {
+  const s = Math.sin(Math.PI * t)
+  return s * s * (3 - 2 * s)
+}
+
+const applyTransformations = (progress, duration = 1.2) => {
+  if (!mesh || !bendProgress) return
+
+  // Rotation logic
+  gsap.to(mesh.rotation, {
+    y: THREE.MathUtils.degToRad(0),
+    x: THREE.MathUtils.degToRad(easeInOutSineBump(progress) * 90),
+    z: isMobile.value ? 0 : THREE.MathUtils.degToRad(easeInOutSineBump(progress) * -45),
+    duration: duration,
+    ease: "expo.out",
+    overwrite: true
+  })
+
+  // Position logic
+  let targetX = 0
+  let targetZ = 0
+
+  if (isMobile.value) {
+    targetZ = -5 * (1 - progress)
+    targetX = 0
+  } else {
+    targetZ = -5 * Math.min(progress / 0.25, 1)
+    targetX = -(2.5 * progress)
+  }
+
+  gsap.to(mesh.position, {
+    x: targetX,
+    z: targetZ,
+    y: 0,
+    duration: duration,
+    overwrite: true,
+    ease: "expo.out"
+  })
+
+  // Shader logic
+  gsap.to(bendProgress, {
+    value: progress,
+    duration: duration,
+    ease: "expo.out",
+    overwrite: true
+  })
 }
 
 const initThree = async () => {
@@ -65,7 +114,8 @@ const initThree = async () => {
   mesh = new THREE.Mesh(geometry, material)
   scene.add(mesh)
 
-  mesh.position.z = isMobile.value ?  -5 : 0;
+  // Initial state setup
+  applyTransformations(props.scrollProgress, 0)
 
   const ambient = new THREE.AmbientLight(0xffffff, 1.5)
   scene.add(ambient)
@@ -87,61 +137,49 @@ const initThree = async () => {
   animate()
 }
 
-function easeInOutSineBump(t) {
-  const s = Math.sin(Math.PI * t)
-  return s * s * (3 - 2 * s)
-}
-
 watch(() => props.scrollProgress, (progress) => {
-  if (!mesh || !bendProgress) return
-
-  gsap.to(mesh.rotation, {
-    y: THREE.MathUtils.degToRad(0),
-    x: THREE.MathUtils.degToRad(easeInOutSineBump(progress) * 90),
-    z: isMobile.value ? 0 : THREE.MathUtils.degToRad(easeInOutSineBump(progress) * -45),
-    duration: 1.2,
-    ease: "expo.out"
-  })
-
-  let targetX = 0;
-  let targetZ = 0;
-
-  if (isMobile.value) {
-    targetZ = -5 * (1 - progress);
-    targetX = 0;
-  } else {
-    targetZ = -5 * Math.min(progress / 0.25, 1);
-    targetX = -(2.5 * progress);
-  }
-
-  gsap.to(mesh.position, {
-    x: targetX,
-    z: targetZ,
-    y: 0,
-    duration: 1.2,
-    overwrite: true,
-    ease: "expo.out"
-  })
-
-  gsap.to(bendProgress, {
-    value: progress,
-    duration: 1.2,
-    ease: "expo.out",
-    overwrite: true
-  })
+  applyTransformations(progress)
 })
 
 const handleResize = () => {
   if (!container.value) return
+
+  const width = window.innerWidth
+  const height = window.innerHeight
+
+  // Check if width actually changed to avoid "jumps" on mobile bar resize
+  // We only trigger re-positioning logic if the width changed or height changed significantly (> 120px)
+  const widthChanged = width !== lastWidth
+  const significantHeightChange = Math.abs(height - lastHeight) > 120
+
+  if (!widthChanged && !significantHeightChange) {
+    // Still update renderer size for minor height changes to keep aspect ratio perfect,
+    // but don't reset isMobile or re-run mesh positioning which causes the "jump"
+    const w = container.value.clientWidth
+    const h = container.value.clientHeight
+    camera.aspect = w / h
+    camera.updateProjectionMatrix()
+    renderer.setSize(w, h)
+    return
+  }
+
+  lastWidth = width
+  lastHeight = height
+
   checkMobile()
   const w = container.value.clientWidth
   const h = container.value.clientHeight
   camera.aspect = w / h
   camera.updateProjectionMatrix()
   renderer.setSize(w, h)
+
+  // Re-apply transformations immediately for the new size
+  applyTransformations(props.scrollProgress, 0)
 }
 
 onMounted(() => {
+  lastWidth = window.innerWidth
+  lastHeight = window.innerHeight
   checkMobile()
   initThree()
   window.addEventListener('resize', handleResize)

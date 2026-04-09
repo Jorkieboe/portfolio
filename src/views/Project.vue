@@ -141,46 +141,7 @@ onUnmounted(() => {
     store.setContentRef(null);
 })
 
-const configMap = {
-  begrijpendBiased: {
-    prefix: 'bb',
-    hasSmall: true,
-    imgBig: 'bb_bigImage',
-    imgSmall1: 'bb_small',
-    imgSmall2: 'bb_small2'
-  },
-  gamification: {
-    prefix: 'gf',
-    hasSmall: false,
-    imgBig: 'gf_bigImage'
-  },
-  festivalRecommender: {
-    prefix: 'rf',
-    hasSmall: false,
-    imgBig: 'rf_bigImage'
-  },
-  burgerCrush: {
-    prefix: 'bc',
-    hasSmall: false,
-    imgBig: 'bc_bigImage'
-  },
-  vrGame: {
-    prefix: 'vr',
-    hasSmall: true,
-    imgBig: 'vr_bigImage',
-    imgSmall1: 'vr_smallIm1',
-    imgSmall2: 'vr_smallIm2'
-  },
-  inABox: {
-    prefix: 'ib',
-    hasSmall: true,
-    imgBig: 'ib_bigImage',
-    imgSmall1: 'ib_smallIm1',
-    imgSmall2: 'ib_smallIm2'
-  }
-}
 
-const cfg = computed(() => configMap[projectId.value] || configMap.begrijpendBiased)
 </script>
 <template>
   <div class="content" ref="localContentRef" v-if="projectData">
