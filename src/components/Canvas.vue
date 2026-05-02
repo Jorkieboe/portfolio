@@ -40,11 +40,35 @@ const uMaskHeight = uniform(store.headerSize)
 
 let scrollProgress = 0
 let smoothedProgress = 0
-const lerpFactor = 0.12
+let scrollTracker = 0
+
+// [MODIFIED] Use a speed factor that works with delta time for frame-rate independence
+const LERP_SPEED = 10
+
+// Cached absolute coordinates to avoid layout thrashing (getBoundingClientRect)
+let cachedTrackBottom = 0
+let cachedContentTop = 0
 
 // Internal smooth targets for route transitions
 let smoothZoomPhase = 0
 let smoothMovePhase = 0
+
+const updateCachedPositions = () => {
+    if (typeof window === 'undefined') return
+    const currentScroll = window.scrollY
+
+    if (store.track) {
+        const trackEl = store.track.value || store.track
+        const rect = trackEl.getBoundingClientRect()
+        cachedTrackBottom = rect.bottom + currentScroll
+    }
+
+    if (store.content) {
+        const contentEl = store.content.value || store.content
+        const rect = contentEl.getBoundingClientRect()
+        cachedContentTop = rect.top + currentScroll
+    }
+}
 
 watch(() => store.projectActive, (newActive) => {
   if (newActive !== null) {
@@ -57,31 +81,32 @@ watch(() => store.projectActive, (newActive) => {
   }
 })
 
+watch([() => store.track, () => store.content], () => {
+    // Small delay to ensure DOM has updated before measuring
+    setTimeout(updateCachedPositions, 50)
+}, { immediate: true })
+
 const updateClip = () => {
     if (!canvasContainer.value) return
     const containerHeight = stableHeight.value
     const targetHeaderH = containerHeight * store.headerSize
     let clipAmount = 0
+
     if (store.isTransitioning) {
         clipAmount = store.transitionClipOverride
     } else if (store.track) {
-        const trackEl = store.track.value || store.track
-        const trackBottom = trackEl.getBoundingClientRect().bottom
-        let rawClip = containerHeight - trackBottom
+        const trackBottomInViewport = cachedTrackBottom - scrollTracker
+        let rawClip = containerHeight - trackBottomInViewport
         let maxClip = containerHeight - targetHeaderH
         clipAmount = Math.max(0, Math.min(rawClip, maxClip))
     } else if (store.content) {
-        const contentEl = store.content.value || store.content
-        const contentTop = contentEl.getBoundingClientRect().top
-        let rawClip = containerHeight - contentTop
+        const contentTopInViewport = cachedContentTop - scrollTracker
+        let rawClip = containerHeight - contentTopInViewport
         let maxClip = containerHeight - targetHeaderH
         clipAmount = Math.max(0, Math.min(rawClip, maxClip))
     }
-    const clipString = `inset(0px 0px ${clipAmount}px 0px)`
-    canvasContainer.value.style.webkitClipPath = clipString
-    canvasContainer.value.style.clipPath = clipString
-    // [MODIFIED] Using translate3d for better mobile performance
-    canvasContainer.value.style.transform = 'translate3d(0,0,0)'
+
+    // [MODIFIED] Removed DOM clip-path updates to use Scissor Test exclusively for performance
     dynamicZoneHeight.value = containerHeight - clipAmount
     return clipAmount
 }
@@ -90,8 +115,14 @@ const handleScroll = () => {
     if (typeof window === 'undefined') return
     const zoomTrackHeight = stableHeight.value * 2.5
     const currentScroll = window.scrollY
+    scrollTracker = currentScroll
     scrollProgress = Math.min(currentScroll / zoomTrackHeight, 1.0)
-    // [FIX] Removed updateClip() from here to prevent redundant calls; animate() handles it
+}
+
+// [MODIFIED] Frame-independent lerp function
+const lerp = (current, target, speed, dt) => {
+    const out = current + (target - current) * (1 - Math.exp(-speed * dt))
+    return Math.abs(target - out) < 0.0001 ? target : out
 }
 
 const handleResize = () => {
@@ -109,6 +140,7 @@ const handleResize = () => {
 
         renderer.setSize(w * renderScale, h * renderScale, false)
         uPlaneAspect.value = w / h
+        updateCachedPositions()
     }
 }
 
@@ -179,8 +211,9 @@ onMounted(async () => {
     scene = new THREE.Scene()
     camera = new THREE.OrthographicCamera(-1, 1, 1, -1, 0, 1)
 
-    renderer = new THREE.WebGPURenderer({ antialias: true })
+    renderer = new THREE.WebGPURenderer({ antialias: true, alpha: true })
     renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2))
+    renderer.setClearColor(0x000000, 1)
 
     const maxWidth = 1920
     const renderScale = Math.min(1.0, maxWidth / window.innerWidth)
@@ -261,15 +294,18 @@ onMounted(async () => {
     mesh = new THREE.Mesh(new THREE.PlaneGeometry(2, 2), material)
     scene.add(mesh)
 
-    const animate = () => {
-      animationId = requestAnimationFrame(animate)
+    // [MODIFIED] Integrated GSAP Ticker for better mobile sync and 120Hz support
+    const renderLoop = (time, deltaTime) => {
+      // deltaTime is in ms, convert to seconds
+      const dt = deltaTime / 1000
 
       let targetZoom = 0
       let targetMove = 0
       let targetStrength = 0
 
       if (route.path === '/') {
-        smoothedProgress += (scrollProgress - smoothedProgress) * lerpFactor
+        // [MODIFIED] Frame-independent smoothing for the scroll progress
+        smoothedProgress = lerp(smoothedProgress, scrollProgress, LERP_SPEED, dt)
 
         targetZoom = Math.min(smoothedProgress / 0.6, 1.0)
         targetZoom = 1 - Math.pow(1 - targetZoom, 3)
@@ -279,44 +315,44 @@ onMounted(async () => {
 
         targetStrength = Math.min(smoothedProgress * 10.0, 1.0)
       } else {
-        // Targets for Project pages
         targetZoom = 1
         targetMove = 1
         targetStrength = 1
       }
 
-      smoothZoomPhase += (targetZoom - smoothZoomPhase) * 0.1
-      smoothMovePhase += (targetMove - smoothMovePhase) * 0.1
+      // [MODIFIED] Frame-independent smoothing for internal phases
+      smoothZoomPhase = lerp(smoothZoomPhase, targetZoom, LERP_SPEED, dt)
+      smoothMovePhase = lerp(smoothMovePhase, targetMove, LERP_SPEED, dt)
 
       uMaskScale.value = 100.0 + (1.0 - 100.0) * smoothZoomPhase
       uMoveProgress.value = smoothMovePhase
       uMaskStrength.value = Math.min(smoothZoomPhase * 10.0, 1.0)
 
-      uColourTop.value.lerp(targetTop, 0.05)
-      uColourBottom.value.lerp(targetBottom, 0.05)
+      // Color lerping also needs to be time-aware
+      uColourTop.value.lerp(targetTop, 1 - Math.exp(-5 * dt))
+      uColourBottom.value.lerp(targetBottom, 1 - Math.exp(-5 * dt))
 
       let clipAmount = updateClip()
 
       const drawingSize = new THREE.Vector2()
       renderer.getSize(drawingSize)
-
       const scaleFactor = drawingSize.y / stableHeight.value
 
-      const scissorX = 0
+      const scissorH = Math.max(0, (stableHeight.value - clipAmount) * scaleFactor)
       const scissorY = 0
+      const scissorX = 0
       const scissorW = drawingSize.x
-      const scissorH = (stableHeight.value - clipAmount) * scaleFactor
 
       renderer.setScissorTest(true)
       renderer.setScissor(scissorX, scissorY, scissorW, scissorH)
 
       renderer.setViewport(0, 0, drawingSize.x, drawingSize.y)
       renderer.render(scene, camera)
-  }
+    }
 
     await renderer.init()
     console.log(`Canvas.vue: Rendering with ${renderer.backend.isWebGPUBackend ? 'WebGPU' : 'WebGL'} fallback`)
-    animate()
+    gsap.ticker.add(renderLoop)
 })
 
 onBeforeUnmount(() => {
@@ -324,7 +360,8 @@ onBeforeUnmount(() => {
         window.removeEventListener('scroll', handleScroll)
         window.removeEventListener('resize', handleResize)
     }
-    cancelAnimationFrame(animationId)
+    // [MODIFIED] Cleanup GSAP ticker listener
+    gsap.ticker.remove(animationId)
     renderer.dispose()
 })
 
@@ -341,8 +378,6 @@ onBeforeUnmount(() => {
     height: 100vh;
     z-index: 100;
     pointer-events: none;
-    background-color: black;
-    will-change: clip-path, -webkit-clip-path;
 
     :deep(canvas) {
         width: 100% !important;

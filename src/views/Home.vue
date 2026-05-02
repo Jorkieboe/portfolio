@@ -77,6 +77,7 @@ const trackRef = ref(null)
 const isAnimating = ref(false)
 let mm;
 let hoverDelayedCall = null;
+let pendingIndex = null;
 
 // const skewedPath = "polygon(15% 0%, 100% 0%, 85% 100%, 0% 100%)";
 // const rectPath = "polygon(0% 0%, 100% 0%, 100% 100%, 0% 100%)";
@@ -89,7 +90,6 @@ const animateProject = (index, isOpen) => {
   const image = wrapper.querySelector('.projectImage');
   isAnimating.value = true;
   const tl = gsap.timeline({
-    // [MODIFIED] Added force3D: true for smoother mobile transitions
     defaults: { ease: "power3.inOut", duration: 0.6, overwrite: "auto", force3D: true },
     onComplete: () => {
         isAnimating.value = false;
@@ -100,7 +100,8 @@ const animateProject = (index, isOpen) => {
   });
   if (isOpen) {
     gsap.set(panel, { display: "block" });
-    tl.to(wrapper, { marginLeft: 0 }, 0);
+    // [MODIFIED] Using x instead of marginLeft for compositor-only animation
+    tl.to(wrapper, { x: 0 }, 0);
     if(isMobile.value){
       tl.fromTo(image, {
         width: "100vw",
@@ -126,7 +127,9 @@ const animateProject = (index, isOpen) => {
     tl.to(textDiv, { opacity: 1, duration: 0.4 }, 0.3);
   } else {
     const isFirst = index === 0;
-    tl.to(wrapper, { marginLeft: isFirst || isMobile.value ? 0 : "-5rem" }, 0);
+    // [MODIFIED] Calculate negative shift in rem based on the overlap (5rem)
+    const shift = (isFirst || isMobile.value) ? 0 : -80; // -5rem is roughly -80px at 16px base
+    tl.to(wrapper, { x: shift }, 0);
     tl.to(image, {
         minWidth: isMobile.value ? "100vw" : "20rem",
         width: isMobile.value ? "100vw" : "20rem",
@@ -137,20 +140,25 @@ const animateProject = (index, isOpen) => {
 }
 
 const handleHover = (index) => {
-  if (isMobile.value) return;
+  if (isMobile.value || isAnimating.value || store.projectActive === index || pendingIndex === index) return;
 
   if (hoverDelayedCall) hoverDelayedCall.kill();
+
+  // [MODIFIED] Use pendingIndex to prevent re-triggering logic while mouse moves within the same item
+  pendingIndex = index;
 
   hoverDelayedCall = gsap.delayedCall(0.1, () => {
     if (store.projectActive !== index && !isAnimating.value) {
       store.projectActive = index;
     }
+    pendingIndex = null;
   });
 }
 
 const handleMouseLeave = () => {
   if (isMobile.value) return;
   if (hoverDelayedCall) hoverDelayedCall.kill();
+  pendingIndex = null;
 
   hoverDelayedCall = gsap.delayedCall(0.1, () => {
     if (route.path === '/' && !isAnimating.value) {
@@ -244,17 +252,26 @@ onMounted(() => {
       scrollTrigger: {
         trigger: ".about",
         start: isDesktop ? "top 10%" : "0% 20%",
-        end: isDesktop ? "+=200%" : "60% 50%",
+        end: isDesktop ? "bottom bottom" : "60% 50%",
         scrub: 1,
         pin: isDesktop ? ".aboutMeContent" : false,
         pinSpacing: true,
-        markers: false,
-        onUpdate: (self) => {
-          aboutScrollProgress.value = Math.min(1, self.progress * 2);
-        }
+        markers: true
       }
     });
 
+    // [MODIFIED] Using a longer duration proxy so text has room to breathe during the scrub
+    const scrollProxy = { val: 0 };
+    tlAbout.to(scrollProxy, {
+        val: 1,
+        duration: 3,
+        ease: "none",
+        onUpdate: () => {
+            aboutScrollProgress.value = scrollProxy.val;
+        }
+    }, 0);
+
+    
     if (isDesktop) {
 
       const paragraphs = gsap.utils.toArray(".meText");
@@ -271,6 +288,7 @@ onMounted(() => {
 
       tlAbout.to({}, { duration: 1 });
     }
+
 
   });
 });
@@ -303,7 +321,7 @@ onUnmounted(() => {
                     'pj' + (index + 1),
                     { active: store.projectActive === index }
                   ]"
-                  @mouseenter="handleHover(index)"
+                  @mousemove="handleHover(index)"
                   @mouseleave="handleMouseLeave"
                 >
                     <div class="project" :class="{'reversed': !isMobile && index > 2}">
@@ -405,22 +423,22 @@ onUnmounted(() => {
 
     pointer-events: none;
     overflow: hidden;
-    filter: drop-shadow(10px 10px 4px rgba(0,0,0,0.08));
+    // [FIX] Removed expensive global filter drop-shadow to improve hover performance
 
     .projectWrapper {
       display: flex;
       flex-shrink: 0;
       height: fit-content;
-      margin-left: -5rem;
+      // [MODIFIED] Replaced static marginLeft with transform for better baseline animation
+      transform: translateX(-5rem);
       pointer-events: all;
       opacity: 1;
       cursor: pointer;
-      // [MODIFIED] Promote to compositor layer
-      will-change: transform, opacity;
+      will-change: transform, opacity, width;
       backface-visibility: hidden;
 
        &:first-child {
-        margin-left: 0;
+        transform: translateX(0);
       }
 
        &.active{
@@ -465,6 +483,8 @@ onUnmounted(() => {
           background-size: 20rem auto;
           background-position: center;
           position: relative;
+          // [MODIFIED] Added box-shadow here instead of global filter
+          box-shadow: 10px 10px 30px rgba(0,0,0,0.1);
 
           img {
             width: 100%;
@@ -582,6 +602,8 @@ onUnmounted(() => {
           display: flex;
           justify-content: flex-start;
           align-items: center;
+          will-change: transform;
+          backface-visibility: hidden;
 
           .profilePicture {
             max-width: 25rem;
@@ -603,6 +625,8 @@ onUnmounted(() => {
         display: flex;
         align-items: center;
         pointer-events: none;
+        will-change: transform;
+        backface-visibility: hidden;
 
         .meTextwrapper {
           display: flex;
