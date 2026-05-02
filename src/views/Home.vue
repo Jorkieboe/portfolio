@@ -84,15 +84,13 @@ let hoverDelayedCall = null;
 const animateProject = (index, isOpen) => {
   const wrapper = document.querySelector(`.pj${index + 1}`);
   if (!wrapper) return;
-
   const panel = wrapper.querySelector('.projectPanel');
   const textDiv = wrapper.querySelector('.panelTextDiv');
   const image = wrapper.querySelector('.projectImage');
-
   isAnimating.value = true;
-
   const tl = gsap.timeline({
-    defaults: { ease: "power3.inOut", duration: 0.6, overwrite: "auto" },
+    // [MODIFIED] Added force3D: true for smoother mobile transitions
+    defaults: { ease: "power3.inOut", duration: 0.6, overwrite: "auto", force3D: true },
     onComplete: () => {
         isAnimating.value = false;
         if (!isOpen) {
@@ -100,7 +98,6 @@ const animateProject = (index, isOpen) => {
         }
     }
   });
-
   if (isOpen) {
     gsap.set(panel, { display: "block" });
     tl.to(wrapper, { marginLeft: 0 }, 0);
@@ -417,8 +414,10 @@ onUnmounted(() => {
       margin-left: -5rem;
       pointer-events: all;
       opacity: 1;
-
       cursor: pointer;
+      // [MODIFIED] Promote to compositor layer
+      will-change: transform, opacity;
+      backface-visibility: hidden;
 
        &:first-child {
         margin-left: 0;
@@ -553,6 +552,9 @@ onUnmounted(() => {
       height: 100vh;
       margin: 0 auto;
       max-width: 160rem;
+      // [MODIFIED] Ensure profile pic and text don't stutter during pinning
+      will-change: transform;
+      transform: translateZ(0);
 
       .sectionTitle.abs {
           max-width: 100rem;

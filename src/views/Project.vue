@@ -141,7 +141,6 @@ onUnmounted(() => {
     store.setContentRef(null);
 })
 
-
 </script>
 <template>
   <div class="content" ref="localContentRef" v-if="projectData">
@@ -160,6 +159,7 @@ onUnmounted(() => {
           <video v-if="projectData.splashImages[0].type === 'video'"
                  class="bigImage"
                  autoplay muted playsinline
+                 loading="lazy"
                  :src="projectData.splashImages[0].src"></video>
           <img v-else
                class="bigImage"
@@ -172,6 +172,7 @@ onUnmounted(() => {
                 <video v-if="media.type === 'video'"
                        class="small-image"
                        autoplay muted loop playsinline
+                       loading="lazy"
                        :src="media.src"></video>
                 <img v-else
                      class="small-image"
@@ -182,7 +183,7 @@ onUnmounted(() => {
       <div v-for="(content, index) in projectData.content" :key="index" class="projectInfoContainer" :class="{ 'reversed': index % 2 !== 0 }">
         <div class="container">
           <div class="subSectionImage" @click="openMedia(content)">
-              <video v-if="content.media.type === 'video'" :src="content.media.src" class="subSectionImg" muted playsinline></video>
+              <video v-if="content.media.type === 'video'" loading="lazy" :src="content.media.src" class="subSectionImg" muted playsinline></video>
               <img v-else :src="content.media.src" :alt="content.title" class="subSectionImg">
               <div v-if="content.media.type === 'video'" class="play-button"><img src="/images/svg/play-icon.svg"></div>
           </div>
@@ -198,7 +199,7 @@ onUnmounted(() => {
             <div v-if="selectedMedia" class="lightbox-overlay" @click="closeMedia">
                 <img class="close-button" src="/images/Icons/close-icon.svg">
                 <div class="lightbox-content">
-                    <video v-if="selectedMedia.type === 'video'" :src="selectedMedia.src" class="lightbox-vid" controls autoplay></video>
+                    <video v-if="selectedMedia.type === 'video'" loading="lazy" :src="selectedMedia.src" class="lightbox-vid" controls autoplay></video>
                     <img v-else :src="selectedMedia.src" class="lightbox-img" />
                 </div>
             </div>
@@ -276,6 +277,9 @@ onUnmounted(() => {
         padding: 5rem 0;
         width: 100%;
         position: relative;
+        // [MODIFIED] Performance boost for scrolled containers
+        will-change: transform;
+        backface-visibility: hidden;
 
         .container {
             display: grid;

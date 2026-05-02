@@ -1,7 +1,7 @@
 <script setup>
 import { onMounted, ref, onBeforeUnmount, inject, watch } from 'vue'
 import * as THREE from 'three/webgpu'
-import { Fn, uv, float, uniform, texture, smoothstep, vec2, vec3, min, vec4, mix, max, time, mx_noise_float, If } from 'three/tsl'
+import { Fn, uv, float, uniform, texture, smoothstep, vec2, vec3, min, vec4, mix, max, time, If } from 'three/tsl'
 import { gsap } from 'gsap'
 import { ScrollTrigger } from 'gsap/ScrollTrigger'
 
@@ -62,7 +62,6 @@ const updateClip = () => {
     const containerHeight = stableHeight.value
     const targetHeaderH = containerHeight * store.headerSize
     let clipAmount = 0
-
     if (store.isTransitioning) {
         clipAmount = store.transitionClipOverride
     } else if (store.track) {
@@ -78,14 +77,12 @@ const updateClip = () => {
         let maxClip = containerHeight - targetHeaderH
         clipAmount = Math.max(0, Math.min(rawClip, maxClip))
     }
-
     const clipString = `inset(0px 0px ${clipAmount}px 0px)`
     canvasContainer.value.style.webkitClipPath = clipString
     canvasContainer.value.style.clipPath = clipString
-    canvasContainer.value.style.transform = 'translateZ(0)'
-
+    // [MODIFIED] Using translate3d for better mobile performance
+    canvasContainer.value.style.transform = 'translate3d(0,0,0)'
     dynamicZoneHeight.value = containerHeight - clipAmount
-    
     return clipAmount
 }
 
@@ -94,7 +91,7 @@ const handleScroll = () => {
     const zoomTrackHeight = stableHeight.value * 2.5
     const currentScroll = window.scrollY
     scrollProgress = Math.min(currentScroll / zoomTrackHeight, 1.0)
-    updateClip()
+    // [FIX] Removed updateClip() from here to prevent redundant calls; animate() handles it
 }
 
 const handleResize = () => {
@@ -114,6 +111,61 @@ const handleResize = () => {
         uPlaneAspect.value = w / h
     }
 }
+
+const createNoiseTexture = () => {
+    const size = 256;
+    const data = new Uint8Array(size * size * 4);
+
+    // Create a low-res grid of random points
+    const grid = 16;
+    const randoms = new Float32Array(grid * grid);
+    for (let i = 0; i < randoms.length; i++) randoms[i] = Math.random();
+
+    // Smoothly interpolate between the points (Value Noise)
+    for (let y = 0; y < size; y++) {
+        for (let x = 0; x < size; x++) {
+            let gx = (x / size) * grid;
+            let gy = (y / size) * grid;
+            let ix = Math.floor(gx);
+            let iy = Math.floor(gy);
+            let fx = gx - ix;
+            let fy = gy - iy;
+
+            // Wrap for seamless tiling
+            let ix1 = (ix + 1) % grid;
+            let iy1 = (iy + 1) % grid;
+
+            // Smoothstep curve for soft cloud-like transitions
+            let u = fx * fx * (3.0 - 2.0 * fx);
+            let v = fy * fy * (3.0 - 2.0 * fy);
+
+            let c00 = randoms[iy * grid + ix];
+            let c10 = randoms[iy * grid + ix1];
+            let c01 = randoms[iy1 * grid + ix];
+            let c11 = randoms[iy1 * grid + ix1];
+
+            // Bilinear interpolation
+            let nx0 = c00 * (1.0 - u) + c10 * u;
+            let nx1 = c01 * (1.0 - u) + c11 * u;
+            let n = nx0 * (1.0 - v) + nx1 * v;
+
+            let val = Math.floor(n * 255);
+            let idx = (y * size + x) * 4;
+            data[idx] = val;
+            data[idx + 1] = val;
+            data[idx + 2] = val;
+            data[idx + 3] = 255;
+        }
+    }
+
+    const tex = new THREE.DataTexture(data, size, size, THREE.RGBAFormat);
+    tex.wrapS = THREE.RepeatWrapping;
+    tex.wrapT = THREE.RepeatWrapping;
+    tex.minFilter = THREE.LinearFilter;
+    tex.magFilter = THREE.LinearFilter;
+    tex.needsUpdate = true;
+    return tex;
+};
 
 onMounted(async () => {
     if (typeof window === 'undefined') return
@@ -143,6 +195,8 @@ onMounted(async () => {
     uTextureAspect.value = img.width / img.height
 
     uPlaneAspect.value = window.innerWidth / window.innerHeight
+
+    const noiseDataTex = createNoiseTexture()
 
     const main = Fn(() => {
       const coords = uv()
@@ -179,14 +233,14 @@ onMounted(async () => {
 
       const maskAlpha = mix(normalMask, invertedMask, transition)
 
-      const finalAlpha = mix(float(1.0), maskAlpha, uMaskStrength)
+        const finalAlpha = mix(float(1.0), maskAlpha, uMaskStrength)
 
-      // Noise Background
-      const nBig = mx_noise_float(vec2(coords.x.mul(0.5), time.mul(0.1)))
-      const nSmall = mx_noise_float(vec2(coords.x.mul(4.0), time.mul(0.4)))
-      const center = mix(float(0.0), float(1.0), nBig.mul(0.6).add(nSmall.mul(0.4)).mul(0.5).add(0.5))
+        // Noise Background using DataTexture instead of expensive mx_noise_float
+        const nBig = texture(noiseDataTex, vec2(coords.x.mul(0.5), time.mul(0.1)).div(16.0)).r.mul(2.0).sub(1.0)
+        const nSmall = texture(noiseDataTex, vec2(coords.x.mul(4.0), time.mul(0.4)).div(16.0)).r.mul(2.0).sub(1.0)
+        const center = mix(float(0.0), float(1.0), nBig.mul(0.6).add(nSmall.mul(0.4)).mul(0.5).add(0.5))
 
-      const offsetTransition = smoothstep(float(0.5), float(1.0), uMoveProgress);
+        const offsetTransition = smoothstep(float(0.5), float(1.0), uMoveProgress);
 
       const offset = uMoveProgress.mul(0.5);
 
@@ -289,7 +343,6 @@ onBeforeUnmount(() => {
     pointer-events: none;
     background-color: black;
     will-change: clip-path, -webkit-clip-path;
-
 
     :deep(canvas) {
         width: 100% !important;
