@@ -389,6 +389,7 @@ onUnmounted(() => {
             flex-direction: column;
             margin-top: 0rem;
             margin-bottom: 2rem;
+            padding-top: 6.5rem;
 
             .projectName {
                 font-size: 3rem;

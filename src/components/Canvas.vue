@@ -343,6 +343,8 @@ onMounted(async () => {
 
       renderer.setScissorTest(true)
       renderer.setScissor(scissorX, scissorY, scissorW, scissorH)
+      renderer.setClearColor(0x000000, 0);
+      renderer.clear();
 
       renderer.setViewport(0, 0, drawingSize.x, drawingSize.y)
       renderer.render(scene, camera)
@@ -360,6 +362,8 @@ onBeforeUnmount(() => {
     }
     gsap.ticker.remove(animationId)
     renderer.dispose()
+    scene.clear(); 
+    
 })
 
 </script>

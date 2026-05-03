@@ -275,6 +275,9 @@ onUnmounted(() => {
   if (mm) {
     mm.revert();
   }
+  ScrollTrigger.getAll().forEach(t => t.kill());
+  gsap.killTweensOf("*");
+  
   if (hoverDelayedCall) hoverDelayedCall.kill();
   store.setContentRef(null);
   store.setTrackRef(null);
