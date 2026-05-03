@@ -1,4 +1,3 @@
-
 let hover = false;
 let hoveredElement;
 
@@ -27,18 +26,11 @@ function expandpreview(element, pass)
 {
     if(mobile == false || pass == true){
         let active = false
-        // for (let i = 0; i < projectElements.length; i++) {
-        //     if(projectElements[i].hasAttribute('projectActive')){
-        //         active = true
-        //     }
-        // }
 
         let project =  element.closest('.projectWrapper');
         
         if (active == false){  
             console.log('open') 
-            // console.log(element)
-            // element.removeAttribute("id", "notActive");
             element.setAttribute("id", "projectActive");
             image = element.querySelectorAll(".projectImage"); 
             image[0].setAttribute("id", "projectImageActive");
@@ -80,12 +72,6 @@ function OpenCloseMobilePreview(element){
    console.log('arrow')
    console.log('t')
     event.stopPropagation()
-    // for (let i = 0; i < projectElements.length; i++) {
-    //     if(element.classList.contains('active')){
-    //         closepreview(projectElements[i], true) 
-            
-    //     }
-    // }
 
     let allArrows = document.getElementsByClassName("arrow")
     for (let i = 0; i < allArrows.length; i++) {
@@ -120,11 +106,8 @@ function scrollto(num){
 
 const observer = new IntersectionObserver(entries => {
     
-    // Loop over the entries
     entries.forEach(entry => {
-      // If the element is visible
       if (entry.isIntersecting) {
-        // Add the animation class
         entry.target.classList.add('animate');
       }else{
         entry.target.classList.remove('animate');
@@ -135,11 +118,8 @@ const observer = new IntersectionObserver(entries => {
 });
 
 const observer_OneWay = new IntersectionObserver(entries => {
-    // Loop over the entries
     entries.forEach(entry => {
-      // If the element is visible
       if (entry.isIntersecting) {
-        // Add the animation class
         entry.target.classList.add('animate');
       }
     }),{
@@ -147,16 +127,6 @@ const observer_OneWay = new IntersectionObserver(entries => {
     }
 });
 
-
-  
-// const ani_elements = document.querySelectorAll('.subSectionImage')
-
-// for (let i = 0; i< ani_elements.length; i++){
-//     const el = ani_elements[i]
-
-//     observer.observe(el)
-
-// }
 
 document.querySelectorAll('.subSectionImage').forEach(div => {
     observer.observe(div);
@@ -186,8 +156,6 @@ document.querySelectorAll('.about').forEach(div => {
     observer_OneWay.observe(div);
 });
 
-
-// observer.observe(projectElements);
 
 function openboodunnit(){
     console.log('tja')
@@ -225,11 +193,6 @@ function openrecommender(){
 }
 
 
-// $(document).mouseover(function(e){
-//     console.log(e.target); // i just retrieved the id for a demo
-//   });
-
-
 function loadText(language, pageName){
     console.log(language)
     fetch('../lang/' + language + '.json')
@@ -265,6 +228,3 @@ function langSelection(){
     localStorage.setItem("language", lang);
     loadText(lang, currentPage)
 };
-   
-
-

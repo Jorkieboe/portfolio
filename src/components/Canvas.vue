@@ -44,15 +44,14 @@ let scrollProgress = 0
 let smoothedProgress = 0
 let scrollTracker = 0
 
-// [MODIFIED] Increased speed factor for much snappier touch response on iPhone
+// Increased speed factor for snappier touch response on iPhone
 const LERP_SPEED = 20
 
-// Internal smooth targets for route transitions
 let smoothZoomPhase = 0
 let smoothMovePhase = 0
 let isResetting = false
 
-// [FIX] Snap canvas state instantly when returning home to avoid "ugly" reverse animation
+// Snaps canvas state instantly when returning home to avoid reverse animation artifacts
 watch(() => route.path, (newPath) => {
   if (newPath === '/') {
     isResetting = true
@@ -62,10 +61,8 @@ watch(() => route.path, (newPath) => {
     smoothZoomPhase = 0
     smoothMovePhase = 0
 
-    // Release the lock after a short delay to allow the browser to finish its scroll jump
     setTimeout(() => { isResetting = false }, 50)
 
-    // Also snap colors back to default immediately
     const def = colors[0]
     uColourTop.value.setRGB(def.top.x, def.top.y, def.top.z)
     uColourBottom.value.setRGB(def.bottom.x, def.bottom.y, def.bottom.z)
@@ -124,7 +121,6 @@ const handleScroll = () => {
     scrollProgress = Math.min(currentScroll / zoomTrackHeight, 1.0)
 }
 
-// [MODIFIED] Frame-independent lerp function
 const lerp = (current, target, speed, dt) => {
     const out = current + (target - current) * (1 - Math.exp(-speed * dt))
     return Math.abs(target - out) < 0.0001 ? target : out
@@ -152,12 +148,10 @@ const createNoiseTexture = () => {
     const size = 256;
     const data = new Uint8Array(size * size * 4);
 
-    // Create a low-res grid of random points
     const grid = 16;
     const randoms = new Float32Array(grid * grid);
     for (let i = 0; i < randoms.length; i++) randoms[i] = Math.random();
 
-    // Smoothly interpolate between the points (Value Noise)
     for (let y = 0; y < size; y++) {
         for (let x = 0; x < size; x++) {
             let gx = (x / size) * grid;
@@ -167,11 +161,9 @@ const createNoiseTexture = () => {
             let fx = gx - ix;
             let fy = gy - iy;
 
-            // Wrap for seamless tiling
             let ix1 = (ix + 1) % grid;
             let iy1 = (iy + 1) % grid;
 
-            // Smoothstep curve for soft cloud-like transitions
             let u = fx * fx * (3.0 - 2.0 * fx);
             let v = fy * fy * (3.0 - 2.0 * fy);
 
@@ -180,7 +172,6 @@ const createNoiseTexture = () => {
             let c01 = randoms[iy1 * grid + ix];
             let c11 = randoms[iy1 * grid + ix1];
 
-            // Bilinear interpolation
             let nx0 = c00 * (1.0 - u) + c10 * u;
             let nx1 = c01 * (1.0 - u) + c11 * u;
             let n = nx0 * (1.0 - v) + nx1 * v;
@@ -217,7 +208,7 @@ onMounted(async () => {
 
     renderer = new THREE.WebGPURenderer({ antialias: true, alpha: true })
     renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2))
-    // [FIX] Transparent clear color so the un-scissored area doesn't black out the DOM
+    // Transparent clear color allows the DOM to show through the bottom
     renderer.setClearColor(0x000000, 0)
 
     const maxWidth = 1920
@@ -273,7 +264,6 @@ onMounted(async () => {
 
         const finalAlpha = mix(float(1.0), maskAlpha, uMaskStrength)
 
-        // Noise Background using DataTexture instead of expensive mx_noise_float
         const nBig = texture(noiseDataTex, vec2(coords.x.mul(0.5), time.mul(0.1)).div(16.0)).r.mul(2.0).sub(1.0)
         const nSmall = texture(noiseDataTex, vec2(coords.x.mul(4.0), time.mul(0.4)).div(16.0)).r.mul(2.0).sub(1.0)
         const center = mix(float(0.0), float(1.0), nBig.mul(0.6).add(nSmall.mul(0.4)).mul(0.5).add(0.5))
@@ -289,13 +279,9 @@ onMounted(async () => {
       )
       const noiseResult = mix(vec4(uColourTop,1.0), vec4(uColourBottom, 1.0), noiseMask)
 
-      // [FIX] Explicitly paint a solid black background outside the mask instead of leaving it transparent,
-      // since the canvas itself is now transparent to allow the DOM to show through at the bottom.
       const baseOutput = mix(vec4(0.0, 0.0, 0.0, 1.0), noiseResult, finalAlpha)
 
-      // [FIX] Perform sub-pixel anti-aliased clipping natively in the shader.
-      // This calculates transparency at the fragment level, allowing for perfectly smooth edges
-      // that don't jump between physical screen pixels.
+      // Calculates sub-pixel anti-aliased transparency at the fragment level to prevent jumping
       const clipEdge = smoothstep(uClipUV.sub(uOnePixelY), uClipUV.add(uOnePixelY), coords.y)
 
       return baseOutput.mul(clipEdge)
@@ -308,19 +294,15 @@ onMounted(async () => {
     mesh = new THREE.Mesh(new THREE.PlaneGeometry(2, 2), material)
     scene.add(mesh)
 
-    // [MODIFIED] Integrated GSAP Ticker for better mobile sync and 120Hz support
     const renderLoop = (time, deltaTime) => {
-      // deltaTime is in ms, convert to seconds
       const dt = deltaTime / 1000
 
       let targetZoom = 0
       let targetMove = 0
 
-      // [MODIFIED] Logic now checks store.projectActive to allow for sequenced transitions from Project -> Home
       const isProjectState = route.path.startsWith('/work/') || store.projectActive !== null
 
       if (!isProjectState) {
-        // [MODIFIED] Calculate targets directly from raw scrollProgress to remove latency
         targetZoom = Math.min(scrollProgress / 0.6, 1.0)
         targetZoom = 1 - Math.pow(1 - targetZoom, 3)
 
@@ -331,16 +313,13 @@ onMounted(async () => {
         targetMove = 1
       }
 
-      // [MODIFIED] Apply single-pass smoothing at a higher speed (20)
       smoothZoomPhase = lerp(smoothZoomPhase, targetZoom, LERP_SPEED, dt)
       smoothMovePhase = lerp(smoothMovePhase, targetMove, LERP_SPEED, dt)
 
       uMaskScale.value = 100.0 + (1.0 - 100.0) * smoothZoomPhase
       uMoveProgress.value = smoothMovePhase
-      // Strength follows zoom phase directly for consistency
       uMaskStrength.value = Math.min(smoothZoomPhase * 10.0, 1.0)
 
-      // Color lerping also needs to be snappier (speed 10)
       uColourTop.value.lerp(targetTop, 1 - Math.exp(-10 * dt))
       uColourBottom.value.lerp(targetBottom, 1 - Math.exp(-10 * dt))
 
@@ -350,13 +329,10 @@ onMounted(async () => {
       renderer.getSize(drawingSize)
       const scaleFactor = drawingSize.y / stableHeight.value
 
-      // 1. VISUAL SMOOTHNESS (Shader)
       uClipUV.value = targetClipAmount / stableHeight.value
       uOnePixelY.value = 1.0 / drawingSize.y
 
-      // 2. PERFORMANCE (Hardware Scissor)
-      // We delay/pad the hardware scissor by 100px so its integer snapping is never seen.
-      // Shader handles the visual edge; Scissor handles the GPU culling.
+      // Delay hardware scissor by buffer so integer snapping is hidden by the shader edge
       const scissorBuffer = 100
       const hardwareClipAmount = Math.max(0, targetClipAmount - scissorBuffer)
 
@@ -382,7 +358,6 @@ onBeforeUnmount(() => {
         window.removeEventListener('scroll', handleScroll)
         window.removeEventListener('resize', handleResize)
     }
-    // [MODIFIED] Cleanup GSAP ticker listener
     gsap.ticker.remove(animationId)
     renderer.dispose()
 })

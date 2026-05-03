@@ -54,14 +54,11 @@ const updateIsMobile = () => {
     isMobile.value = window.innerWidth <= 1024
 
     if (wasMobile !== isMobile.value) {
-      // Crossing breakpoint: Reset state and clear inline styles
       store.projectActive = null
       isAnimating.value = false
 
-      // Stop any running animations
       gsap.killTweensOf(".projectWrapper, .projectImage, .projectPanel, .panelTextDiv");
 
-      // Strip GSAP inline styles so CSS Media Queries can take over
       gsap.set(".projectWrapper, .projectImage, .projectPanel, .panelTextDiv", { clearProps: "all" });
     }
 }
@@ -78,9 +75,6 @@ const isAnimating = ref(false)
 let mm;
 let hoverDelayedCall = null;
 let pendingIndex = null;
-
-// const skewedPath = "polygon(15% 0%, 100% 0%, 85% 100%, 0% 100%)";
-// const rectPath = "polygon(0% 0%, 100% 0%, 100% 100%, 0% 100%)";
 
 const animateProject = (index, isOpen) => {
   const wrapper = document.querySelector(`.pj${index + 1}`);
@@ -100,68 +94,54 @@ const animateProject = (index, isOpen) => {
   });
   if (isOpen) {
     gsap.set(panel, { display: "block" });
-    // [MODIFIED] Using x instead of marginLeft for compositor-only animation
-    tl.to(wrapper, { x: 0 }, 0);
-    if(isMobile.value){
-      tl.fromTo(image, {
-        width: "100vw",
-        minWidth: "100vw",
-      }, {
-        minWidth: 'unset',
-        width: "25vw",
-      }, 0);
-      tl.fromTo(panel, {
-        width: 0,
-        opacity: 0
-      }, {
-        width: "75vw",
-        opacity: 1
-      }, 0);
-    }else{
-      tl.to(image, {
-        width: "20rem",
-        minWidth: "20rem",
-      }, 0);
-      tl.to(panel, { width: "20rem", opacity: 1 }, 0);
-    }
-    tl.to(textDiv, { opacity: 1, duration: 0.4 }, 0.3);
-  } else {
+    tl.to(wrapper, { marginLeft: 0 }, 0);
+      if (isMobile.value) {
+        tl.to(image, { width: "25vw", minWidth: "25vw" }, 0);
+        tl.to(panel, { width: "75vw", opacity: 1 }, 0);
+      } else {
+        tl.to(image, { width: "20rem", minWidth: "20rem" }, 0);
+        tl.to(panel, { width: "20rem", opacity: 1 }, 0);
+      }
+      tl.to(textDiv, { opacity: 1, duration: 0.4 }, 0.3);
+     } else {
     const isFirst = index === 0;
-    // [MODIFIED] Calculate negative shift in rem based on the overlap (5rem)
-    const shift = (isFirst || isMobile.value) ? 0 : -80; // -5rem is roughly -80px at 16px base
-    tl.to(wrapper, { x: shift }, 0);
+    
+    tl.to(wrapper, { marginLeft: (isFirst || isMobile.value) ? 0 : "-5rem" }, 0);
+
     tl.to(image, {
-        minWidth: isMobile.value ? "100vw" : "20rem",
-        width: isMobile.value ? "100vw" : "20rem",
+      minWidth: isMobile.value ? "100vw" : "20rem",
+      width: isMobile.value ? "100vw" : "20rem",
     }, 0);
     tl.to(panel, { width: 0, opacity: 0 }, 0);
     tl.to(textDiv, { opacity: 0, duration: 0.2 }, 0);
   }
-}
+};
+
+let lastMouseIndex = null;
 
 const handleHover = (index) => {
-  if (isMobile.value || isAnimating.value || store.projectActive === index || pendingIndex === index) return;
+  if (isMobile.value || store.projectActive === index || lastMouseIndex === index) return;
 
   if (hoverDelayedCall) hoverDelayedCall.kill();
+  
+  lastMouseIndex = index; // Track which item we are moving over
 
-  // [MODIFIED] Use pendingIndex to prevent re-triggering logic while mouse moves within the same item
-  pendingIndex = index;
-
-  hoverDelayedCall = gsap.delayedCall(0.1, () => {
-    if (store.projectActive !== index && !isAnimating.value) {
+  hoverDelayedCall = gsap.delayedCall(0.05, () => {
+    if (!isAnimating.value) {
       store.projectActive = index;
     }
-    pendingIndex = null;
   });
 }
 
 const handleMouseLeave = () => {
   if (isMobile.value) return;
   if (hoverDelayedCall) hoverDelayedCall.kill();
-  pendingIndex = null;
+  
+  lastMouseIndex = null; 
 
   hoverDelayedCall = gsap.delayedCall(0.1, () => {
-    if (route.path === '/' && !isAnimating.value) {
+    // Only close if the mouse isn't currently over another project
+    if (lastMouseIndex === null && !isAnimating.value) {
       store.projectActive = null;
     }
   });
@@ -256,7 +236,7 @@ onMounted(() => {
         scrub: 1,
         pin: isDesktop ? ".aboutMeContent" : false,
         pinSpacing: true,
-        markers: true
+        markers: false
       }
     });
 
@@ -394,7 +374,6 @@ onUnmounted(() => {
 }
 
 .projects{
-  /* Spacing to clear the fixed navigation. Note: ScrollTrigger adds inline padding here when pinning */
   padding-top: 8vh;
   padding-bottom: 25px;
   max-width: 100rem;
@@ -422,14 +401,11 @@ onUnmounted(() => {
 
     pointer-events: none;
     overflow: hidden;
-    // [FIX] Removed expensive global filter drop-shadow to improve hover performance
 
     .projectWrapper {
       display: flex;
       flex-shrink: 0;
       height: fit-content;
-      // [MODIFIED] Replaced static marginLeft with transform for better baseline animation
-      // transform: translateX(-5rem);
       margin-left: -5rem;
       pointer-events: all;
       opacity: 1;
@@ -437,24 +413,12 @@ onUnmounted(() => {
       will-change: transform, opacity, width;
       backface-visibility: hidden;
 
-        // transform: translateX(0);
-
        &.active{
           flex-grow: 0;
           .project{
-            .projectImage {
-              // z-index: 50;
-            }
-
-            // .projectPanel{
-            //   margin-left: -4rem;
-            //   left: 0;
-            // }
-
             &.reversed{
               .projectPanel{
                 margin-right: -3.5rem;
-                // removed padding-left from active to prevent jump
               }
             }
           }
@@ -481,7 +445,6 @@ onUnmounted(() => {
           background-size: 20rem auto;
           background-position: center;
           position: relative;
-          // [MODIFIED] Added box-shadow here instead of global filter
           box-shadow: 10px 10px 30px rgba(0,0,0,0.1);
 
           img {
@@ -514,7 +477,6 @@ onUnmounted(() => {
             width: 0;
             opacity: 0;
             overflow: hidden;
-            // display: none;
             padding-top: 25px;
             padding-left: 5px;
             box-sizing: border-box;

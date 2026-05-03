@@ -1,0 +1,8 @@
+{
+  "name": "Default",
+  "expanded_dirs": [
+    "src",
+    "src/components",
+    "src/store"
+  ]
+}

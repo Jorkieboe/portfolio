@@ -1,0 +1,100 @@
+[
+  {
+    "path": "index.html",
+    "mtime": 1777803950.3550143,
+    "hash": "003e8deaa29609edf9b9ff1e70bf2d7aa22fb7d1",
+    "tokens": 625,
+    "lines": 60
+  },
+  {
+    "path": "script.js",
+    "mtime": 1774600893.761003,
+    "hash": "f1b4858fe44d36ac0214db17bfc127d88cf9c01f",
+    "tokens": 1631,
+    "lines": 271
+  },
+  {
+    "path": "src/components/Canvas.vue",
+    "mtime": 1777807450.0535564,
+    "hash": "f68f28b5fd6d95322e4454661ca607cb52b62acf",
+    "tokens": 3988,
+    "lines": 409
+  },
+  {
+    "path": "src/composables/useLang.js",
+    "mtime": 1774600893.764864,
+    "hash": "d017d6bcaec9b7294dd037b2f9f1034c92529036",
+    "tokens": 125,
+    "lines": 19
+  },
+  {
+    "path": "src/store/store.js",
+    "mtime": 1774600899.757579,
+    "hash": "f6c0a80500ae3341a65c41f24585b568750aba48",
+    "tokens": 111,
+    "lines": 17
+  },
+  {
+    "path": "src/views/Home.vue",
+    "mtime": 1777803328.7175212,
+    "hash": "128d9afd6e01373940cfeee588c7441aa20741a6",
+    "tokens": 5490,
+    "lines": 851
+  },
+  {
+    "path": "src/views/Project.vue",
+    "mtime": 1777795321.4836366,
+    "hash": "b78b772a23deed33d78cf421cc43e94ddc751399",
+    "tokens": 3203,
+    "lines": 523
+  },
+  {
+    "path": "src/App.vue",
+    "mtime": 1777807449.9227405,
+    "hash": "c546374b5bce87841d03e67874deaaa8b55cf5ca",
+    "tokens": 1741,
+    "lines": 265
+  },
+  {
+    "path": "src/main.js",
+    "mtime": 1774600899.756574,
+    "hash": "f38aa31d3642b0b8450e7c6f743055d17acd5587",
+    "tokens": 465,
+    "lines": 65
+  },
+  {
+    "path": "src/router.js",
+    "mtime": 1774600893.7663329,
+    "hash": "b967895897f3a17c477b82a707f253981e38b3b6",
+    "tokens": 114,
+    "lines": 18
+  },
+  {
+    "path": "src/style.css",
+    "mtime": 1777803950.471563,
+    "hash": "8d2e71e74d4da80be21b62f34bc5051ae9451e96",
+    "tokens": 247,
+    "lines": 60
+  },
+  {
+    "path": "go.bat",
+    "mtime": 1774600893.5423257,
+    "hash": "aadc8f77ab11b9334226b1710c3257dc9c765653",
+    "tokens": 128,
+    "lines": 18
+  },
+  {
+    "path": "package.json",
+    "mtime": 1774600899.7504213,
+    "hash": "6a458de5839317ea0924e4cf3055978443e1ba0c",
+    "tokens": 196,
+    "lines": 24
+  },
+  {
+    "path": "vite.config.js",
+    "mtime": 1774600893.7714334,
+    "hash": "78ea177b79c86065884df657ce25dc291d4aa04a",
+    "tokens": 33,
+    "lines": 6
+  }
+]

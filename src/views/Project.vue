@@ -275,7 +275,6 @@ onUnmounted(() => {
         padding: 5rem 0;
         width: 100%;
         position: relative;
-        // [MODIFIED] Performance boost for scrolled containers
         will-change: transform;
         backface-visibility: hidden;
 
@@ -371,7 +370,6 @@ onUnmounted(() => {
 
     @media (max-width: 1024px) {
         .small-image-container{
-            // flex-direction: column;
             gap: 0.1rem;
 
             .small-image{

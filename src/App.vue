@@ -45,8 +45,6 @@ watch(() => router.currentRoute.value.path, (path) => {
     if (index !== -1) {
       store.projectActive = index
     }
-  } else if (path === '/') {
-    // [MODIFIED] Reset removed here to allow sequenced transitions in onLeave/onEnter
   }
 }, { immediate: true })
 
@@ -72,8 +70,7 @@ const onLeave = (el, done) => {
   })
 
   if(isHome){
-    // [FIX] Aggressive scroll reset to handle mobile address bar shifts.
-    // Resetting multiple properties ensures the browser snaps to the absolute top.
+    // Aggressive scroll reset to handle mobile address bar shifts
     window.scrollTo(0, 0);
     document.documentElement.scrollTop = 0;
     document.body.scrollTop = 0;
@@ -207,7 +204,6 @@ const onEnter = (el, done) => {
       font-size: 0.9rem;
       font-family: Arial;
       background-color: rgba(255,255,255,0.75);
-      /* [FIX] Sub-pixel text alignment for small buttons */
       line-height: 1;
 
       &.selected{
@@ -227,7 +223,6 @@ h3, h4, p{
    background-color: white;
 }
 
-/* On project pages, we push the content down so it doesn't overlap the header strip initially */
 .page.is-project {
   margin-top: 0;
 }
