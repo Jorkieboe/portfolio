@@ -50,6 +50,29 @@ const LERP_SPEED = 20
 // Internal smooth targets for route transitions
 let smoothZoomPhase = 0
 let smoothMovePhase = 0
+let isResetting = false
+
+// [FIX] Snap canvas state instantly when returning home to avoid "ugly" reverse animation
+watch(() => route.path, (newPath) => {
+  if (newPath === '/') {
+    isResetting = true
+    scrollProgress = 0
+    scrollTracker = 0
+    smoothedProgress = 0
+    smoothZoomPhase = 0
+    smoothMovePhase = 0
+
+    // Release the lock after a short delay to allow the browser to finish its scroll jump
+    setTimeout(() => { isResetting = false }, 50)
+
+    // Also snap colors back to default immediately
+    const def = colors[0]
+    uColourTop.value.setRGB(def.top.x, def.top.y, def.top.z)
+    uColourBottom.value.setRGB(def.bottom.x, def.bottom.y, def.bottom.z)
+    targetTop.setRGB(def.top.x, def.top.y, def.top.z)
+    targetBottom.setRGB(def.bottom.x, def.bottom.y, def.bottom.z)
+  }
+})
 
 watch(() => store.projectActive, (newActive) => {
   if (newActive !== null) {
@@ -94,7 +117,7 @@ const updateClip = () => {
 }
 
 const handleScroll = () => {
-    if (typeof window === 'undefined') return
+    if (typeof window === 'undefined' || isResetting) return
     const zoomTrackHeight = stableHeight.value * 2.5
     const currentScroll = window.scrollY
     scrollTracker = currentScroll
@@ -244,7 +267,7 @@ onMounted(async () => {
 
       const invertedMask = float(1.0).sub(rawMaskValue.mul(isInsideMask))
 
-      const transition = smoothstep(float(0.92), float(0.96), uMoveProgress);
+      const transition = smoothstep(float(0.88), float(0.99), uMoveProgress);
 
       const maskAlpha = mix(normalMask, invertedMask, transition)
 
@@ -293,7 +316,10 @@ onMounted(async () => {
       let targetZoom = 0
       let targetMove = 0
 
-      if (route.path === '/') {
+      // [MODIFIED] Logic now checks store.projectActive to allow for sequenced transitions from Project -> Home
+      const isProjectState = route.path.startsWith('/work/') || store.projectActive !== null
+
+      if (!isProjectState) {
         // [MODIFIED] Calculate targets directly from raw scrollProgress to remove latency
         targetZoom = Math.min(scrollProgress / 0.6, 1.0)
         targetZoom = 1 - Math.pow(1 - targetZoom, 3)

@@ -14,7 +14,7 @@ html {
 body {
     margin: auto;
     margin-top: 0;
-    background-color: transparent !important;
+    background-color: #000000 !important;
 }
 
 p {
@@ -34,6 +34,7 @@ a {
     display: flex;
     flex-direction: column;
     overflow: hidden;
+    background-color: white;
 }
 
 .text {

@@ -389,7 +389,7 @@ onUnmounted(() => {
     @media (max-width: 768px) {
         .projectIntro {
             flex-direction: column;
-            margin-top: 8.3rem;
+            margin-top: 0rem;
             margin-bottom: 2rem;
 
             .projectName {

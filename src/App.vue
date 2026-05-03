@@ -46,8 +46,7 @@ watch(() => router.currentRoute.value.path, (path) => {
       store.projectActive = index
     }
   } else if (path === '/') {
-    // Only reset if we are actually on the home page (hover handles it there)
-    store.projectActive = null
+    // [MODIFIED] Reset removed here to allow sequenced transitions in onLeave/onEnter
   }
 }, { immediate: true })
 
@@ -73,21 +72,30 @@ const onLeave = (el, done) => {
   })
 
   if(isHome){
+    // [FIX] Aggressive scroll reset to handle mobile address bar shifts.
+    // Resetting multiple properties ensures the browser snaps to the absolute top.
+    window.scrollTo(0, 0);
+    document.documentElement.scrollTop = 0;
+    document.body.scrollTop = 0;
+
+    store.projectActive = null;
+
     gsap.to(store, {
       transitionClipOverride: targetClip,
-      duration: 0.2,
+      duration: 0.4,
+      ease: "power2.inOut",
       onComplete: ()=>{
-      done()
-    }
+        done()
+      }
     })
   }else{
     gsap.from(store, {
-    transitionClipOverride: vhVal - (vhVal * store.headerSize),
-    duration: 0.4,
-    onComplete: ()=>{
-      done()
-    }
-  })
+      transitionClipOverride: vhVal - (vhVal * store.headerSize),
+      duration: 0.4,
+      onComplete: ()=>{
+        done()
+      }
+    })
   }
 
 }
@@ -119,7 +127,7 @@ const onEnter = (el, done) => {
 </script>
 <template>
 
-  <div class="navigation" :style="{height: (store.headerSize * vh) + 'px'}">
+  <div class="navigation" :style="{height: `calc(${store.headerSize * 100}svh + env(safe-area-inset-top))`}">
     <div class="home-button" @click="router.push('/')"></div>
     <div class="lang-button-wrapper" ref="langSwitch">
       <div class="lang-button" :class="{'selected' : currentLang == 'nl'}" @click="()=>{setLang('nl')}">NL</div>
@@ -161,20 +169,23 @@ const onEnter = (el, done) => {
   position: fixed;
   display: flex;
   justify-content: space-between;
+  align-items: center;
   top: 0;
   left: 0;
   width: 100%;
-  background-color: transparent !important;
-  /* iPhone System Bar safe area */
+  background-color: transparent;
   padding-top: env(safe-area-inset-top);
   box-sizing: border-box;
   z-index: 200;
   pointer-events: none;
+  transform: translateZ(0);
 
   .home-button{
     pointer-events: auto;
-    width: 20vw;
+    width: 25vw;
     height: 100%;
+    display: flex;
+    align-items: center;
   }
 
   .lang-button-wrapper{
@@ -182,14 +193,22 @@ const onEnter = (el, done) => {
     justify-content: center;
     align-items: center;
     width: 7rem;
+    height: 100%;
     pointer-events: auto;
+    margin-right: 1rem;
 
     .lang-button{
+      display: flex;
+      align-items: center;
+      justify-content: center;
       width: fit-content;
-      padding: 0.5rem;
-      font-size: 1rem;
+      height: fit-content;
+      padding: 0.6rem;
+      font-size: 0.9rem;
       font-family: Arial;
       background-color: rgba(255,255,255,0.75);
+      /* [FIX] Sub-pixel text alignment for small buttons */
+      line-height: 1;
 
       &.selected{
         background-color: rgba(255,255,255,0.95);

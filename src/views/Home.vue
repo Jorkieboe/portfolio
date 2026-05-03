@@ -252,7 +252,7 @@ onMounted(() => {
       scrollTrigger: {
         trigger: ".about",
         start: isDesktop ? "top 10%" : "0% 60%",
-        end: isDesktop ? "bottom bottom" : "20% 50%",
+        end: isDesktop ? "+=200%" : "20% 50%",
         scrub: 1,
         pin: isDesktop ? ".aboutMeContent" : false,
         pinSpacing: true,
@@ -260,11 +260,11 @@ onMounted(() => {
       }
     });
 
-    // [MODIFIED] Using a longer duration proxy so text has room to breathe during the scrub
+    // Sync profile picture progress with the timeline
     const scrollProxy = { val: 0 };
     tlAbout.to(scrollProxy, {
         val: 1,
-        duration: 3,
+        duration: 2,
         ease: "none",
         onUpdate: () => {
             aboutScrollProgress.value = scrollProxy.val;
@@ -272,7 +272,6 @@ onMounted(() => {
     }, 0);
 
     if (isDesktop) {
-
       const paragraphs = gsap.utils.toArray(".meText");
       paragraphs.forEach((p, i) => {
           const split = new SplitText(p, { type: "lines" });
@@ -282,12 +281,12 @@ onMounted(() => {
             y: 30,
             duration: 0.5,
             stagger: 0.1
-          }, ">-0.5");
+          }, i === 0 ? 0 : ">-0.2");
       });
 
+      // Maintain pin for a moment after text finishes
       tlAbout.to({}, { duration: 1 });
     }
-
   });
 });
 
@@ -571,7 +570,6 @@ onUnmounted(() => {
       height: 100vh;
       margin: 0 auto;
       max-width: 160rem;
-      // [MODIFIED] Ensure profile pic and text don't stutter during pinning
       will-change: transform;
       transform: translateZ(0);
 
@@ -719,11 +717,12 @@ onUnmounted(() => {
   }
 
   .about {
+    padding-bottom: 5rem;
     .aboutMeContent {
       display: flex;
       flex-direction: column;
       height: fit-content;
-      padding: 50px 0px;
+      padding: 0px 0px;
 
       .sectionTitle.abs {
           position: relative;
