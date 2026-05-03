@@ -7,9 +7,14 @@
     font-size: clamp(1rem, calc(0.5rem + 0.625vw), 1.5rem);
 }
 
+html {
+    background-color: #000000 !important;
+}
+
 body {
     margin: auto;
     margin-top: 0;
+    background-color: transparent !important;
 }
 
 p {
@@ -29,7 +34,6 @@ a {
     display: flex;
     flex-direction: column;
     overflow: hidden;
-    background-color: white;
 }
 
 .text {

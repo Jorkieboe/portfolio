@@ -37,38 +37,19 @@ const targetTop = new THREE.Color(colors[0].top.x, colors[0].top.y, colors[0].to
 const targetBottom = new THREE.Color(colors[0].bottom.x, colors[0].bottom.y, colors[0].bottom.z)
 
 const uMaskHeight = uniform(store.headerSize)
+const uClipUV = uniform(0)
+const uOnePixelY = uniform(0.001)
 
 let scrollProgress = 0
 let smoothedProgress = 0
 let scrollTracker = 0
 
-// [MODIFIED] Use a speed factor that works with delta time for frame-rate independence
-const LERP_SPEED = 10
-
-// Cached absolute coordinates to avoid layout thrashing (getBoundingClientRect)
-let cachedTrackBottom = 0
-let cachedContentTop = 0
+// [MODIFIED] Increased speed factor for much snappier touch response on iPhone
+const LERP_SPEED = 20
 
 // Internal smooth targets for route transitions
 let smoothZoomPhase = 0
 let smoothMovePhase = 0
-
-const updateCachedPositions = () => {
-    if (typeof window === 'undefined') return
-    const currentScroll = window.scrollY
-
-    if (store.track) {
-        const trackEl = store.track.value || store.track
-        const rect = trackEl.getBoundingClientRect()
-        cachedTrackBottom = rect.bottom + currentScroll
-    }
-
-    if (store.content) {
-        const contentEl = store.content.value || store.content
-        const rect = contentEl.getBoundingClientRect()
-        cachedContentTop = rect.top + currentScroll
-    }
-}
 
 watch(() => store.projectActive, (newActive) => {
   if (newActive !== null) {
@@ -81,13 +62,8 @@ watch(() => store.projectActive, (newActive) => {
   }
 })
 
-watch([() => store.track, () => store.content], () => {
-    // Small delay to ensure DOM has updated before measuring
-    setTimeout(updateCachedPositions, 50)
-}, { immediate: true })
-
 const updateClip = () => {
-    if (!canvasContainer.value) return
+    if (!canvasContainer.value) return 0
     const containerHeight = stableHeight.value
     const targetHeaderH = containerHeight * store.headerSize
     let clipAmount = 0
@@ -95,18 +71,24 @@ const updateClip = () => {
     if (store.isTransitioning) {
         clipAmount = store.transitionClipOverride
     } else if (store.track) {
-        const trackBottomInViewport = cachedTrackBottom - scrollTracker
-        let rawClip = containerHeight - trackBottomInViewport
+        const trackEl = store.track.value || store.track
+        const trackBottom = trackEl.getBoundingClientRect().bottom
+        let rawClip = containerHeight - trackBottom
         let maxClip = containerHeight - targetHeaderH
         clipAmount = Math.max(0, Math.min(rawClip, maxClip))
     } else if (store.content) {
-        const contentTopInViewport = cachedContentTop - scrollTracker
-        let rawClip = containerHeight - contentTopInViewport
+        const contentEl = store.content.value || store.content
+        const contentTop = contentEl.getBoundingClientRect().top
+        let rawClip = containerHeight - contentTop
         let maxClip = containerHeight - targetHeaderH
         clipAmount = Math.max(0, Math.min(rawClip, maxClip))
     }
 
-    // [MODIFIED] Removed DOM clip-path updates to use Scissor Test exclusively for performance
+    const clipString = `inset(0px 0px ${clipAmount}px 0px)`
+    canvasContainer.value.style.webkitClipPath = clipString
+    canvasContainer.value.style.clipPath = clipString
+    canvasContainer.value.style.transform = 'translateZ(0)'
+
     dynamicZoneHeight.value = containerHeight - clipAmount
     return clipAmount
 }
@@ -140,7 +122,6 @@ const handleResize = () => {
 
         renderer.setSize(w * renderScale, h * renderScale, false)
         uPlaneAspect.value = w / h
-        updateCachedPositions()
     }
 }
 
@@ -213,7 +194,8 @@ onMounted(async () => {
 
     renderer = new THREE.WebGPURenderer({ antialias: true, alpha: true })
     renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2))
-    renderer.setClearColor(0x000000, 1)
+    // [FIX] Transparent clear color so the un-scissored area doesn't black out the DOM
+    renderer.setClearColor(0x000000, 0)
 
     const maxWidth = 1920
     const renderScale = Math.min(1.0, maxWidth / window.innerWidth)
@@ -284,7 +266,16 @@ onMounted(async () => {
       )
       const noiseResult = mix(vec4(uColourTop,1.0), vec4(uColourBottom, 1.0), noiseMask)
 
-      return noiseResult.mul(finalAlpha)
+      // [FIX] Explicitly paint a solid black background outside the mask instead of leaving it transparent,
+      // since the canvas itself is now transparent to allow the DOM to show through at the bottom.
+      const baseOutput = mix(vec4(0.0, 0.0, 0.0, 1.0), noiseResult, finalAlpha)
+
+      // [FIX] Perform sub-pixel anti-aliased clipping natively in the shader.
+      // This calculates transparency at the fragment level, allowing for perfectly smooth edges
+      // that don't jump between physical screen pixels.
+      const clipEdge = smoothstep(uClipUV.sub(uOnePixelY), uClipUV.add(uOnePixelY), coords.y)
+
+      return baseOutput.mul(clipEdge)
   })
 
     const material = new THREE.NodeMaterial()
@@ -301,47 +292,52 @@ onMounted(async () => {
 
       let targetZoom = 0
       let targetMove = 0
-      let targetStrength = 0
 
       if (route.path === '/') {
-        // [MODIFIED] Frame-independent smoothing for the scroll progress
-        smoothedProgress = lerp(smoothedProgress, scrollProgress, LERP_SPEED, dt)
-
-        targetZoom = Math.min(smoothedProgress / 0.6, 1.0)
+        // [MODIFIED] Calculate targets directly from raw scrollProgress to remove latency
+        targetZoom = Math.min(scrollProgress / 0.6, 1.0)
         targetZoom = 1 - Math.pow(1 - targetZoom, 3)
 
-        targetMove = Math.max(0, (smoothedProgress - 0.6) / 0.4)
+        targetMove = Math.max(0, (scrollProgress - 0.6) / 0.4)
         targetMove = targetMove * targetMove * (3.0 - 2.0 * targetMove)
-
-        targetStrength = Math.min(smoothedProgress * 10.0, 1.0)
       } else {
         targetZoom = 1
         targetMove = 1
-        targetStrength = 1
       }
 
-      // [MODIFIED] Frame-independent smoothing for internal phases
+      // [MODIFIED] Apply single-pass smoothing at a higher speed (20)
       smoothZoomPhase = lerp(smoothZoomPhase, targetZoom, LERP_SPEED, dt)
       smoothMovePhase = lerp(smoothMovePhase, targetMove, LERP_SPEED, dt)
 
       uMaskScale.value = 100.0 + (1.0 - 100.0) * smoothZoomPhase
       uMoveProgress.value = smoothMovePhase
+      // Strength follows zoom phase directly for consistency
       uMaskStrength.value = Math.min(smoothZoomPhase * 10.0, 1.0)
 
-      // Color lerping also needs to be time-aware
-      uColourTop.value.lerp(targetTop, 1 - Math.exp(-5 * dt))
-      uColourBottom.value.lerp(targetBottom, 1 - Math.exp(-5 * dt))
+      // Color lerping also needs to be snappier (speed 10)
+      uColourTop.value.lerp(targetTop, 1 - Math.exp(-10 * dt))
+      uColourBottom.value.lerp(targetBottom, 1 - Math.exp(-10 * dt))
 
-      let clipAmount = updateClip()
+      let targetClipAmount = updateClip()
 
       const drawingSize = new THREE.Vector2()
       renderer.getSize(drawingSize)
       const scaleFactor = drawingSize.y / stableHeight.value
 
-      const scissorH = Math.max(0, (stableHeight.value - clipAmount) * scaleFactor)
-      const scissorY = 0
+      // 1. VISUAL SMOOTHNESS (Shader)
+      uClipUV.value = targetClipAmount / stableHeight.value
+      uOnePixelY.value = 1.0 / drawingSize.y
+
+      // 2. PERFORMANCE (Hardware Scissor)
+      // We delay/pad the hardware scissor by 100px so its integer snapping is never seen.
+      // Shader handles the visual edge; Scissor handles the GPU culling.
+      const scissorBuffer = 100
+      const hardwareClipAmount = Math.max(0, targetClipAmount - scissorBuffer)
+
       const scissorX = 0
-      const scissorW = drawingSize.x
+      const scissorY = 0
+      const scissorW = Math.round(drawingSize.x)
+      const scissorH = Math.round(drawingSize.y - scissorY)
 
       renderer.setScissorTest(true)
       renderer.setScissor(scissorX, scissorY, scissorW, scissorH)

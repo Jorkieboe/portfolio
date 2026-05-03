@@ -251,8 +251,8 @@ onMounted(() => {
     const tlAbout = gsap.timeline({
       scrollTrigger: {
         trigger: ".about",
-        start: isDesktop ? "top 10%" : "0% 20%",
-        end: isDesktop ? "bottom bottom" : "60% 50%",
+        start: isDesktop ? "top 10%" : "0% 60%",
+        end: isDesktop ? "bottom bottom" : "20% 50%",
         scrub: 1,
         pin: isDesktop ? ".aboutMeContent" : false,
         pinSpacing: true,
@@ -271,7 +271,6 @@ onMounted(() => {
         }
     }, 0);
 
-    
     if (isDesktop) {
 
       const paragraphs = gsap.utils.toArray(".meText");
@@ -288,7 +287,6 @@ onMounted(() => {
 
       tlAbout.to({}, { duration: 1 });
     }
-
 
   });
 });
@@ -385,6 +383,7 @@ onUnmounted(() => {
 .content {
   position: relative;
   z-index: 1;
+  background-color: transparent;
 
   .section {
     min-height: 100vh;
@@ -396,7 +395,8 @@ onUnmounted(() => {
 }
 
 .projects{
-  padding-top: 25px;
+  /* Spacing to clear the fixed navigation. Note: ScrollTrigger adds inline padding here when pinning */
+  padding-top: 8vh;
   padding-bottom: 25px;
   max-width: 100rem;
   width: 100%;
@@ -430,16 +430,15 @@ onUnmounted(() => {
       flex-shrink: 0;
       height: fit-content;
       // [MODIFIED] Replaced static marginLeft with transform for better baseline animation
-      transform: translateX(-5rem);
+      // transform: translateX(-5rem);
+      margin-left: -5rem;
       pointer-events: all;
       opacity: 1;
       cursor: pointer;
       will-change: transform, opacity, width;
       backface-visibility: hidden;
 
-       &:first-child {
-        transform: translateX(0);
-      }
+        // transform: translateX(0);
 
        &.active{
           flex-grow: 0;

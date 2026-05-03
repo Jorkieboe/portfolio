@@ -119,7 +119,7 @@ const onEnter = (el, done) => {
 </script>
 <template>
 
-  <div class="navigation" :style="{height: store.headerSize * vh + 'px'}">
+  <div class="navigation" :style="{height: (store.headerSize * vh) + 'px'}">
     <div class="home-button" @click="router.push('/')"></div>
     <div class="lang-button-wrapper" ref="langSwitch">
       <div class="lang-button" :class="{'selected' : currentLang == 'nl'}" @click="()=>{setLang('nl')}">NL</div>
@@ -129,7 +129,7 @@ const onEnter = (el, done) => {
 
   <Canvas></Canvas>
 
-  <div class="page content-wrapper">
+  <div class="page content-wrapper" :class="{ 'is-project': $route.path.startsWith('/work/') }">
      <router-view v-slot="{ Component }">
       <transition
         mode="out-in"
@@ -164,10 +164,15 @@ const onEnter = (el, done) => {
   top: 0;
   left: 0;
   width: 100%;
-
+  background-color: transparent !important;
+  /* iPhone System Bar safe area */
+  padding-top: env(safe-area-inset-top);
+  box-sizing: border-box;
   z-index: 200;
+  pointer-events: none;
 
   .home-button{
+    pointer-events: auto;
     width: 20vw;
     height: 100%;
   }
@@ -177,6 +182,7 @@ const onEnter = (el, done) => {
     justify-content: center;
     align-items: center;
     width: 7rem;
+    pointer-events: auto;
 
     .lang-button{
       width: fit-content;
@@ -199,6 +205,12 @@ h3, h4, p{
    min-height: 100vh;
    display: flex;
    flex-direction: column;
+   background-color: white;
+}
+
+/* On project pages, we push the content down so it doesn't overlap the header strip initially */
+.page.is-project {
+  margin-top: 0;
 }
 
 .footer {

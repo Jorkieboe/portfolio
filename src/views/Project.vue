@@ -212,7 +212,7 @@ onUnmounted(() => {
         max-width: 1920px;
         width: 90%;
         margin: auto;
-        margin-top: 9.5rem;
+        padding-top: 9.5rem;
 
         #projectType {
             font-family: Cooper;
