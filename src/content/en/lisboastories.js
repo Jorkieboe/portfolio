@@ -12,7 +12,7 @@ export default {
         {
             title: "Harriet Low's Diary",
             text: `One of the interactions was a projected video diary that visitors could browse. The interaction consisted of a physical book with markers in the corners, placed beneath a camera and projector. A camera detected which markers were in view using machine learning and projected the corresponding video. During development, I found that running an interface in Python can introduce significant delays, particularly in components such as video playback.`,
-            media: { type: 'video', src: "/videos/lisboa-diary.mp4" }
+            media: { type: 'video', src: "/videos/lisboa-diary.mp4", thumbnail: "/images/lisboa/diaryThumbnail.jpg" }
         },
         {
             title: "Trading game",
@@ -22,7 +22,7 @@ export default {
         {
             title: "Façade",
             text: `In the exhibition featured scaled replica of the old façade, onto which visuals were projected using projection mapping. Beneath the model was a touchscreen running a React application, where visitors could play a quiz to restore the façade by identifying the correct figures. Each correct answer revealed a corresponding element on the façade.`,
-            media: { type: 'video', src: "/videos/lisboa-facade.mp4" }
+            media: { type: 'video', src: "/videos/lisboa-facade.mp4", thumbnail: "/images/lisboa/fascadeThumbnail.jpg" }
         },
     ]
 }

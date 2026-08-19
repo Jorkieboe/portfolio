@@ -11,4 +11,4 @@ Folder Structure:
 
 These files are designed to be part of your repository.
 
-Official Repository: https://github.com/DrSiemer/CodeMerger/
+Official website: https://codemerger.nl/

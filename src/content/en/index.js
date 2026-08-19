@@ -6,6 +6,7 @@ import parleyStudio from './parleyStudio.js'
 import lisboastories from './lisboastories.js'
 import futurenow from './futurenow.js'
 import verhalenvangers from './verhalenvangers.js'
+import sophia from './sophia.js'
 
 export default {
     homePage,
@@ -16,4 +17,5 @@ export default {
     lisboastories,
     futurenow,
     verhalenvangers,
+    sophia
 }

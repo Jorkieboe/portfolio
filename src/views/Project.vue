@@ -183,6 +183,7 @@ onUnmounted(() => {
           <div class="subSectionImage" @click="openMedia(content)">
               <video v-if="content.media.type === 'video'" :src="content.media.src" class="subSectionImg" muted playsinline></video>
               <img v-else :src="content.media.src" :alt="content.title" class="subSectionImg">
+              <div v-if="content.media.type === 'video'" class="subSectionImg" id="thumbnail"><img :src="content.media.thumbnail"></div>
               <div v-if="content.media.type === 'video'" class="play-button"><img src="/images/svg/play-icon.svg"></div>
           </div>
           <div class="sectionInfo">
@@ -309,6 +310,10 @@ onUnmounted(() => {
                     &:hover {
                         transform: scale(1.02);
                     }
+
+                    img{
+                        width: 100%;
+                    }
                 }
 
                 .play-button{
@@ -327,6 +332,11 @@ onUnmounted(() => {
                         width: 80%;
                         height: 80%;
                     }
+                }
+
+                #thumbnail{
+                    position: absolute;
+           
                 }
             }
 

@@ -21,7 +21,7 @@ export default {
         },
         {
             title: "Backend",
-            text: `Even though my role was mainly the frontend, I also contributed to the backend. The tablets were connected via socket.io to a Node server that controlled the entire tour. Throughout the project, we struggled with poor internet connections in the church, which caused the entire game to crash. We solved this with a lot of extra checks on server communications.`,
+            text: `Even though my role was mainly the frontend, I also contributed to the backend. The tablets were connected via Socket.IO to a Node server that controlled the entire tour. Throughout the project, we struggled with poor internet connections in the church, which caused the entire game to crash. We solved this with a lot of extra checks on server communications.`,
             media: { type: "video", src: "/videos/verhalenvangers-tablets.mp4" }
         },
     ]

@@ -16,12 +16,12 @@ export default {
         },
         {
             title: "Frontend",
-            text: `De applicatie is gebouwd in React Native. Al kende ik React al, React Native is nog wel een stapje verder om al die native functies te laten werken. Bovendien was er naast diverse libraries als Three js of een gesture plugin, ook een hele complexe logica nodig voor de vertalingen in teksten, plaatjes en videos. In dit project heb ik het meeste werk gehad aan de audio omdat de tablets aan de server lieten weten wanneer de audio klaar was met afspelen. En dat gaf problemen als de audio niet speelde of vroegtijdig stopte.`,
+            text: `De applicatie is gebouwd in React Native. Al kende ik React al, React Native is nog wel een stapje verder om al die native functies te laten werken. Bovendien was er naast diverse libraries als FastAPI of een gesture plugin, ook een hele complexe logica nodig voor de vertalingen in teksten, plaatjes en videos. In dit project heb ik het meeste werk gehad aan de audio omdat de tablets aan de server lieten weten wanneer de audio klaar was met afspelen. En dat gaf problemen als de audio niet speelde of vroegtijdig stopte.`,
             media: { type: "image", src: "/images/verhalenvangers/screens.jpg" }
         },
         {
             title: "Backend",
-            text: `Hoewel mijn rol vooral in de frontend lag, heb ik ook meegewerkt aan de backend. De tablets waren verbonden via socket io met een node server die heel de tour aanstuurde. Tijdens heel het project kampten we met slechte internet verbindingen in de kerk waarop het hele spel in de soep liep. Dit hebben we opgelost met heel veel extra checks in de server communicatie.`,
+            text: `Hoewel mijn rol vooral in de frontend lag, heb ik ook meegewerkt aan de backend. De tablets waren verbonden via Socket.IO met een node server die heel de tour aanstuurde. Tijdens heel het project kampten we met slechte internet verbindingen in de kerk waarop het hele spel in de soep liep. Dit hebben we opgelost met heel veel extra checks in de server communicatie.`,
             media: { type: "video", src: "/videos/verhalenvangers-tablets.mp4" }
         },
     ]

@@ -2,7 +2,7 @@ export default {
     id: 'parleyStudio',
     projectTitle: "Parley Studio",
     projectType: "AI tool",
-    introText: "Parley studio is een AI-platform om historische karakters tot leven te brengen. In parley staat het narratief van het personage centraal en helpt Retrieval-Augmented Generation tegen hallucinaties. De applicatie is gemaakt met Fast api en een Vue.js frontend.",
+    introText: "Parley studio is een AI-platform om historische karakters tot leven te brengen. In parley staat het narratief van het personage centraal en helpt Retrieval-Augmented Generation tegen hallucinaties. De applicatie is gemaakt met FastAPI en een Vue.js frontend.",
     splashImages: [
         { type: 'image', src: '/images/parley/neel.png' },
         { type: 'image', src: '/images/parley/chatscreen.jpg' },
@@ -31,7 +31,7 @@ export default {
         },
         {
             title: "Latency is de vijand",
-            text: `Op dit moment is het grootste probleem van deze ontwikkelingen latency. Voor een goede immersieve ervaring moet je haast vergeten dat je tegen een computer praat. Hiervoor heb ik een full-stack architectuur opgezet die de tijd tussen spreken en antwoord voelbaar moet verminderen. Dit heb ik gedaan door middle van het streamen van de output en visuele veranderingen op het scherm.`,
+            text: `Op dit moment is het grootste probleem van deze ontwikkelingen latency. Voor een goede immersieve ervaring moet je haast vergeten dat je tegen een computer praat. Hiervoor heb ik een full-stack architectuur opgezet die de tijd tussen spreken en antwoord voelbaar moet verminderen. Dit heb ik gedaan door middel van het streamen van de output en visuele veranderingen op het scherm.`,
             media: { type: 'image', src: "/images/parley/latency.jpg" }
         }
     ]

@@ -2,7 +2,7 @@ export default {
     id: 'parleyStudio',
     projectTitle: "Parley Studio",
     projectType: "AI tool",
-    introText: "Parley studio is an AI platform to bring historical characters to life. In Parley, the character's narrative takes center stage and Retrieval-Augmented Generation helps prevent hallucinations. The application is built with Fast API and a Vue.js frontend.",
+    introText: "Parley studio is an AI platform to bring historical characters to life. In Parley, the character's narrative takes center stage and Retrieval-Augmented Generation helps prevent hallucinations. The application is built with FastAPI and a Vue.js frontend.",
     splashImages: [
         { type: 'image', src: '/images/parley/neel.png' },
         { type: 'image', src: '/images/parley/chatscreen.jpg' },

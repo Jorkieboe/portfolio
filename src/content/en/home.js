@@ -2,16 +2,22 @@ export default {
     subText: "Creativity, technology, and perseverance are the golden combination.",
     projects: [
         {
+            projectTitle: "Parley Studio",
+            projectType: "AI tool",
+            projectText: "Parley studio is an AI platform to bring historical characters to life. In Parley, the character's narrative takes center stage and Retrieval-Augmented Generation helps prevent hallucinations. The application is built with Fast API and a Vue.js frontend.",
+            projectImage: '/images/parley/neel.png'
+        },
+        {
             projectTitle: "Story Catchers",
             projectType: "Tablet experience",
             projectText: "Commissioned by the Grote Sint-Laurenskerk in Alkmaar, I built a multimedia tour to discover the secrets of the church. The application is built with React Native and managed on Samsung tablets via ScaleFusion.",
             projectImage: '/images/verhalenvangers/storycatchers.jpg'
         },
         {
-            projectTitle: "Parley Studio",
-            projectType: "AI tool",
-            projectText: "Parley studio is an AI platform to bring historical characters to life. In Parley, the character's narrative takes center stage and Retrieval-Augmented Generation helps prevent hallucinations. The application is built with Fast API and a Vue.js frontend.",
-            projectImage: '/images/parley/neel.png'
+            projectTitle: "Sophia Children's Hospital Self-Portrait",
+            projectType: "Web application",
+            projectText: "A web application for Sophia Children's Hospital, built with Vue.js, where children can view the results of assessments conducted at the Children's Brain Lab.",
+            projectImage: '/images/sophia/zelfportrait_splash.jpg'
         },
         {
             projectTitle: "Future is Now",
@@ -21,15 +27,9 @@ export default {
         },
         {
             projectTitle: "Festival recommender",
-            projectType: "Machine learning",
+            projectType: "Web application",
             projectText: "Festival recommender recommends which music festivals you should go to based on your listening behavior on Spotify. The system collects data via the Spotify API and uses machine learning to compare your music taste with festival lineups. The interface was developed with React.",
             projectImage: '/images/recommender/FR_mock_recommendation.jpg'
-        },
-        {
-            projectTitle: "Lisboa stories",
-            projectType: "Museum Exhibition",
-            projectText: "For an exhibition in the Lisboa hotels in Macau (China), I developed several interactive applications about the history of trade between Macau and the Portuguese. I worked on various applications, including web applications, a game, and an application with a computer vision implementation. See the different components below.",
-            projectImage: '/images/lisboa/diary.jpg'
         },
         {
             projectTitle: "Peer pressure VR experience",
@@ -43,9 +43,15 @@ export default {
             projectText: "In my graduation project, I investigate how gamification can be personalized to encourage students to exercise more. Using machine learning algorithms, an application learns which factors motivate an individual the most.",
             projectImage: '/images/parley/neel.png'
         },
+        {
+            projectTitle: "Lisboa stories",
+            projectType: "Museum Exhibition",
+            projectText: "For an exhibition in the Lisboa hotels in Macau (China), I developed several interactive applications about the history of trade between Macau and the Portuguese. I worked on various applications, including web applications, a game, and an application with a computer vision implementation. See the different components below.",
+            projectImage: '/images/lisboa/diary.jpg'
+        },
     ],
     aboutmeText: [
-        "My name is Jorrik Dillisse, a creative developer and technologist specialized in interactive installations, games, and AI applications. I enjoy using technology as a means to design and build meaningful experiences, from physical installations to data-driven web apps.",
+        "My name is Jorrik Dillisse, a creative developer and technologist. I design and develop digital experiences that use technology to help people learn, discover, and interact in new and unexpected ways.",
         "With a background in Communication & Multimedia Design and a master's in Data-Driven Design, I focus on creating unique interactions where technique and concept come together."
     ]
 }

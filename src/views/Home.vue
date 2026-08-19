@@ -24,11 +24,11 @@ useHead({
 })
 
 const projectIds =[
-  'verhalenvangers',
   'parleyStudio',
+  'verhalenvangers',
+  'sophia',
   'futurenow',
   'festivalRecommender',
-  'lisboastories',
   'vrGame',
 ]
 

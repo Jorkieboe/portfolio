@@ -14,7 +14,7 @@ export default {
         },
         {
             title: "Concept",
-            text: `In deze VR-experience worden jonge mannen uitgedaagd om naar een rots ver op zee te zwemmen. Via gesprekken met non-player characters worden ze overgehaald om de overduidelijk gevaarlijke afstand af te leggen. Wanneer de gebruiker het accepteerd wordt hij geconfronteerd met de gevolgen en verdrinkt hij.`,
+            text: `In deze VR-experience worden jonge mannen uitgedaagd om naar een rots ver op zee te zwemmen. Via gesprekken met non-player characters worden ze overgehaald om de overduidelijk gevaarlijke afstand af te leggen. Wanneer de gebruiker het accepteert wordt hij geconfronteerd met de gevolgen en verdrinkt hij.`,
             media: { type: 'image', src: "/images/SOTA/npcs.jpg" }
         },
         {

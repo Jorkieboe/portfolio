@@ -12,7 +12,7 @@ export default {
         {
             title: "Harriet Low's Diary",
             text: `Een van de interacties was een geprojecteerd videodagboek waar bezoekers doorheen konden bladeren. Deze interactie bestond uit een fysiek boek met markers in de hoeken, geplaatst onder een camera en projector. Een camera detecteerde met behulp van machine learning welke markers in beeld waren, en projecteerde vervolgens de bijbehorende video. Tijdens development merkte ik dat het heel erg belangrijk is om een interface niet in python te draaien, omdat dit aanzienlijk veel vertraging oplevert bijvoorbeeld in het afspelen van videos.`,
-            media: { type: 'video', src: "/videos/lisboa-diary.mp4" }
+            media: { type: 'video', src: "/videos/lisboa-diary.mp4", thumbnail: "/images/lisboa/diaryThumbnail.jpg" }
         },
         {
             title: "Trading game",
@@ -22,7 +22,7 @@ export default {
         {
             title: "Façade",
             text: `In de tentoonstelling stond een geschaalde replica van de oude façade, waarop via projection mapping visuals werden geprojecteerd. Onder de replica bevond zich een touchscreen met een React applicatie. Hierin mochten spelers een quiz doen waar ze de façade moesten restaureren door de juiste figuren te herkennen. figureren te herkennen. Bij een goed antwoord kregen ze een plekje op de façade.`,
-            media: { type: 'video', src: "/videos/lisboa-facade.mp4" }
+            media: { type: 'video', src: "/videos/lisboa-facade.mp4", thumbnail: "/images/lisboa/fascadeThumbnail.jpg" }
         },
     ]
 }
