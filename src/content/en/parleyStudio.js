@@ -2,7 +2,19 @@ export default {
     id: 'parleyStudio',
     projectTitle: "Parley Studio",
     projectType: "AI tool",
-    introText: "Parley studio is an AI platform to bring historical characters to life. In Parley, the character's narrative takes center stage and Retrieval-Augmented Generation helps prevent hallucinations. The application is built with FastAPI and a Vue.js frontend.",
+    projectStats: [{
+        title: "Role:",
+        content: ["Full-stack development, AI engineer, Conversational designer"]
+    },
+    {
+        title: "Responsibilities:",
+        content: ["Full-stack development", "AI/API integration", "RAG implementation", "prompting characters"]
+    },
+    {
+        title: "Tech: ",
+        content: ["Vue.js, FastAPI, RAG, LLM APIs"]
+    }],
+    introText: "Parley studio is an AI platform to bring historical characters to life. In Parley, the character's narrative takes center stage and Retrieval-Augmented Generation helps prevent hallucinations.",
     splashImages: [
         { type: 'image', src: '/images/parley/neel.png' },
         { type: 'image', src: '/images/parley/chatscreen.jpg' },
@@ -12,7 +24,7 @@ export default {
         {
             title: "New way of storytelling",
             text: `Parley studio is a tool to bring AI characters to life. I do not see AI as a goal in itself but as a new form of storytelling. My goal was to build a foundation to make the language models more predictable and human.`,
-            media: { type: 'video', src: "/videos/parley-guillaume.mp4" }
+            media: { type: 'video', src: "/videos/parley-guillaume.mp4", thumbnail: "/images/parley/gauillaumeThumbnail.jpg" }
         },
         {
             title: "Guiding the LLM",

@@ -1,7 +1,20 @@
 export default {
+    id: "festivalRecommender",
     projectTitle: "Festival recommender",
     projectType: "Machine learning",
-    introText: "Festival recommender beveelt jou aan naar welke muziek festivals je moet gaan op basis van je luistergedrag op Spotify. Het systeem verzamelt data via de Spotify API en gebruikt machine learning om je muzieksmaak te vergelijken met de line-ups van festivals. De interface is ontwikkeld met React.",
+    projectStats: [{
+        title: "Rol:",
+        content: ["Data engineer, Front-end development"]
+    },
+    {
+        title: "Verantwoordelijkheden:",
+        content: ["Verzamelen en opschonen van data", "Bouwen van recommendation engine", "Ontwikkeling interface"]
+    },
+    {
+        title: "Tech: ",
+        content: ["React.js, Python, Machine learning, Spotify Api, Webscraping"]
+    }],
+    introText: "Festival recommender beveelt jou muziek festivals aan op basis van je luistergedrag op Spotify. Het systeem verzamelt data via de Spotify API en gebruikt machine learning om je muzieksmaak te vergelijken met de line-ups van festivals.",
     splashImages: [
         { type: 'image', src: '/images/recommender/FR_mock_recommendation.jpg' },
     ],

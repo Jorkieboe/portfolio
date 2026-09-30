@@ -1,10 +1,22 @@
 export default {
     id: "sophia",
-    projectTitle: "Sophia Children's Hospital Self-Portrait",
+    projectTitle: "Children's Brain Lab<br> Self-Portrait",
     projectType: "web application",
+    projectStats: [{
+        title: "Role:",
+        content: ["Front-end development, UX"]
+    },
+    {
+        title: "Responsibilities:",
+        content: ["Building responsive Front-end", "Building interactive prototype in Figma"]
+    },
+    {
+        title: "Tech: ",
+        content: ["Vue.js, VueUse Motion, Figma"]
+    }],
     introText: "A web application for Sophia Children's Hospital, built with Vue.js, where children can view the results of assessments conducted at the Children's Brain Lab.",
     splashImages: [
-        { type: 'image', src: "/images/sophia/zelfportrait-splash.jpg" }
+        { type: 'image', src: "/images/sophia/zelfportrait_splash.jpg" }
     ],
     content: [
         {

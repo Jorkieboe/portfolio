@@ -1,5 +1,5 @@
 <script setup>
-import { ref, computed, inject, onMounted, onUnmounted, watch } from 'vue'
+import { ref, computed, inject, onMounted, onUnmounted, watch, nextTick } from 'vue'
 import Canvas from '../components/canvas.vue'
 import { useLang } from '../composables/useLang'
 import { useHead } from '@unhead/vue'
@@ -23,7 +23,7 @@ useHead({
   ]
 })
 
-const projectIds =[
+const projectIds = [
   'parleyStudio',
   'verhalenvangers',
   'sophia',
@@ -35,14 +35,24 @@ const projectIds =[
 const store = inject('store')
 
 const projects = computed(() => {
-  return projectIds.map((id, index) => {
-    const projectDetails = t.value[id]
-    const homeInfo = t.value.homePage.projects[index]
+  const homeProjects = t.value?.homePage?.projects || []
+
+  return projectIds.map((defaultId, index) => {
+    const homeItem = homeProjects[index]
+    const id = (typeof homeItem === 'object' && homeItem?.id) || (typeof homeItem === 'string' && homeItem) || defaultId
+    const projectDetails = t.value[id] || {}
 
     return {
       id,
-      content: homeInfo,
-      projectImage: homeInfo.projectImage
+      content: {
+        ...projectDetails,
+        ...(typeof homeItem === 'object' ? homeItem : {}),
+        projectTitle: (typeof homeItem === 'object' && homeItem?.projectTitle) || projectDetails.projectTitle || '',
+        projectType: (typeof homeItem === 'object' && homeItem?.projectType) || projectDetails.projectType || '',
+        projectText: (typeof homeItem === 'object' && homeItem?.projectText) || projectDetails.introText || '',
+        projectStats: projectDetails.projectStats || []
+      },
+      projectImage: (typeof homeItem === 'object' && homeItem?.projectImage) || projectDetails.projectImage || projectDetails.splashImages?.[0]?.src || ''
     }
   })
 })
@@ -105,7 +115,7 @@ const animateProject = (index, isOpen) => {
       tl.to(textDiv, { opacity: 1, duration: 0.4 }, 0.3);
      } else {
     const isFirst = index === 0;
-    
+
     tl.to(wrapper, { marginLeft: (isFirst || isMobile.value) ? 0 : "-5rem" }, 0);
 
     tl.to(image, {
@@ -123,8 +133,8 @@ const handleHover = (index) => {
   if (isMobile.value || store.projectActive === index || lastMouseIndex === index) return;
 
   if (hoverDelayedCall) hoverDelayedCall.kill();
-  
-  lastMouseIndex = index; // Track which item we are moving over
+
+  lastMouseIndex = index;
 
   hoverDelayedCall = gsap.delayedCall(0.05, () => {
     if (!isAnimating.value) {
@@ -136,11 +146,10 @@ const handleHover = (index) => {
 const handleMouseLeave = () => {
   if (isMobile.value) return;
   if (hoverDelayedCall) hoverDelayedCall.kill();
-  
-  lastMouseIndex = null; 
+
+  lastMouseIndex = null;
 
   hoverDelayedCall = gsap.delayedCall(0.1, () => {
-    // Only close if the mouse isn't currently over another project
     if (lastMouseIndex === null && !isAnimating.value) {
       store.projectActive = null;
     }
@@ -152,13 +161,19 @@ watch(() => store.projectActive, (newVal, oldVal) => {
   if (newVal !== null) animateProject(newVal, true);
 });
 
-onMounted(() => {
+onMounted(async () => {
   updateIsMobile();
   window.addEventListener('resize', updateIsMobile);
 
   store.setContentRef(localContentRef.value)
   store.setTrackRef(trackRef.value)
   gsap.registerPlugin(ScrollTrigger, SplitText);
+
+  if (typeof document !== 'undefined' && document.fonts) {
+    await document.fonts.ready;
+  }
+  await nextTick();
+
   mm = gsap.matchMedia(localContentRef.value);
 
    gsap.to(".scroll-cta img", {
@@ -240,7 +255,6 @@ onMounted(() => {
       }
     });
 
-    // Sync profile picture progress with the timeline
     const scrollProxy = { val: 0 };
     tlAbout.to(scrollProxy, {
         val: 1,
@@ -264,9 +278,10 @@ onMounted(() => {
           }, i === 0 ? 0 : ">-0.2");
       });
 
-      // Maintain pin for a moment after text finishes
       tlAbout.to({}, { duration: 1 });
     }
+
+    ScrollTrigger.refresh();
   });
 });
 
@@ -277,7 +292,7 @@ onUnmounted(() => {
   }
   ScrollTrigger.getAll().forEach(t => t.kill());
   gsap.killTweensOf("*");
-  
+
   if (hoverDelayedCall) hoverDelayedCall.kill();
   store.setContentRef(null);
   store.setTrackRef(null);
@@ -314,9 +329,12 @@ onUnmounted(() => {
                               <div class="left-guard"></div>
                               <div class="right-guard"></div>
 
-                              <h3 class="panelText title" >{{ project.content.projectTitle }}</h3>
+                              <h3 class="panelText title" v-html="project.content.projectTitle"></h3>
                               <h4 class="panelText type">{{ project.content.projectType }}</h4>
                               <p class="panelText description">{{ project.content.projectText }}</p>
+
+                              <p v-if="project.content.projectStats?.[0]?.content" class="panelText description role"><strong>Role:</strong> {{ Array.isArray(project.content.projectStats[0].content) ? project.content.projectStats[0].content.join(', ') : project.content.projectStats[0].content }}</p>
+                              <p v-if="project.content.projectStats?.[2]?.content" class="panelText description tech"><strong>Tech:</strong> {{ Array.isArray(project.content.projectStats[2].content) ? project.content.projectStats[2].content.join(', ') : project.content.projectStats[2].content }}</p>
                             </div>
                         </div>
                     </div>
@@ -334,7 +352,7 @@ onUnmounted(() => {
             </div>
             <div class="text-side">
               <div class="meTextwrapper">
-                <p class="meText" v-for="text in t.homePage.aboutmeText" v-html="text"></p>
+                <p class="meText" v-for="(text, index) in t.homePage.aboutmeText" :key="index" v-html="text"></p>
               </div>
             </div>
           </div>
@@ -511,12 +529,21 @@ onUnmounted(() => {
               word-wrap: break-word;
               &.title{
                 font-size: 1.5rem;
+                margin-bottom: 0.15rem;
               }
               &.type{
-                 font-size: 1.2rem;
+                 font-size: 0.95rem;
+                 margin-bottom: 1.1rem;
               }
               &.description{
                  font-size: 0.8rem;
+                 margin-bottom: 0.8rem;
+                 &.role{
+                   margin-bottom: 0.15rem;
+                 }
+                 &.tech{
+                   margin-bottom: 0;
+                 }
               }
             }
         }
@@ -628,12 +655,16 @@ onUnmounted(() => {
               padding: 0 1rem;
               height: 300px;
               margin-left: 0;
-              margin-top: 2rem;
+              margin-top: 0.75rem;
 
               .panelTextDiv{
 
                 .left-guard, .right-guard{
                   display: none;
+                }
+
+                .panelText.title{
+                  font-size: 1.25rem;
                 }
               }
             }
@@ -668,11 +699,15 @@ onUnmounted(() => {
             padding: 0 1rem;
             height: 300px;
             margin-left: 0;
-            margin-top: 2rem;
+            margin-top: 1.25rem;
             .panelTextDiv{
                width: 60vw;
               .left-guard, .right-guard{
                   display: none;
+              }
+
+              .panelText.title{
+                font-size: 1.25rem;
               }
             }
           }

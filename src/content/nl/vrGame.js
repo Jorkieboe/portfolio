@@ -1,7 +1,21 @@
 export default {
+    id: "vrGame",
     projectTitle: "Peer pressure VR experience",
+    projectImage: '/images/SOTA/npcs.jpg',
     projectType: "Serious game",
-    introText: "Verdrinking is nog steeds een grote doodsoorzaak voor jonge mannen. In deze Vr Experience gemaakt in de Unreal Engine, worden jonge mannen geconfronteerd met de gevaren van water door overschatting en groepsdruk.",
+    projectStats: [{
+        title: "Rol:",
+        content: ["Game development, Onderzoeken"]
+    },
+    {
+        title: "Verantwoordelijkheden:",
+        content: ["Onderzoek doen naar een probleem", "Concept ontwikkeling", "Ervaring bouwen in Unreal Engine", "gebruikerstesten"]
+    },
+    {
+        title: "Tech: ",
+        content: ["Unreal Engine, VR"]
+    }],
+    introText: "Verdrinking is nog steeds een grote doodsoorzaak voor jonge mannen. In deze Vr Experience worden jonge mannen geconfronteerd met de gevaren van water door overschatting en groepsdruk.",
     splashImages: [
         { type: 'image', src: '/images/SOTA/npcdialog.jpg' },
         { type: 'image', src: '/images/SOTA/goal.jpg' },

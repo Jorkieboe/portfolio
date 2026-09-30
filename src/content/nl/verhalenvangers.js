@@ -2,7 +2,19 @@ export default {
     id: "verhalenVangers",
     projectTitle: "Verhalen Vangers",
     projectType: "Werk project",
-    introText: "In opdracht van de Grote Sint-Laurenskerk in Alkmaar heb ik een multimedia tour gebouwd om de geheimen van de kerk te ontdekken. De applicatie is gebouwd met React Native en gemanaged op Samsung tablets via ScaleFusion.",
+    projectStats: [{
+        title: "Rol:",
+        content: ["Full-stack development"]
+    },
+    {
+        title: "Verantwoordelijkheden:",
+        content: ["Bouwen van front-end", "Ontwikkeling server connectie", "Testen en debuggen op locatie", "Tablet beheer"]
+    },
+    {
+        title: "Tech: ",
+        content: ["React Native, Node.js, Socket.IO, ScaleFusion"]
+    }],
+    introText: "In opdracht van de Grote Sint-Laurenskerk in Alkmaar heb ik een multimedia tour gebouwd om de geheimen van de kerk te ontdekken.",
     splashImages: [
         { type: "image", src: "/images/verhalenvangers/storycatchers.jpg" },
         { type: "image", src: "/images/verhalenvangers/organ.jpg" },

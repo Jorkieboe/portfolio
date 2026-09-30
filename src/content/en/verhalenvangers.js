@@ -2,7 +2,19 @@ export default {
     id: "verhalenVangers",
     projectTitle: "Story Catchers",
     projectType: "Work project",
-    introText: "Commissioned by the Grote Sint-Laurenskerk in Alkmaar, I built a multimedia tour to discover the secrets of the church. The application is built with React Native and managed on Samsung tablets via ScaleFusion.",
+    projectStats: [{
+        title: "Role:",
+        content: ["Full-stack development"]
+    },
+    {
+        title: "Responsibilities:",
+        content: ["Front-end development", "Developing server connection", "On-site testing and debugging", "Tablet management"]
+    },
+    {
+        title: "Tech: ",
+        content: ["React Native, Node.js, Socket.IO, ScaleFusion"]
+    }],
+    introText: "Commissioned by the Grote Sint-Laurenskerk in Alkmaar, I built a multimedia tour to discover the secrets of the church.",
     splashImages: [
         { type: "image", src: "/images/verhalenvangers/storycatchers.jpg" },
         { type: "image", src: "/images/verhalenvangers/organ.jpg" },

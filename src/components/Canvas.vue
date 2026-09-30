@@ -22,9 +22,9 @@ let renderer, scene, camera, animationId, mesh
 
 const minHeaderPx = 64
 
-const stableHeight = ref(0)
-const dynamicZoneHeight = ref(0)
-let lastWidth = 0
+const stableHeight = ref(typeof window !== 'undefined' ? window.innerHeight : 1080)
+const dynamicZoneHeight = ref(typeof window !== 'undefined' ? window.innerHeight : 1080)
+let lastWidth = typeof window !== 'undefined' ? window.innerWidth : 1920
 
 const uMaskScale = uniform(1)
 const uPlaneAspect = uniform(1)
@@ -362,8 +362,8 @@ onBeforeUnmount(() => {
     }
     gsap.ticker.remove(animationId)
     renderer.dispose()
-    scene.clear(); 
-    
+    scene.clear();
+
 })
 
 </script>

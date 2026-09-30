@@ -1,7 +1,20 @@
 export default {
+    id: "festivalRecommender",
     projectTitle: "Festival recommender",
     projectType: "Machine learning",
-    introText: "Festival recommender recommends which music festivals you should go to based on your listening behavior on Spotify. The system collects data via the Spotify API and uses machine learning to compare your music taste with festival lineups. The interface was developed with React.",
+    projectStats: [{
+        title: "Role:",
+        content: ["Data engineer, Front-end development"]
+    },
+    {
+        title: "Responsibilities:",
+        content: ["Collecting and cleaning data", "Building recommendation engine", "Interface development"]
+    },
+    {
+        title: "Tech: ",
+        content: ["React.js, Python, Machine learning, Spotify API, Web scraping"]
+    }],
+    introText: "Festival recommender recommends you music festivals based on your listening behavior on Spotify. The system collects data via the Spotify API and uses machine learning to compare your music taste with festival lineups.",
     splashImages: [
         { type: 'image', src: '/images/recommender/FR_mock_recommendation.jpg' },
     ],

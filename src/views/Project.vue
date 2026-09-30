@@ -41,10 +41,12 @@ const closeMedia = () => {
 }
 
 watch(selectedMedia, (newVal) => {
-    if (newVal) {
-        document.body.style.overflow = 'hidden'
-    } else {
-        document.body.style.overflow = ''
+    if (typeof document !== 'undefined') {
+        if (newVal) {
+            document.body.style.overflow = 'hidden'
+        } else {
+            document.body.style.overflow = ''
+        }
     }
 })
 
@@ -147,10 +149,16 @@ onUnmounted(() => {
       <div class="projectIntro">
           <div class="projectTitle">
               <h4 id="projectType">{{ projectData.projectType }}</h4>
-              <h2 class="projectName">{{ projectData.projectTitle }}</h2>
+              <h2 class="projectName" v-html="projectData.projectTitle"></h2>
           </div>
           <div class="projectDescription">
               <p class='text'>{{ projectData.introText }}</p>
+              <div class="stat-wrapper">
+                <div v-for="entry in projectData.projectStats" class="stat-entry">
+                    <p><strong>{{ entry.title }} </strong></p>
+                    <p v-for="content in entry.content">{{ content }}</p>
+                </div>
+              </div>
           </div>
       </div>
 
@@ -216,23 +224,31 @@ onUnmounted(() => {
         padding-top: 9.5rem;
 
         #projectType {
-            font-family: Cooper;
-            font-size: 2rem;
-            margin-bottom: 0px;
+            font-family: Arial, Helvetica, sans-serif;
+            font-size: 1.3rem;
         }
         .projectName {
             font-family: Cooper;
-            font-size: 5rem;
+            font-size: 3.5rem;
             max-width: 800px;
             width: 100%;
             margin-top: 0;
         }
         .projectDescription {
             max-width: 700px;
-            display: flex;
-            align-items: center;
-            p{
+
+            .text {
                 font-size: 1.2rem;
+                margin-bottom: 1.75rem;
+            }
+
+            .stat-entry{
+                display: flex;
+                flex-direction: column;
+                margin-bottom: 0.5rem;
+                p{
+                    font-size: 1rem;
+                }
             }
         }
     }
@@ -336,7 +352,7 @@ onUnmounted(() => {
 
                 #thumbnail{
                     position: absolute;
-           
+
                 }
             }
 
@@ -378,7 +394,30 @@ onUnmounted(() => {
         }
     }
 
+
+    @media (max-width: 1400px) {
+        .projectIntro {
+            .projectTitle {
+                width: 40%
+            }
+            .projectDescription{
+                max-width: 500px;
+                width: 40%
+            }
+        }
+    }
+
     @media (max-width: 1024px) {
+        .projectIntro {
+            .projectTitle {
+                width: 40%
+            }
+            .projectDescription{
+
+                width: 40%
+            }
+        }
+
         .small-image-container{
             gap: 0.1rem;
 
@@ -397,13 +436,26 @@ onUnmounted(() => {
     @media (max-width: 768px) {
         .projectIntro {
             flex-direction: column;
-            margin-top: 0rem;
+            margin-top: 1rem;
             margin-bottom: 2rem;
             padding-top: 6.5rem;
+            width: 90%;
+
+            .projectTitle {
+                width: 100%;
+            }
 
             .projectName {
-                font-size: 3rem;
-                margin-bottom: 2rem;
+                font-size: 2.5rem;
+                margin-bottom: 1.25rem;
+            }
+
+            .projectDescription{
+                width: 90%;
+
+                .text {
+                    margin-bottom: 1rem;
+                }
             }
         }
 

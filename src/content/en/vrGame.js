@@ -1,7 +1,21 @@
 export default {
+    id: "vrGame",
     projectTitle: "Peer pressure VR experience",
+    projectImage: '/images/SOTA/npcs.jpg',
     projectType: "Serious game",
-    introText: "Drowning is still a major cause of death among young men. In this VR Experience created in the Unreal Engine, young men are confronted with the dangers of water through overestimation and peer pressure.",
+    projectStats: [{
+        title: "Role:",
+        content: ["Game development, Research"]
+    },
+    {
+        title: "Responsibilities:",
+        content: ["Researching a problem", "Concept development", "Building experience in Unreal Engine", "User testing"]
+    },
+    {
+        title: "Tech: ",
+        content: ["Unreal Engine, VR"]
+    }],
+    introText: "Drowning is still a major cause of death among young men. In this VR Experience young men are confronted with the dangers of water through overestimation and peer pressure.",
     splashImages: [
         { type: 'image', src: '/images/SOTA/npcdialog.jpg' },
         { type: 'image', src: '/images/SOTA/goal.jpg' },

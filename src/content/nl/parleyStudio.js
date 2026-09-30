@@ -2,7 +2,19 @@ export default {
     id: 'parleyStudio',
     projectTitle: "Parley Studio",
     projectType: "AI tool",
-    introText: "Parley studio is een AI-platform om historische karakters tot leven te brengen. In parley staat het narratief van het personage centraal en helpt Retrieval-Augmented Generation tegen hallucinaties. De applicatie is gemaakt met FastAPI en een Vue.js frontend.",
+    projectStats: [{
+        title: "Rol:",
+        content: ["Full-stack development, AI engineer, Conversational designer"]
+    },
+    {
+        title: "Verantwoordelijkheden:",
+        content: ["Full-stack ontwikkeling", "AI/API intergratie", "RAG implementatie", "personages prompten"]
+    },
+    {
+        title: "Tech: ",
+        content: ["Vue.js, FastAPI, RAG, LLM APIs"]
+    }],
+    introText: "Parley studio is een AI-platform om historische karakters tot leven te brengen. In parley staat het narratief van het personage centraal en helpt Retrieval-Augmented Generation tegen hallucinaties.",
     splashImages: [
         { type: 'image', src: '/images/parley/neel.png' },
         { type: 'image', src: '/images/parley/chatscreen.jpg' },
@@ -12,7 +24,7 @@ export default {
         {
             title: "Nieuwe manier van storytelling",
             text: `Parley studio is een tool om ai personages tot leven te wekken. Ik zie AI niet als een doel op zich maar een nieuwe vorm van storytelling. Mijn doel was om een basis te bouwen om de taalmodellen voorspelbaarder en menselijker te maken.`,
-            media: { type: 'video', src: "/videos/parley-guillaume.mp4" }
+            media: { type: 'video', src: "/videos/parley-guillaume.mp4", thumbnail: "/images/parley/gauillaumeThumbnail.jpg" }
         },
         {
             title: "Sturen van de LLM",

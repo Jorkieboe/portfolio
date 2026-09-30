@@ -88,6 +88,8 @@ const initThree = async () => {
   const loader = new THREE.TextureLoader()
   const texture = await loader.loadAsync('/images/Jorrik.jpg')
 
+  texture.colorSpace = THREE.SRGBColorSpace
+
   const geometry = new THREE.BoxGeometry(2, 2.5, 0.05, 32, 32, 2)
 
   const material = new THREE.MeshStandardNodeMaterial({

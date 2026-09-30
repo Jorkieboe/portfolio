@@ -17,7 +17,7 @@ export default {
         {
             title: "Trading game",
             text: `Trading game is een applicatie ontwikkeld met Vue.js, waarin je een handelsreis maakte in het oude China. Hierin ontwikkelde ik een minigame met Phaser waarbij je veilig naar je bestemming moet varen tussen piraten, rotsen en tyfoons. De grootste uitdaging was de performance. De applicatie draaide op drie pc’s waar één pc een extra centrale kaart aanstuurde. De framerate van de game bepaalde de snelheid van de boot en moest daarom op alle pc’s gelijk zijn.`,
-            media: { type: 'video', src: "/videos/lisboa-trading.mp4" }
+            media: { type: 'video', src: "/videos/lisboa-trading.mp4", thumbnail: "/images/lisboa/tradingThumbnail.jpg" }
         },
         {
             title: "Façade",

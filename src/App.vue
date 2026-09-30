@@ -14,32 +14,39 @@ const store = useMainStore()
 const langSwitch = ref(null)
 
 const projectIds =[
-  'verhalenvangers',
   'parleyStudio',
+  'verhalenvangers',
+  'sophia',
   'futurenow',
   'festivalRecommender',
-  'lisboastories',
   'vrGame',
 ]
 
 provide('store', store)
 
-const vh = ref(window.innerHeight)
+const vh = ref(typeof window !== 'undefined' ? window.innerHeight : 1080)
 
 const handleResize = () => {
-  vh.value = window.innerHeight
+  if (typeof window !== 'undefined') {
+    vh.value = window.innerHeight
+  }
 }
 
 onMounted(() => {
-  window.addEventListener('resize', handleResize)
+  if (typeof window !== 'undefined') {
+    vh.value = window.innerHeight
+    window.addEventListener('resize', handleResize)
+  }
 })
 
 onUnmounted(() => {
-  window.removeEventListener('resize', handleResize)
+  if (typeof window !== 'undefined') {
+    window.removeEventListener('resize', handleResize)
+  }
 })
 
 watch(() => router.currentRoute.value.path, (path) => {
-  if (path.startsWith('/work/')) {
+  if (path && path.startsWith('/work/')) {
     const id = path.split('/').pop()
     const index = projectIds.indexOf(id)
     if (index !== -1) {
@@ -49,8 +56,10 @@ watch(() => router.currentRoute.value.path, (path) => {
 }, { immediate: true })
 
 const scrollTo = (id) => {
-  const el = document.getElementById(id)
-  if (el) el.scrollIntoView({ behavior: 'smooth' })
+  if (typeof document !== 'undefined') {
+    const el = document.getElementById(id)
+    if (el) el.scrollIntoView({ behavior: 'smooth' })
+  }
 }
 
 const onBeforeLeave = () => {
@@ -64,16 +73,20 @@ const onLeave = (el, done) => {
   const isHome = router.currentRoute.value.path === '/'
   const targetClip = isHome ? 0 : vhVal - (vhVal * store.headerSize)
 
-  gsap.to(langSwitch.value,{
-    yPercent: -100,
-    duration: 0.2,
-  })
+  if (langSwitch.value) {
+    gsap.to(langSwitch.value,{
+      yPercent: -100,
+      duration: 0.2,
+    })
+  }
 
   if(isHome){
-    // Aggressive scroll reset to handle mobile address bar shifts
-    window.scrollTo(0, 0);
-    document.documentElement.scrollTop = 0;
-    document.body.scrollTop = 0;
+    if (typeof window !== 'undefined') {
+      // Aggressive scroll reset to handle mobile address bar shifts
+      window.scrollTo(0, 0);
+      document.documentElement.scrollTop = 0;
+      document.body.scrollTop = 0;
+    }
 
     store.projectActive = null;
 

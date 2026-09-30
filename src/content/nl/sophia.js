@@ -1,10 +1,22 @@
 export default {
     id: "sophia",
-    projectTitle: "Het KinderHersenLab Zelfportret",
+    projectTitle: "Het Kinder-<br> HersenLab Zelfportret",
     projectType: "webapplicatie",
+    projectStats: [{
+        title: "Rol:",
+        content: ["Front-end development, UX"]
+    },
+    {
+        title: "Verantwoordelijkheden:",
+        content: ["Bouwen van responsive Front-end", "Interactieve prototype bouwen in Figma"]
+    },
+    {
+        title: "Tech: ",
+        content: ["Vue.js, VueUse motion, Figma"]
+    }],
     introText: "Een webapplicatie voor het Sophia kinderziekenhuis gemaakt in vue.js waar kinderen hun resulaten kunnen inzien van onderzoeken in het kinderhersenlab",
     splashImages: [
-        { type: 'image', src: "/images/sophia/zelfportrait-splash.jpg" }
+        { type: 'image', src: "/images/sophia/zelfportrait_splash.jpg" }
     ],
     content: [
         {
