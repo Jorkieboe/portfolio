@@ -9,7 +9,7 @@ export default {
         { id: "vrGame" }
     ],
     aboutmeText: [
-        "My name is Jorrik Dillisse, a creative developer and technologist. I design and develop digital experiences that use technology to help people learn, discover, and interact in new and unexpected ways.",
+        "My name is Jorrik Dillisse, a creative developer and AI Engineer. I design and develop digital experiences that use technology to help people learn, discover, and interact in new and unexpected ways.",
         "With a background in Communication & Multimedia Design and a master's in Data-Driven Design, I focus on creating unique interactions where technique and concept come together."
     ]
 }

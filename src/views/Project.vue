@@ -6,7 +6,7 @@ import { useHead } from '@unhead/vue'
 import { gsap } from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
 import { SplitText } from 'gsap/SplitText';
-import {colors} from '../utils/colors'
+import { colors, projectIds } from '../utils/colors'
 
 const route = useRoute()
 const { t } = useLang()
@@ -51,6 +51,11 @@ watch(selectedMedia, (newVal) => {
 })
 
 onMounted(() => {
+    const projectIndex = projectIds.indexOf(projectId.value)
+    if (projectIndex !== -1) {
+        store.projectActive = projectIndex
+    }
+
     store.setContentRef(localContentRef.value)
     gsap.registerPlugin(ScrollTrigger, SplitText);
     mm = gsap.matchMedia(localContentRef.value);
@@ -393,7 +398,6 @@ onUnmounted(() => {
             }
         }
     }
-
 
     @media (max-width: 1400px) {
         .projectIntro {

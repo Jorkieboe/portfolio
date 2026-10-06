@@ -1,3 +1,12 @@
+export const projectIds = [
+  'parleyStudio',
+  'verhalenvangers',
+  'sophia',
+  'futurenow',
+  'festivalRecommender',
+  'vrGame',
+]
+
 export const colors = [
   {
     "top": { x: 1, y: 0.2, z: 0.2, hex: "#FFB7B7" },

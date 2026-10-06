@@ -1,5 +1,5 @@
 <script setup>
-import { onMounted, ref, onBeforeUnmount, inject, watch } from 'vue'
+import { onMounted, ref, onBeforeUnmount, inject, watch, computed } from 'vue'
 import * as THREE from 'three/webgpu'
 import { Fn, uv, float, uniform, texture, smoothstep, vec2, vec3, min, vec4, mix, max, time, If } from 'three/tsl'
 import { gsap } from 'gsap'
@@ -27,6 +27,21 @@ const dynamicZoneHeight = ref(typeof window !== 'undefined' ? window.innerHeight
 let lastWidth = typeof window !== 'undefined' ? window.innerWidth : 1920
 
 const isLoaded = ref(false)
+
+const isHeaderLoading = computed(() => route.path !== '/')
+
+const loadingScreenStyle = computed(() => {
+  if (isHeaderLoading.value) {
+    const bgColor = store.projectActive !== null && colors[store.projectActive]
+      ? colors[store.projectActive].bottom.hex
+      : '#B7FFB7'
+    return {
+      height: `calc(${(store?.headerSize || 0.08) * 100}svh + env(safe-area-inset-top))`,
+      backgroundColor: bgColor
+    }
+  }
+  return {}
+})
 
 const uMaskScale = uniform(1)
 const uPlaneAspect = uniform(1)
@@ -81,6 +96,7 @@ watch(() => route.path, (newPath) => {
 
 watch(() => store.projectActive, (newActive) => {
   if (newActive !== null) {
+    console.log(newActive)
     const nextCol = colors[newActive]
     targetTop.setRGB(nextCol.top.x, nextCol.top.y, nextCol.top.z)
     targetBottom.setRGB(nextCol.bottom.x, nextCol.bottom.y, nextCol.bottom.z)
@@ -365,6 +381,13 @@ onMounted(async () => {
 
     await renderer.init()
     console.log(`Canvas.vue: Rendering with ${renderer.backend.isWebGPUBackend ? 'WebGPU' : 'WebGL'} fallback`)
+    if (store.projectActive !== null && colors[store.projectActive]) {
+      const col = colors[store.projectActive]
+      uColourTop.value.setRGB(col.top.x, col.top.y, col.top.z)
+      uColourBottom.value.setRGB(col.bottom.x, col.bottom.y, col.bottom.z)
+      targetTop.setRGB(col.top.x, col.top.y, col.top.z)
+      targetBottom.setRGB(col.bottom.x, col.bottom.y, col.bottom.z)
+    }
     isLoaded.value = true
     targetOriginY = 0.0
     gsap.ticker.add(renderLoop)
@@ -384,7 +407,13 @@ onBeforeUnmount(() => {
 </script>
 <template>
      <div class="canvas-fixed-container" ref="canvasContainer"  :style="{ height: stableHeight + 'px' }" >
-       <div class="loading-screen" :class="{ 'is-loaded': isLoaded }"></div>
+       <div
+         class="loading-screen"
+         :class="{ 'is-loaded': isLoaded, 'is-header': isHeaderLoading }"
+         :style="loadingScreenStyle"
+       >
+         <div class="spinner"></div>
+       </div>
      </div>
 </template>
 <style lang="scss" scoped>
@@ -413,9 +442,37 @@ onBeforeUnmount(() => {
       pointer-events: none;
       transition: opacity 0.5s ease;
       z-index: 10;
+      display: flex;
+      justify-content: center;
+      align-items: center;
 
       &.is-loaded {
         opacity: 0;
+      }
+
+      &.is-header {
+        height: calc(8svh + env(safe-area-inset-top));
+
+        .spinner {
+          width: 28px;
+          height: 28px;
+          border-width: 3px;
+        }
+      }
+    }
+
+    .spinner {
+      width: 48px;
+      height: 48px;
+      border: 4px solid rgba(255, 255, 255, 0.3);
+      border-top-color: #ffffff;
+      border-radius: 50%;
+      animation: spin 1s linear infinite;
+    }
+
+    @keyframes spin {
+      to {
+        transform: rotate(360deg);
       }
     }
 </style>

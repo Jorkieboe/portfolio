@@ -6,12 +6,13 @@ import { useHead } from '@unhead/vue'
 import { gsap } from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
 import { SplitText } from 'gsap/SplitText';
-import { useRoute } from 'vue-router';
+import { useRoute, useRouter } from 'vue-router';
 
 import ProfilePic from '../components/ProfilePic.vue';
 
 const { t } = useLang()
 const route = useRoute()
+const router = useRouter()
 
 useHead({
   title: 'Portfolio - Jorrik Dillisse',
@@ -129,32 +130,45 @@ const animateProject = (index, isOpen) => {
 
 let lastMouseIndex = null;
 
+const goToProject = (id, index) => {
+  if (hoverDelayedCall) hoverDelayedCall.kill();
+  store.projectActive = index;
+  store.isTransitioning = true;
+  router.push('/work/' + id);
+};
+
 const handleHover = (index) => {
-  if (isMobile.value || store.projectActive === index || lastMouseIndex === index) return;
+  if (store.isTransitioning || isMobile.value || store.projectActive === index || lastMouseIndex === index) return;
 
   if (hoverDelayedCall) hoverDelayedCall.kill();
 
   lastMouseIndex = index;
 
   hoverDelayedCall = gsap.delayedCall(0.05, () => {
-    if (!isAnimating.value) {
+    if (!isAnimating.value && !store.isTransitioning) {
       store.projectActive = index;
     }
   });
 }
 
 const handleMouseLeave = () => {
-  if (isMobile.value) return;
+  if (store.isTransitioning || isMobile.value) return;
   if (hoverDelayedCall) hoverDelayedCall.kill();
 
   lastMouseIndex = null;
 
   hoverDelayedCall = gsap.delayedCall(0.1, () => {
-    if (lastMouseIndex === null && !isAnimating.value) {
+    if (lastMouseIndex === null && !isAnimating.value && !store.isTransitioning) {
       store.projectActive = null;
     }
   });
 }
+
+watch(() => store.isTransitioning, (val) => {
+  if (val && hoverDelayedCall) {
+    hoverDelayedCall.kill();
+  }
+});
 
 watch(() => store.projectActive, (newVal, oldVal) => {
   if (oldVal !== null) animateProject(oldVal, false);
