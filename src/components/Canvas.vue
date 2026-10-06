@@ -26,11 +26,14 @@ const stableHeight = ref(typeof window !== 'undefined' ? window.innerHeight : 10
 const dynamicZoneHeight = ref(typeof window !== 'undefined' ? window.innerHeight : 1080)
 let lastWidth = typeof window !== 'undefined' ? window.innerWidth : 1920
 
+const isLoaded = ref(false)
+
 const uMaskScale = uniform(1)
 const uPlaneAspect = uniform(1)
 const uTextureAspect = uniform(1)
 const uMaskStrength = uniform(0)
 const uMoveProgress = uniform(0)
+const uTargetOriginY = uniform(-0.7)
 const uColourTop = uniform(new THREE.Color(colors[0].top.x, colors[0].top.y, colors[0].top.z))
 const uColourBottom = uniform(new THREE.Color(colors[0].bottom.x, colors[0].bottom.y, colors[0].bottom.z))
 const targetTop = new THREE.Color(colors[0].top.x, colors[0].top.y, colors[0].top.z)
@@ -43,6 +46,9 @@ const uOnePixelY = uniform(0.001)
 let scrollProgress = 0
 let smoothedProgress = 0
 let scrollTracker = 0
+
+let targetOriginY = -0.7
+let currentOriginY = -0.7
 
 // Increased speed factor for snappier touch response on iPhone
 const LERP_SPEED = 20
@@ -60,6 +66,8 @@ watch(() => route.path, (newPath) => {
     smoothedProgress = 0
     smoothZoomPhase = 0
     smoothMovePhase = 0
+    currentOriginY = 0.0
+    targetOriginY = 0.0
 
     setTimeout(() => { isResetting = false }, 50)
 
@@ -243,8 +251,8 @@ onMounted(async () => {
       const padding = float(0.015)
       const targetWidth = uMaskHeight.mul(uTextureAspect).div(uPlaneAspect)
       const targetOriginX = padding
-      const targetOriginY = float(1.0).sub(uMaskHeight).add(padding.div(2))
-      const cornerUV = coords.sub(vec2(targetOriginX, targetOriginY)).div(vec2(targetWidth, uMaskHeight))
+      const cornerOriginY = float(1.0).sub(uMaskHeight).add(padding.div(2))
+      const cornerUV = coords.sub(vec2(targetOriginX, cornerOriginY)).div(vec2(targetWidth, uMaskHeight))
 
       const currentUV = mix(centeredUV, cornerUV, uMoveProgress)
 
@@ -272,9 +280,11 @@ onMounted(async () => {
 
       const offset = uMoveProgress.mul(0.5);
 
+      const waveOrigin = center.add(offset).add(uTargetOriginY)
+
       const noiseMask = smoothstep(
-        center.add(offset).sub(0.1),
-        center.add(offset).add(0.1),
+        waveOrigin.sub(0.1),
+        waveOrigin.add(0.1),
         coords.y
       )
       const noiseResult = mix(vec4(uColourTop,1.0), vec4(uColourBottom, 1.0), noiseMask)
@@ -316,6 +326,9 @@ onMounted(async () => {
       smoothZoomPhase = lerp(smoothZoomPhase, targetZoom, LERP_SPEED, dt)
       smoothMovePhase = lerp(smoothMovePhase, targetMove, LERP_SPEED, dt)
 
+      currentOriginY = lerp(currentOriginY, targetOriginY, 3.5, dt)
+      uTargetOriginY.value = currentOriginY
+
       uMaskScale.value = 100.0 + (1.0 - 100.0) * smoothZoomPhase
       uMoveProgress.value = smoothMovePhase
       uMaskStrength.value = Math.min(smoothZoomPhase * 10.0, 1.0)
@@ -352,6 +365,8 @@ onMounted(async () => {
 
     await renderer.init()
     console.log(`Canvas.vue: Rendering with ${renderer.backend.isWebGPUBackend ? 'WebGPU' : 'WebGL'} fallback`)
+    isLoaded.value = true
+    targetOriginY = 0.0
     gsap.ticker.add(renderLoop)
 })
 
@@ -368,7 +383,9 @@ onBeforeUnmount(() => {
 
 </script>
 <template>
-     <div class="canvas-fixed-container" ref="canvasContainer"  :style="{ height: stableHeight + 'px' }" ></div>
+     <div class="canvas-fixed-container" ref="canvasContainer"  :style="{ height: stableHeight + 'px' }" >
+       <div class="loading-screen" :class="{ 'is-loaded': isLoaded }"></div>
+     </div>
 </template>
 <style lang="scss" scoped>
     .canvas-fixed-container {
@@ -384,5 +401,21 @@ onBeforeUnmount(() => {
         width: 100% !important;
         height: 100% !important;
     }
+    }
+
+    .loading-screen {
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background-color: #B7FFB7;
+      pointer-events: none;
+      transition: opacity 0.5s ease;
+      z-index: 10;
+
+      &.is-loaded {
+        opacity: 0;
+      }
     }
 </style>
