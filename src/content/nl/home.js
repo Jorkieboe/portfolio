@@ -1,12 +1,13 @@
 export default {
     subText: "Creativiteit, technologie en doorzettingsvermogen zijn de gouden combinatie.",
     projects: [
-        { id: "parleyStudio" },
         { id: "verhalenvangers" },
+        { id: "parleyStudio" },
+        { id: "beerAgent" },
         { id: "sophia" },
         { id: "futurenow" },
         { id: "festivalRecommender" },
-        { id: "vrGame" }
+        
     ],
     aboutmeText: [
         "Mijn naam is Jorrik Dillisse, creatieve developer en AI engineer. Ik ontwerp en ontwikkel digitale ervaringen die technologie inzetten om mensen op een andere manier te laten leren, ontdekken en interacteren.",

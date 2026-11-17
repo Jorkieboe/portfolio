@@ -1,12 +1,12 @@
 export default {
     subText: "Creativity, technology, and perseverance are the golden combination.",
     projects: [
+             { id: "verhalenvangers" },
         { id: "parleyStudio" },
-        { id: "verhalenvangers" },
+        { id: "beerAgent" },
         { id: "sophia" },
         { id: "futurenow" },
         { id: "festivalRecommender" },
-        { id: "vrGame" }
     ],
     aboutmeText: [
         "My name is Jorrik Dillisse, a creative developer and AI Engineer. I design and develop digital experiences that use technology to help people learn, discover, and interact in new and unexpected ways.",

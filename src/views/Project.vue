@@ -1,6 +1,6 @@
 <script setup>
 import { computed, onMounted, onUnmounted, inject, ref, watch } from 'vue'
-import { useRoute } from 'vue-router'
+import { useRoute, useRouter } from 'vue-router'
 import { useLang } from '../composables/useLang'
 import { useHead } from '@unhead/vue'
 import { gsap } from "gsap";
@@ -9,6 +9,7 @@ import { SplitText } from 'gsap/SplitText';
 import { colors, projectIds } from '../utils/colors'
 
 const route = useRoute()
+const router = useRouter()
 const { t } = useLang()
 
 const store = inject('store')
@@ -39,6 +40,30 @@ const openMedia = (contentItem) => {
 const closeMedia = () => {
     selectedMedia.value = null
 }
+
+const currentProjectIndex = computed(() =>
+  projectIds.indexOf(projectId.value)
+)
+
+const previousProjectId = computed(() =>
+  currentProjectIndex.value > 0
+    ? projectIds[currentProjectIndex.value - 1]
+    : null
+)
+
+const nextProjectId = computed(() =>
+  currentProjectIndex.value < projectIds.length - 1
+    ? projectIds[currentProjectIndex.value + 1]
+    : null
+)
+
+const projectRoute = (id) => ({
+  name: route.name,
+  params: {
+    ...route.params,
+    id
+  }
+})
 
 watch(selectedMedia, (newVal) => {
     if (typeof document !== 'undefined') {
@@ -151,21 +176,50 @@ onUnmounted(() => {
 </script>
 <template>
   <div class="content" ref="localContentRef" v-if="projectData">
-      <div class="projectIntro">
-          <div class="projectTitle">
-              <h4 id="projectType">{{ projectData.projectType }}</h4>
-              <h2 class="projectName" v-html="projectData.projectTitle"></h2>
+    <div class="projectIntro">
+      <nav class="top-bar top-row" aria-label="Project navigation">
+        <RouterLink to="/" class="home-link">
+          <span class="arrow">←</span>
+          <span>All projects</span>
+        </RouterLink>
+
+        <div class="project-navigation">
+          <RouterLink
+            v-if="previousProjectId"
+            :to="projectRoute(previousProjectId)"
+            class="nav-link previous-link"
+          >
+            <span class="arrow">←</span>
+            <span>Previous</span>
+          </RouterLink>
+
+          <RouterLink
+            v-if="nextProjectId"
+            :to="projectRoute(nextProjectId)"
+            class="nav-link next-link"
+          >
+            <span>Next</span>
+            <span class="arrow">→</span>
+          </RouterLink>
+        </div>
+      </nav>
+
+      <div class="introContent">
+        <div class="projectTitle">
+          <h4 id="projectType">{{ projectData.projectType }}</h4>
+          <h2 class="projectName" v-html="projectData.projectTitle"></h2>
+        </div>
+        <div class="projectDescription">
+          <p class='text'>{{ projectData.introText }}</p>
+          <div class="stat-wrapper">
+            <div v-for="entry in projectData.projectStats" class="stat-entry">
+              <p><strong>{{ entry.title }} </strong></p>
+              <p v-for="content in entry.content">{{ content }}</p>
+            </div>
           </div>
-          <div class="projectDescription">
-              <p class='text'>{{ projectData.introText }}</p>
-              <div class="stat-wrapper">
-                <div v-for="entry in projectData.projectStats" class="stat-entry">
-                    <p><strong>{{ entry.title }} </strong></p>
-                    <p v-for="content in entry.content">{{ content }}</p>
-                </div>
-              </div>
-          </div>
+        </div>
       </div>
+    </div>
 
       <div class="projectOverview">
         <template v-if="projectData.splashImages?.[0]">
@@ -193,7 +247,7 @@ onUnmounted(() => {
 
       <div v-for="(content, index) in projectData.content" :key="index" class="projectInfoContainer" :class="{ 'reversed': index % 2 !== 0 }">
         <div class="container">
-          <div class="subSectionImage" @click="openMedia(content)">
+          <div class="subSectionImage" @click="openMedia(content)" v-if="content.media">
               <video v-if="content.media.type === 'video'" :src="content.media.src" class="subSectionImg" muted playsinline></video>
               <img v-else :src="content.media.src" :alt="content.title" class="subSectionImg">
               <div v-if="content.media.type === 'video'" class="subSectionImg" id="thumbnail"><img :src="content.media.thumbnail"></div>
@@ -221,12 +275,71 @@ onUnmounted(() => {
 </template>
 <style lang="scss" scoped>
     .projectIntro {
+        position: relative;
         display: flex;
-        justify-content: space-between;
+        flex-direction: column;
         max-width: 1920px;
         width: 90%;
         margin: auto;
-        padding-top: 9.5rem;
+        padding-top: calc(8svh + 2rem);
+        padding-top: calc(8svh + env(safe-area-inset-top) + 2rem);
+        gap: 3.5rem;
+
+        .top-bar,
+        .top-row {
+            position: relative;
+            z-index: 10;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            width: 100%;
+
+            a {
+                color: #222;
+                text-decoration: none;
+                font-family: Arial, Helvetica, sans-serif;
+                font-size: 0.95rem;
+                transition: color 0.25s ease;
+
+                &:hover {
+                    color: #2BA69C;
+                }
+            }
+
+            .home-link,
+            .nav-link {
+                display: inline-flex;
+                align-items: center;
+                gap: 0.6rem;
+            }
+
+            .project-navigation {
+                display: flex;
+                align-items: center;
+                gap: 2rem;
+            }
+
+            .arrow {
+                display: inline-block;
+                transition: transform 0.25s ease;
+            }
+
+            .home-link:hover .arrow,
+            .previous-link:hover .arrow {
+                transform: translateX(-4px);
+            }
+
+            .next-link:hover .arrow {
+                transform: translateX(4px);
+            }
+        }
+
+        .introContent {
+            display: flex;
+            flex-direction: row;
+            justify-content: space-between;
+            width: 100%;
+        }
 
         #projectType {
             font-family: Arial, Helvetica, sans-serif;
@@ -438,12 +551,37 @@ onUnmounted(() => {
     }
 
     @media (max-width: 768px) {
+
         .projectIntro {
-            flex-direction: column;
-            margin-top: 1rem;
+            margin-top: 0;
             margin-bottom: 2rem;
-            padding-top: 6.5rem;
+            padding-top: calc(8svh + 1.25rem);
+            padding-top: calc(8svh + env(safe-area-inset-top) + 1.25rem);
+            gap: 2rem;
             width: 90%;
+
+            .top-bar,
+            .top-row {
+                width: 100%;
+
+                a {
+                    font-size: 0.8rem;
+                }
+
+                .project-navigation {
+                    gap: 1rem;
+                }
+
+                .home-link,
+                .nav-link {
+                    gap: 0.35rem;
+                }
+            }
+
+            .introContent {
+                flex-direction: column;
+                gap: 1rem;
+            }
 
             .projectTitle {
                 width: 100%;
